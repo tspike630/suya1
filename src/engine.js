@@ -5,8 +5,18 @@ function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
+function markDissonance(state, before, after) {
+  if (after <= before) return;
+  const crossed = Math.floor(after / 10) > Math.floor(before / 10);
+  const big = after - before >= 10;
+  if (big || crossed) state.feedback = "drop";
+  else if (!state.meter && state.feedback !== "drop") state.feedback = "thorn";
+  if (big) state.glitch = true;
+}
+
 export function applyFx(state, fx) {
   if (!fx) return;
+  const before = state.dissonance;
   if (fx.d) state.dissonance = clamp(state.dissonance + fx.d, 0, 100);
   if (fx.lu) state.lu = clamp(state.lu + fx.lu, 0, BOND_CAPS.lu);
   if (fx.shen) state.shen = clamp(state.shen + fx.shen, 0, BOND_CAPS.shen);
@@ -14,6 +24,7 @@ export function applyFx(state, fx) {
   if (typeof fx.academic === "number" && fx.academic !== 0) {
     state.academic = clamp(state.academic + fx.academic, 0, 100);
   }
+  if (fx.d) markDissonance(state, before, state.dissonance);
 }
 
 export function getLines(session) {
@@ -36,18 +47,33 @@ function resolveNext(node, session) {
   return typeof node.next === "function" ? node.next(session) : node.next;
 }
 
+function rememberList(list, value) {
+  if (value && !list.includes(value)) list.push(value);
+}
+
 export function goto(session, id, keepPrefix = false) {
   const node = NODES[id];
   if (!node) throw new Error(`missing scene: ${id}`);
+  const carriedGlitch = session.glitch;
+  const carriedDrop = session.feedback === "drop";
   if (!keepPrefix) session.prefix = null;
   session.nodeId = id;
   session.line = 0;
-  session.glitch = false;
+  session.glitch = carriedGlitch;
   if (node.meter) session.meter = true;
   if (node.onEnter && !session.flags[`enter:${id}`]) {
     session.flags[`enter:${id}`] = true;
     applyFx(session, node.onEnter);
-    if (node.onEnter.d) session.sting = true;
+  }
+  if (carriedDrop) session.feedback = "drop";
+  if (carriedGlitch) session.glitch = true;
+  rememberList(session.fragments, node.fragment);
+  rememberList(session.heard, node.bgm);
+  if (node.cg && !session.flags[`cgshown:${id}`]) {
+    session.flags[`cgshown:${id}`] = true;
+    session.cgMoment = node.cg;
+  } else {
+    session.cgMoment = null;
   }
   if (node.title && !session.seenTitles.includes(node.title)) {
     session.seenTitles.push(node.title);
@@ -87,15 +113,19 @@ export function newSession(ngPlus = false) {
     meter: false,
     flags: {},
     log: [],
+    choices: [],
+    fragments: [],
+    heard: [],
     prefix: null,
     seenTitles: [],
     showNg: false,
     chapterCard: null,
-    sting: false,
+    feedback: null,
+    cgMoment: null,
     glitch: false,
     endingId: null,
   };
-  return goto(session, "pro_rank");
+  return goto(session, ngPlus ? "ng_gate" : "pro_rank");
 }
 
 function currentLine(session) {
@@ -143,8 +173,16 @@ export function choose(session, index) {
   const options = optionsFor(session);
   const option = options[index];
   if (!option) throw new Error(`missing option ${index} at ${session.nodeId}`);
+  session.choices.push({
+    nodeId: session.nodeId,
+    id: option.id,
+    label: option.label,
+    d: option.fx?.d || 0,
+  });
   applyFx(session, option.fx);
-  if (option.fx?.d) session.glitch = option.fx.d >= 10;
+  if (option.fragment && !session.fragments.includes(option.fragment)) {
+    session.fragments.push(option.fragment);
+  }
   if (option.set) Object.assign(session.flags, option.set);
   const prefix = [];
   if (option.say) prefix.push(option.say);
