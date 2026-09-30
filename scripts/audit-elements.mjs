@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readdirSync } from "node:fs";
-import { EFFECTS } from "../src/audio.js";
+import { EFFECTS, SCENE_BEDS } from "../src/audio.js";
 import { CAST, CGS, FRAGMENTS, TRACKS, sceneIds } from "../src/cast.js";
 import { AUTO_COUNT, QUICK_COUNT, SLOT_COUNT } from "../src/game.js";
 
@@ -55,6 +55,8 @@ const fragmentTitles = FRAGMENTS.map((item) => item.title.replace(/\s/g, ""));
 for (const title of CANON_FRAGMENTS) {
   assert.ok(fragmentTitles.includes(title), `missing fragment ${title}`);
 }
+assert.equal(Object.keys(SCENE_BEDS).length, sceneIds().length);
+for (const id of sceneIds()) assert.ok(SCENE_BEDS[id], `bed ${id}`);
 assert.equal(Object.keys(EFFECTS).length, 30);
 assert.deepEqual(Object.keys(EFFECTS), EFFECT_NAMES);
 assert.equal(SLOT_COUNT, 90);

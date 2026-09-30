@@ -28,6 +28,9 @@ const spritesReady =
         import("./backgrounds.js").then((mod) => {
           mod.installBackgrounds();
         }),
+        import("./voice.js").then((mod) => {
+          mod.installVoices();
+        }),
       ]);
 
 const META_KEY = "suya-meta-v2";
@@ -124,9 +127,7 @@ function stamp(session) {
 }
 
 function voiced(line) {
-  if (!line?.who || line.voice === false) return false;
-  if (line.voice === true) return true;
-  return line.who === "鹿眠";
+  return Boolean(line?.who && line.voice !== false && line.text);
 }
 
 function presenceOf(session) {
@@ -317,8 +318,9 @@ export function mountGame(root) {
     const key = `${lineKey(session)}:${line.se || ""}:${line.who || ""}`;
     if (playedKey === key) return;
     playedKey = key;
+    if (line.face) score.setMood(line.face);
     if (line.se) score.effect(line.se);
-    if (voiced(line)) score.voice(line.who);
+    if (voiced(line) && !skipOn && !fast) score.voice(line.who, line.text, line.face || "");
     if (line.kind === "glitch" && glitchKey !== lineKey(session)) {
       glitchKey = lineKey(session);
       session.glitch = true;
@@ -380,6 +382,7 @@ export function mountGame(root) {
     dock.querySelector("[data-act='skip']").dataset.on = skipOn ? "1" : "0";
     if (node?.bgm) score.play(node.bgm);
     score.setLayer(node?.layer || "real");
+    score.setScene(screen === "play" && !cover ? node?.bg || "" : "");
     applySize();
   }
 
@@ -724,7 +727,7 @@ export function mountGame(root) {
       </div>
       <p>音乐 <span id="bgm-read">${Math.round(meta.settings.bgm * 100)}</span></p>
       <input data-vol="bgm" type="range" min="0" max="1" step="0.05" value="${meta.settings.bgm}" />
-      <p>音效 <span id="se-read">${Math.round(meta.settings.se * 100)}</span></p>
+      <p>音效与配音 <span id="se-read">${Math.round(meta.settings.se * 100)}</span></p>
       <input data-vol="se" type="range" min="0" max="1" step="0.05" value="${meta.settings.se}" />
       <p><button type="button" data-act="full">全屏</button></p>
     </section>`;
