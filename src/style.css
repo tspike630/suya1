@@ -351,9 +351,9 @@ button:disabled { opacity: 0.4; cursor: default; }
 @media (max-width: 800px) {
   .title-screen { grid-template-columns: 1fr; align-items: start; padding-top: 12vh; }
   .vn { --win: max(150px, 26%); }
-  .sprite { width: min(340px, 86vw); right: 0; bottom: 0; height: 100%; }
-  .box { padding: 0 16px 28px; }
-  .choices { bottom: 150px; width: min(420px, 90vw); }
+  .sprite { width: min(340px, 86vw); right: 0; bottom: var(--win); height: calc(100% - var(--win)); }
+  .box { padding: 12px 16px 12px; }
+  .choices { bottom: calc(var(--win) + 12px); width: min(420px, 90vw); }
   .gallery, .slots { grid-template-columns: 1fr 1fr; }
   #text { font-size: 1rem; }
   .cg-cast { width: 42vw; }
