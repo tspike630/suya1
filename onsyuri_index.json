@@ -7,8 +7,7 @@
     "--width",
     "1280",
     "--height",
-    "720",
-    "--render-font-outline"
+    "720"
   ],
   "lazyload": true,
   "files": [
@@ -173,68 +172,68 @@
       "url": "game/bg/white.jpg"
     },
     {
-      "path": "bgm/applause.mp3",
-      "url": "game/bgm/applause.mp3"
+      "path": "bgm/applause.ogg",
+      "url": "game/bgm/applause.ogg"
     },
     {
-      "path": "bgm/awake.mp3",
-      "url": "game/bgm/awake.mp3"
+      "path": "bgm/awake.ogg",
+      "url": "game/bgm/awake.ogg"
     },
     {
-      "path": "bgm/bed.mp3",
-      "url": "game/bgm/bed.mp3"
+      "path": "bgm/bed.ogg",
+      "url": "game/bgm/bed.ogg"
     },
     {
-      "path": "bgm/crack.mp3",
-      "url": "game/bgm/crack.mp3"
+      "path": "bgm/crack.ogg",
+      "url": "game/bgm/crack.ogg"
     },
     {
-      "path": "bgm/cradle.mp3",
-      "url": "game/bgm/cradle.mp3"
+      "path": "bgm/cradle.ogg",
+      "url": "game/bgm/cradle.ogg"
     },
     {
-      "path": "bgm/exam.mp3",
-      "url": "game/bgm/exam.mp3"
+      "path": "bgm/exam.ogg",
+      "url": "game/bgm/exam.ogg"
     },
     {
-      "path": "bgm/heart.mp3",
-      "url": "game/bgm/heart.mp3"
+      "path": "bgm/heart.ogg",
+      "url": "game/bgm/heart.ogg"
     },
     {
-      "path": "bgm/home.mp3",
-      "url": "game/bgm/home.mp3"
+      "path": "bgm/home.ogg",
+      "url": "game/bgm/home.ogg"
     },
     {
-      "path": "bgm/june.mp3",
-      "url": "game/bgm/june.mp3"
+      "path": "bgm/june.ogg",
+      "url": "game/bgm/june.ogg"
     },
     {
-      "path": "bgm/lab.mp3",
-      "url": "game/bgm/lab.mp3"
+      "path": "bgm/lab.ogg",
+      "url": "game/bgm/lab.ogg"
     },
     {
-      "path": "bgm/lamp.mp3",
-      "url": "game/bgm/lamp.mp3"
+      "path": "bgm/lamp.ogg",
+      "url": "game/bgm/lamp.ogg"
     },
     {
-      "path": "bgm/pork.mp3",
-      "url": "game/bgm/pork.mp3"
+      "path": "bgm/pork.ogg",
+      "url": "game/bgm/pork.ogg"
     },
     {
-      "path": "bgm/qinhua.mp3",
-      "url": "game/bgm/qinhua.mp3"
+      "path": "bgm/qinhua.ogg",
+      "url": "game/bgm/qinhua.ogg"
     },
     {
-      "path": "bgm/rain.mp3",
-      "url": "game/bgm/rain.mp3"
+      "path": "bgm/rain.ogg",
+      "url": "game/bgm/rain.ogg"
     },
     {
-      "path": "bgm/together.mp3",
-      "url": "game/bgm/together.mp3"
+      "path": "bgm/together.ogg",
+      "url": "game/bgm/together.ogg"
     },
     {
-      "path": "bgm/white.mp3",
-      "url": "game/bgm/white.mp3"
+      "path": "bgm/white.ogg",
+      "url": "game/bgm/white.ogg"
     },
     {
       "path": "cg/cg_bed.jpg",
@@ -331,6 +330,10 @@
     {
       "path": "cg1920/cg_white.jpg",
       "url": "game/cg1920/cg_white.jpg"
+    },
+    {
+      "path": "choices.json",
+      "url": "game/choices.json"
     },
     {
       "path": "cursor0.bmp",
@@ -665,6 +668,466 @@
       "url": "game/sprites/yu/stand-sting.png"
     },
     {
+      "path": "ui/btn/04630ff915.png",
+      "url": "game/ui/btn/04630ff915.png"
+    },
+    {
+      "path": "ui/btn/0584891975.png",
+      "url": "game/ui/btn/0584891975.png"
+    },
+    {
+      "path": "ui/btn/0b99765914.png",
+      "url": "game/ui/btn/0b99765914.png"
+    },
+    {
+      "path": "ui/btn/0cae9c4858.png",
+      "url": "game/ui/btn/0cae9c4858.png"
+    },
+    {
+      "path": "ui/btn/0fbf31db39.png",
+      "url": "game/ui/btn/0fbf31db39.png"
+    },
+    {
+      "path": "ui/btn/112333c28c.png",
+      "url": "game/ui/btn/112333c28c.png"
+    },
+    {
+      "path": "ui/btn/11d0241540.png",
+      "url": "game/ui/btn/11d0241540.png"
+    },
+    {
+      "path": "ui/btn/124ae86f19.png",
+      "url": "game/ui/btn/124ae86f19.png"
+    },
+    {
+      "path": "ui/btn/13a079cee4.png",
+      "url": "game/ui/btn/13a079cee4.png"
+    },
+    {
+      "path": "ui/btn/13d7ce3f24.png",
+      "url": "game/ui/btn/13d7ce3f24.png"
+    },
+    {
+      "path": "ui/btn/14520deda8.png",
+      "url": "game/ui/btn/14520deda8.png"
+    },
+    {
+      "path": "ui/btn/14f9607fe6.png",
+      "url": "game/ui/btn/14f9607fe6.png"
+    },
+    {
+      "path": "ui/btn/1564244091.png",
+      "url": "game/ui/btn/1564244091.png"
+    },
+    {
+      "path": "ui/btn/176b7ed8f8.png",
+      "url": "game/ui/btn/176b7ed8f8.png"
+    },
+    {
+      "path": "ui/btn/18a0989721.png",
+      "url": "game/ui/btn/18a0989721.png"
+    },
+    {
+      "path": "ui/btn/1ceb85949a.png",
+      "url": "game/ui/btn/1ceb85949a.png"
+    },
+    {
+      "path": "ui/btn/1d3040d963.png",
+      "url": "game/ui/btn/1d3040d963.png"
+    },
+    {
+      "path": "ui/btn/1fa69355fe.png",
+      "url": "game/ui/btn/1fa69355fe.png"
+    },
+    {
+      "path": "ui/btn/24bbcbfd2e.png",
+      "url": "game/ui/btn/24bbcbfd2e.png"
+    },
+    {
+      "path": "ui/btn/2777ae76db.png",
+      "url": "game/ui/btn/2777ae76db.png"
+    },
+    {
+      "path": "ui/btn/29a830f105.png",
+      "url": "game/ui/btn/29a830f105.png"
+    },
+    {
+      "path": "ui/btn/2a168249e4.png",
+      "url": "game/ui/btn/2a168249e4.png"
+    },
+    {
+      "path": "ui/btn/2e93b7c29d.png",
+      "url": "game/ui/btn/2e93b7c29d.png"
+    },
+    {
+      "path": "ui/btn/2e9c0f5acf.png",
+      "url": "game/ui/btn/2e9c0f5acf.png"
+    },
+    {
+      "path": "ui/btn/30db4e533b.png",
+      "url": "game/ui/btn/30db4e533b.png"
+    },
+    {
+      "path": "ui/btn/31d281e6a8.png",
+      "url": "game/ui/btn/31d281e6a8.png"
+    },
+    {
+      "path": "ui/btn/31f49545e2.png",
+      "url": "game/ui/btn/31f49545e2.png"
+    },
+    {
+      "path": "ui/btn/35fad73af9.png",
+      "url": "game/ui/btn/35fad73af9.png"
+    },
+    {
+      "path": "ui/btn/37d6c2f990.png",
+      "url": "game/ui/btn/37d6c2f990.png"
+    },
+    {
+      "path": "ui/btn/4352c41d3b.png",
+      "url": "game/ui/btn/4352c41d3b.png"
+    },
+    {
+      "path": "ui/btn/48d4799a2c.png",
+      "url": "game/ui/btn/48d4799a2c.png"
+    },
+    {
+      "path": "ui/btn/4cedb8eb0a.png",
+      "url": "game/ui/btn/4cedb8eb0a.png"
+    },
+    {
+      "path": "ui/btn/502aace727.png",
+      "url": "game/ui/btn/502aace727.png"
+    },
+    {
+      "path": "ui/btn/515ce023b1.png",
+      "url": "game/ui/btn/515ce023b1.png"
+    },
+    {
+      "path": "ui/btn/57d900cebb.png",
+      "url": "game/ui/btn/57d900cebb.png"
+    },
+    {
+      "path": "ui/btn/58aaaff52a.png",
+      "url": "game/ui/btn/58aaaff52a.png"
+    },
+    {
+      "path": "ui/btn/59de9216fa.png",
+      "url": "game/ui/btn/59de9216fa.png"
+    },
+    {
+      "path": "ui/btn/5ba87535fe.png",
+      "url": "game/ui/btn/5ba87535fe.png"
+    },
+    {
+      "path": "ui/btn/62d50cfc86.png",
+      "url": "game/ui/btn/62d50cfc86.png"
+    },
+    {
+      "path": "ui/btn/64c281afd3.png",
+      "url": "game/ui/btn/64c281afd3.png"
+    },
+    {
+      "path": "ui/btn/64d465f56f.png",
+      "url": "game/ui/btn/64d465f56f.png"
+    },
+    {
+      "path": "ui/btn/654d902d87.png",
+      "url": "game/ui/btn/654d902d87.png"
+    },
+    {
+      "path": "ui/btn/6819da6982.png",
+      "url": "game/ui/btn/6819da6982.png"
+    },
+    {
+      "path": "ui/btn/688b2d9c48.png",
+      "url": "game/ui/btn/688b2d9c48.png"
+    },
+    {
+      "path": "ui/btn/691ff0fb00.png",
+      "url": "game/ui/btn/691ff0fb00.png"
+    },
+    {
+      "path": "ui/btn/69cb951bba.png",
+      "url": "game/ui/btn/69cb951bba.png"
+    },
+    {
+      "path": "ui/btn/6dc4b5d4e4.png",
+      "url": "game/ui/btn/6dc4b5d4e4.png"
+    },
+    {
+      "path": "ui/btn/7042450c5a.png",
+      "url": "game/ui/btn/7042450c5a.png"
+    },
+    {
+      "path": "ui/btn/75c8c7a7d0.png",
+      "url": "game/ui/btn/75c8c7a7d0.png"
+    },
+    {
+      "path": "ui/btn/787d41d9c3.png",
+      "url": "game/ui/btn/787d41d9c3.png"
+    },
+    {
+      "path": "ui/btn/78ef5d15a3.png",
+      "url": "game/ui/btn/78ef5d15a3.png"
+    },
+    {
+      "path": "ui/btn/7ab284414e.png",
+      "url": "game/ui/btn/7ab284414e.png"
+    },
+    {
+      "path": "ui/btn/7c4dac8685.png",
+      "url": "game/ui/btn/7c4dac8685.png"
+    },
+    {
+      "path": "ui/btn/7d6c0cdedd.png",
+      "url": "game/ui/btn/7d6c0cdedd.png"
+    },
+    {
+      "path": "ui/btn/7dcbd805e6.png",
+      "url": "game/ui/btn/7dcbd805e6.png"
+    },
+    {
+      "path": "ui/btn/80e16c5455.png",
+      "url": "game/ui/btn/80e16c5455.png"
+    },
+    {
+      "path": "ui/btn/8496b1e8e2.png",
+      "url": "game/ui/btn/8496b1e8e2.png"
+    },
+    {
+      "path": "ui/btn/8538fad6ea.png",
+      "url": "game/ui/btn/8538fad6ea.png"
+    },
+    {
+      "path": "ui/btn/861e4a2d92.png",
+      "url": "game/ui/btn/861e4a2d92.png"
+    },
+    {
+      "path": "ui/btn/87d843ccaa.png",
+      "url": "game/ui/btn/87d843ccaa.png"
+    },
+    {
+      "path": "ui/btn/885224f6f1.png",
+      "url": "game/ui/btn/885224f6f1.png"
+    },
+    {
+      "path": "ui/btn/8b6a678340.png",
+      "url": "game/ui/btn/8b6a678340.png"
+    },
+    {
+      "path": "ui/btn/8e57b6c139.png",
+      "url": "game/ui/btn/8e57b6c139.png"
+    },
+    {
+      "path": "ui/btn/8f3cddd57d.png",
+      "url": "game/ui/btn/8f3cddd57d.png"
+    },
+    {
+      "path": "ui/btn/8f8930282b.png",
+      "url": "game/ui/btn/8f8930282b.png"
+    },
+    {
+      "path": "ui/btn/909f8c1898.png",
+      "url": "game/ui/btn/909f8c1898.png"
+    },
+    {
+      "path": "ui/btn/94a9a32795.png",
+      "url": "game/ui/btn/94a9a32795.png"
+    },
+    {
+      "path": "ui/btn/958892396c.png",
+      "url": "game/ui/btn/958892396c.png"
+    },
+    {
+      "path": "ui/btn/967ba3bf35.png",
+      "url": "game/ui/btn/967ba3bf35.png"
+    },
+    {
+      "path": "ui/btn/977cb8642c.png",
+      "url": "game/ui/btn/977cb8642c.png"
+    },
+    {
+      "path": "ui/btn/997fc05c12.png",
+      "url": "game/ui/btn/997fc05c12.png"
+    },
+    {
+      "path": "ui/btn/ac846ace53.png",
+      "url": "game/ui/btn/ac846ace53.png"
+    },
+    {
+      "path": "ui/btn/ada2e30ad1.png",
+      "url": "game/ui/btn/ada2e30ad1.png"
+    },
+    {
+      "path": "ui/btn/aeccfcca1d.png",
+      "url": "game/ui/btn/aeccfcca1d.png"
+    },
+    {
+      "path": "ui/btn/afb3c40c39.png",
+      "url": "game/ui/btn/afb3c40c39.png"
+    },
+    {
+      "path": "ui/btn/afd6e7c16b.png",
+      "url": "game/ui/btn/afd6e7c16b.png"
+    },
+    {
+      "path": "ui/btn/b013ec55d8.png",
+      "url": "game/ui/btn/b013ec55d8.png"
+    },
+    {
+      "path": "ui/btn/b3ab9f82a5.png",
+      "url": "game/ui/btn/b3ab9f82a5.png"
+    },
+    {
+      "path": "ui/btn/b42390868c.png",
+      "url": "game/ui/btn/b42390868c.png"
+    },
+    {
+      "path": "ui/btn/b7859f245c.png",
+      "url": "game/ui/btn/b7859f245c.png"
+    },
+    {
+      "path": "ui/btn/b8f7ae134b.png",
+      "url": "game/ui/btn/b8f7ae134b.png"
+    },
+    {
+      "path": "ui/btn/bbc9339c92.png",
+      "url": "game/ui/btn/bbc9339c92.png"
+    },
+    {
+      "path": "ui/btn/c3154967e8.png",
+      "url": "game/ui/btn/c3154967e8.png"
+    },
+    {
+      "path": "ui/btn/c3c4915338.png",
+      "url": "game/ui/btn/c3c4915338.png"
+    },
+    {
+      "path": "ui/btn/c5d577d6ff.png",
+      "url": "game/ui/btn/c5d577d6ff.png"
+    },
+    {
+      "path": "ui/btn/c75cd26caa.png",
+      "url": "game/ui/btn/c75cd26caa.png"
+    },
+    {
+      "path": "ui/btn/c772f73f23.png",
+      "url": "game/ui/btn/c772f73f23.png"
+    },
+    {
+      "path": "ui/btn/c7f25b2800.png",
+      "url": "game/ui/btn/c7f25b2800.png"
+    },
+    {
+      "path": "ui/btn/c7f9e387fd.png",
+      "url": "game/ui/btn/c7f9e387fd.png"
+    },
+    {
+      "path": "ui/btn/c85b1ee0f9.png",
+      "url": "game/ui/btn/c85b1ee0f9.png"
+    },
+    {
+      "path": "ui/btn/c8f4cb769b.png",
+      "url": "game/ui/btn/c8f4cb769b.png"
+    },
+    {
+      "path": "ui/btn/cce6e91189.png",
+      "url": "game/ui/btn/cce6e91189.png"
+    },
+    {
+      "path": "ui/btn/d1f4bc9e7c.png",
+      "url": "game/ui/btn/d1f4bc9e7c.png"
+    },
+    {
+      "path": "ui/btn/d21abfe78a.png",
+      "url": "game/ui/btn/d21abfe78a.png"
+    },
+    {
+      "path": "ui/btn/d4909d10d6.png",
+      "url": "game/ui/btn/d4909d10d6.png"
+    },
+    {
+      "path": "ui/btn/d499cefdb3.png",
+      "url": "game/ui/btn/d499cefdb3.png"
+    },
+    {
+      "path": "ui/btn/d8350149d7.png",
+      "url": "game/ui/btn/d8350149d7.png"
+    },
+    {
+      "path": "ui/btn/d94d2bd2c5.png",
+      "url": "game/ui/btn/d94d2bd2c5.png"
+    },
+    {
+      "path": "ui/btn/da0656483b.png",
+      "url": "game/ui/btn/da0656483b.png"
+    },
+    {
+      "path": "ui/btn/e1e9ec2948.png",
+      "url": "game/ui/btn/e1e9ec2948.png"
+    },
+    {
+      "path": "ui/btn/e300141745.png",
+      "url": "game/ui/btn/e300141745.png"
+    },
+    {
+      "path": "ui/btn/e3b1ae218f.png",
+      "url": "game/ui/btn/e3b1ae218f.png"
+    },
+    {
+      "path": "ui/btn/e4627cdc35.png",
+      "url": "game/ui/btn/e4627cdc35.png"
+    },
+    {
+      "path": "ui/btn/e593adbd36.png",
+      "url": "game/ui/btn/e593adbd36.png"
+    },
+    {
+      "path": "ui/btn/e5d49e03b3.png",
+      "url": "game/ui/btn/e5d49e03b3.png"
+    },
+    {
+      "path": "ui/btn/e7872e2daf.png",
+      "url": "game/ui/btn/e7872e2daf.png"
+    },
+    {
+      "path": "ui/btn/e9f585ae2d.png",
+      "url": "game/ui/btn/e9f585ae2d.png"
+    },
+    {
+      "path": "ui/btn/f008f46645.png",
+      "url": "game/ui/btn/f008f46645.png"
+    },
+    {
+      "path": "ui/btn/f4935f480b.png",
+      "url": "game/ui/btn/f4935f480b.png"
+    },
+    {
+      "path": "ui/btn/f741e04d7e.png",
+      "url": "game/ui/btn/f741e04d7e.png"
+    },
+    {
+      "path": "ui/btn/f8a7eb897d.png",
+      "url": "game/ui/btn/f8a7eb897d.png"
+    },
+    {
+      "path": "ui/btn/fa14ef85c3.png",
+      "url": "game/ui/btn/fa14ef85c3.png"
+    },
+    {
+      "path": "ui/btn/fbf9be475a.png",
+      "url": "game/ui/btn/fbf9be475a.png"
+    },
+    {
+      "path": "ui/btn/fdf9a15634.png",
+      "url": "game/ui/btn/fdf9a15634.png"
+    },
+    {
+      "path": "ui/btn/fecbb6ab3f.png",
+      "url": "game/ui/btn/fecbb6ab3f.png"
+    },
+    {
       "path": "ui/window.png",
       "url": "game/ui/window.png"
     },
@@ -677,284 +1140,240 @@
       "url": "game/uoncur.bmp"
     },
     {
-      "path": "voice/025a8b30139e.mp3",
-      "url": "game/voice/025a8b30139e.mp3"
+      "path": "voice/025a8b30139e.ogg",
+      "url": "game/voice/025a8b30139e.ogg"
     },
     {
-      "path": "voice/02a7a9cf0d15.mp3",
-      "url": "game/voice/02a7a9cf0d15.mp3"
+      "path": "voice/02a7a9cf0d15.ogg",
+      "url": "game/voice/02a7a9cf0d15.ogg"
     },
     {
-      "path": "voice/040d16f315b8.mp3",
-      "url": "game/voice/040d16f315b8.mp3"
+      "path": "voice/040d16f315b8.ogg",
+      "url": "game/voice/040d16f315b8.ogg"
     },
     {
-      "path": "voice/07ec08c8bb2d.mp3",
-      "url": "game/voice/07ec08c8bb2d.mp3"
+      "path": "voice/07ec08c8bb2d.ogg",
+      "url": "game/voice/07ec08c8bb2d.ogg"
     },
     {
-      "path": "voice/07fcecfc07e3.mp3",
-      "url": "game/voice/07fcecfc07e3.mp3"
+      "path": "voice/07fcecfc07e3.ogg",
+      "url": "game/voice/07fcecfc07e3.ogg"
     },
     {
-      "path": "voice/082e9213f581.mp3",
-      "url": "game/voice/082e9213f581.mp3"
+      "path": "voice/082e9213f581.ogg",
+      "url": "game/voice/082e9213f581.ogg"
     },
     {
-      "path": "voice/09cd522c5fe7.mp3",
-      "url": "game/voice/09cd522c5fe7.mp3"
+      "path": "voice/1229f3075a07.ogg",
+      "url": "game/voice/1229f3075a07.ogg"
     },
     {
-      "path": "voice/1229f3075a07.mp3",
-      "url": "game/voice/1229f3075a07.mp3"
+      "path": "voice/155d886a7258.ogg",
+      "url": "game/voice/155d886a7258.ogg"
     },
     {
-      "path": "voice/155d886a7258.mp3",
-      "url": "game/voice/155d886a7258.mp3"
+      "path": "voice/16263a6f37e7.ogg",
+      "url": "game/voice/16263a6f37e7.ogg"
     },
     {
-      "path": "voice/16263a6f37e7.mp3",
-      "url": "game/voice/16263a6f37e7.mp3"
+      "path": "voice/189fa26332a5.ogg",
+      "url": "game/voice/189fa26332a5.ogg"
     },
     {
-      "path": "voice/189fa26332a5.mp3",
-      "url": "game/voice/189fa26332a5.mp3"
+      "path": "voice/1a07cc229f1a.ogg",
+      "url": "game/voice/1a07cc229f1a.ogg"
     },
     {
-      "path": "voice/1a07cc229f1a.mp3",
-      "url": "game/voice/1a07cc229f1a.mp3"
+      "path": "voice/1ce5058fe4bf.ogg",
+      "url": "game/voice/1ce5058fe4bf.ogg"
     },
     {
-      "path": "voice/1ce5058fe4bf.mp3",
-      "url": "game/voice/1ce5058fe4bf.mp3"
+      "path": "voice/2187c7835fe9.ogg",
+      "url": "game/voice/2187c7835fe9.ogg"
     },
     {
-      "path": "voice/1d9628a30486.mp3",
-      "url": "game/voice/1d9628a30486.mp3"
+      "path": "voice/263e0b96b39c.ogg",
+      "url": "game/voice/263e0b96b39c.ogg"
     },
     {
-      "path": "voice/2187c7835fe9.mp3",
-      "url": "game/voice/2187c7835fe9.mp3"
+      "path": "voice/299c087c826c.ogg",
+      "url": "game/voice/299c087c826c.ogg"
     },
     {
-      "path": "voice/263e0b96b39c.mp3",
-      "url": "game/voice/263e0b96b39c.mp3"
+      "path": "voice/2ca1abef6dea.ogg",
+      "url": "game/voice/2ca1abef6dea.ogg"
     },
     {
-      "path": "voice/299c087c826c.mp3",
-      "url": "game/voice/299c087c826c.mp3"
+      "path": "voice/2e82cdd42397.ogg",
+      "url": "game/voice/2e82cdd42397.ogg"
     },
     {
-      "path": "voice/2ca1abef6dea.mp3",
-      "url": "game/voice/2ca1abef6dea.mp3"
+      "path": "voice/361d34d5643a.ogg",
+      "url": "game/voice/361d34d5643a.ogg"
     },
     {
-      "path": "voice/2e82cdd42397.mp3",
-      "url": "game/voice/2e82cdd42397.mp3"
+      "path": "voice/42250977ed5d.ogg",
+      "url": "game/voice/42250977ed5d.ogg"
     },
     {
-      "path": "voice/361d34d5643a.mp3",
-      "url": "game/voice/361d34d5643a.mp3"
+      "path": "voice/4a48cdbe995a.ogg",
+      "url": "game/voice/4a48cdbe995a.ogg"
     },
     {
-      "path": "voice/42250977ed5d.mp3",
-      "url": "game/voice/42250977ed5d.mp3"
+      "path": "voice/4e1afe9a0909.ogg",
+      "url": "game/voice/4e1afe9a0909.ogg"
     },
     {
-      "path": "voice/471abc4a74db.mp3",
-      "url": "game/voice/471abc4a74db.mp3"
+      "path": "voice/5226ee22ef67.ogg",
+      "url": "game/voice/5226ee22ef67.ogg"
     },
     {
-      "path": "voice/4a48cdbe995a.mp3",
-      "url": "game/voice/4a48cdbe995a.mp3"
+      "path": "voice/53c76b95b30c.ogg",
+      "url": "game/voice/53c76b95b30c.ogg"
     },
     {
-      "path": "voice/4e1afe9a0909.mp3",
-      "url": "game/voice/4e1afe9a0909.mp3"
+      "path": "voice/54658ca9b501.ogg",
+      "url": "game/voice/54658ca9b501.ogg"
     },
     {
-      "path": "voice/5226ee22ef67.mp3",
-      "url": "game/voice/5226ee22ef67.mp3"
+      "path": "voice/55ecefee11f2.ogg",
+      "url": "game/voice/55ecefee11f2.ogg"
     },
     {
-      "path": "voice/53c76b95b30c.mp3",
-      "url": "game/voice/53c76b95b30c.mp3"
+      "path": "voice/5be595e7a188.ogg",
+      "url": "game/voice/5be595e7a188.ogg"
     },
     {
-      "path": "voice/54658ca9b501.mp3",
-      "url": "game/voice/54658ca9b501.mp3"
+      "path": "voice/6209955f1052.ogg",
+      "url": "game/voice/6209955f1052.ogg"
     },
     {
-      "path": "voice/55ecefee11f2.mp3",
-      "url": "game/voice/55ecefee11f2.mp3"
+      "path": "voice/62f7d807ff19.ogg",
+      "url": "game/voice/62f7d807ff19.ogg"
     },
     {
-      "path": "voice/5be595e7a188.mp3",
-      "url": "game/voice/5be595e7a188.mp3"
+      "path": "voice/7815ae360dab.ogg",
+      "url": "game/voice/7815ae360dab.ogg"
     },
     {
-      "path": "voice/6209955f1052.mp3",
-      "url": "game/voice/6209955f1052.mp3"
+      "path": "voice/7a88984ec4a2.ogg",
+      "url": "game/voice/7a88984ec4a2.ogg"
     },
     {
-      "path": "voice/62f7d807ff19.mp3",
-      "url": "game/voice/62f7d807ff19.mp3"
+      "path": "voice/7d4ec90ec914.ogg",
+      "url": "game/voice/7d4ec90ec914.ogg"
     },
     {
-      "path": "voice/7815ae360dab.mp3",
-      "url": "game/voice/7815ae360dab.mp3"
+      "path": "voice/880b346bca8d.ogg",
+      "url": "game/voice/880b346bca8d.ogg"
     },
     {
-      "path": "voice/7a88984ec4a2.mp3",
-      "url": "game/voice/7a88984ec4a2.mp3"
+      "path": "voice/8cb4aeef59c8.ogg",
+      "url": "game/voice/8cb4aeef59c8.ogg"
     },
     {
-      "path": "voice/7d4ec90ec914.mp3",
-      "url": "game/voice/7d4ec90ec914.mp3"
+      "path": "voice/8eae0e57950a.ogg",
+      "url": "game/voice/8eae0e57950a.ogg"
     },
     {
-      "path": "voice/880b346bca8d.mp3",
-      "url": "game/voice/880b346bca8d.mp3"
+      "path": "voice/8f825c7d8af6.ogg",
+      "url": "game/voice/8f825c7d8af6.ogg"
     },
     {
-      "path": "voice/8908293965a5.mp3",
-      "url": "game/voice/8908293965a5.mp3"
+      "path": "voice/99786f3e4092.ogg",
+      "url": "game/voice/99786f3e4092.ogg"
     },
     {
-      "path": "voice/8cb4aeef59c8.mp3",
-      "url": "game/voice/8cb4aeef59c8.mp3"
+      "path": "voice/9dbba744c76e.ogg",
+      "url": "game/voice/9dbba744c76e.ogg"
     },
     {
-      "path": "voice/8eae0e57950a.mp3",
-      "url": "game/voice/8eae0e57950a.mp3"
+      "path": "voice/9ee59926963e.ogg",
+      "url": "game/voice/9ee59926963e.ogg"
     },
     {
-      "path": "voice/8f825c7d8af6.mp3",
-      "url": "game/voice/8f825c7d8af6.mp3"
+      "path": "voice/a28142e6b201.ogg",
+      "url": "game/voice/a28142e6b201.ogg"
     },
     {
-      "path": "voice/99786f3e4092.mp3",
-      "url": "game/voice/99786f3e4092.mp3"
+      "path": "voice/a51b448522ac.ogg",
+      "url": "game/voice/a51b448522ac.ogg"
     },
     {
-      "path": "voice/9b87b35ecc9c.mp3",
-      "url": "game/voice/9b87b35ecc9c.mp3"
+      "path": "voice/ab19e9145cdf.ogg",
+      "url": "game/voice/ab19e9145cdf.ogg"
     },
     {
-      "path": "voice/9dbba744c76e.mp3",
-      "url": "game/voice/9dbba744c76e.mp3"
+      "path": "voice/aff7c9e87004.ogg",
+      "url": "game/voice/aff7c9e87004.ogg"
     },
     {
-      "path": "voice/9ee59926963e.mp3",
-      "url": "game/voice/9ee59926963e.mp3"
+      "path": "voice/b04d317350fc.ogg",
+      "url": "game/voice/b04d317350fc.ogg"
     },
     {
-      "path": "voice/a28142e6b201.mp3",
-      "url": "game/voice/a28142e6b201.mp3"
+      "path": "voice/cefb3b133e9f.ogg",
+      "url": "game/voice/cefb3b133e9f.ogg"
     },
     {
-      "path": "voice/a46d90951d0b.mp3",
-      "url": "game/voice/a46d90951d0b.mp3"
+      "path": "voice/d0271d8459d3.ogg",
+      "url": "game/voice/d0271d8459d3.ogg"
     },
     {
-      "path": "voice/a51b448522ac.mp3",
-      "url": "game/voice/a51b448522ac.mp3"
+      "path": "voice/d0f65a47d579.ogg",
+      "url": "game/voice/d0f65a47d579.ogg"
     },
     {
-      "path": "voice/ab19e9145cdf.mp3",
-      "url": "game/voice/ab19e9145cdf.mp3"
+      "path": "voice/d375f9ffbe58.ogg",
+      "url": "game/voice/d375f9ffbe58.ogg"
     },
     {
-      "path": "voice/ab3edb25388b.mp3",
-      "url": "game/voice/ab3edb25388b.mp3"
+      "path": "voice/d41176c4a07d.ogg",
+      "url": "game/voice/d41176c4a07d.ogg"
     },
     {
-      "path": "voice/aff7c9e87004.mp3",
-      "url": "game/voice/aff7c9e87004.mp3"
+      "path": "voice/d7d13bfc2667.ogg",
+      "url": "game/voice/d7d13bfc2667.ogg"
     },
     {
-      "path": "voice/b04d317350fc.mp3",
-      "url": "game/voice/b04d317350fc.mp3"
+      "path": "voice/dc18a2e34159.ogg",
+      "url": "game/voice/dc18a2e34159.ogg"
     },
     {
-      "path": "voice/b8c4bff43d08.mp3",
-      "url": "game/voice/b8c4bff43d08.mp3"
+      "path": "voice/e32da5681488.ogg",
+      "url": "game/voice/e32da5681488.ogg"
     },
     {
-      "path": "voice/cefb3b133e9f.mp3",
-      "url": "game/voice/cefb3b133e9f.mp3"
+      "path": "voice/e5e2178d4993.ogg",
+      "url": "game/voice/e5e2178d4993.ogg"
     },
     {
-      "path": "voice/d0271d8459d3.mp3",
-      "url": "game/voice/d0271d8459d3.mp3"
+      "path": "voice/e65e1395cd44.ogg",
+      "url": "game/voice/e65e1395cd44.ogg"
     },
     {
-      "path": "voice/d0f65a47d579.mp3",
-      "url": "game/voice/d0f65a47d579.mp3"
+      "path": "voice/e675843e9c2b.ogg",
+      "url": "game/voice/e675843e9c2b.ogg"
     },
     {
-      "path": "voice/d375f9ffbe58.mp3",
-      "url": "game/voice/d375f9ffbe58.mp3"
+      "path": "voice/eaea896570f9.ogg",
+      "url": "game/voice/eaea896570f9.ogg"
     },
     {
-      "path": "voice/d41176c4a07d.mp3",
-      "url": "game/voice/d41176c4a07d.mp3"
+      "path": "voice/ec802b958622.ogg",
+      "url": "game/voice/ec802b958622.ogg"
     },
     {
-      "path": "voice/d7d13bfc2667.mp3",
-      "url": "game/voice/d7d13bfc2667.mp3"
+      "path": "voice/f3ede4d07d0f.ogg",
+      "url": "game/voice/f3ede4d07d0f.ogg"
     },
     {
-      "path": "voice/dc18a2e34159.mp3",
-      "url": "game/voice/dc18a2e34159.mp3"
+      "path": "voice/f8ebdc167a3f.ogg",
+      "url": "game/voice/f8ebdc167a3f.ogg"
     },
     {
-      "path": "voice/e32da5681488.mp3",
-      "url": "game/voice/e32da5681488.mp3"
-    },
-    {
-      "path": "voice/e5e2178d4993.mp3",
-      "url": "game/voice/e5e2178d4993.mp3"
-    },
-    {
-      "path": "voice/e65e1395cd44.mp3",
-      "url": "game/voice/e65e1395cd44.mp3"
-    },
-    {
-      "path": "voice/e675843e9c2b.mp3",
-      "url": "game/voice/e675843e9c2b.mp3"
-    },
-    {
-      "path": "voice/e744bac2a1c4.mp3",
-      "url": "game/voice/e744bac2a1c4.mp3"
-    },
-    {
-      "path": "voice/eaea896570f9.mp3",
-      "url": "game/voice/eaea896570f9.mp3"
-    },
-    {
-      "path": "voice/ec802b958622.mp3",
-      "url": "game/voice/ec802b958622.mp3"
-    },
-    {
-      "path": "voice/ee300f9410c6.mp3",
-      "url": "game/voice/ee300f9410c6.mp3"
-    },
-    {
-      "path": "voice/f3ede4d07d0f.mp3",
-      "url": "game/voice/f3ede4d07d0f.mp3"
-    },
-    {
-      "path": "voice/f8ebdc167a3f.mp3",
-      "url": "game/voice/f8ebdc167a3f.mp3"
-    },
-    {
-      "path": "voice/fcd6750c7aa0.mp3",
-      "url": "game/voice/fcd6750c7aa0.mp3"
-    },
-    {
-      "path": "voice/ff9a4c6e6ecd.mp3",
-      "url": "game/voice/ff9a4c6e6ecd.mp3"
+      "path": "voice/fcd6750c7aa0.ogg",
+      "url": "game/voice/fcd6750c7aa0.ogg"
     }
   ]
 }

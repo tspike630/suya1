@@ -41,7 +41,7 @@ async function writePage(dir, copyGame) {
     title: "黍琊：醒梦之间",
     gamedir: "/onsyuri/suya",
     savedir: "/onsyuri_save/suya",
-    args: ["--enc:utf8", "--width", "1280", "--height", "720", "--render-font-outline"],
+    args: ["--enc:utf8", "--width", "1280", "--height", "720"],
     lazyload: true,
     files,
   };

@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -21,9 +22,10 @@ const gameDir = join(root, "game");
 
 const SCREEN_W = 1280;
 const SCREEN_H = 720;
-const SPRITE_SCALE = 70;
-const SPRITE_X = 860;
-const SPRITE_Y = 470;
+// lsp2 x/y is the sprite center. Scale keeps a 900x1600 standee above the text box.
+const SPRITE_SCALE = 36;
+const SPRITE_X = SCREEN_W - 36 - Math.round((900 * SPRITE_SCALE) / 200);
+const SPRITE_Y = 620 - Math.round((1600 * SPRITE_SCALE) / 200);
 
 const NAME_COLOR = {
   鹿眠: "1d4e6f",
@@ -41,22 +43,57 @@ const ANOMALY_SCENES = ["calendar", "pork", "no301", "plaque", "faceless", "diar
 
 const lines = [];
 const once = new Map();
+const choiceLabels = new Set();
 let onceCursor = 40;
 let unlockSeq = 0;
+let selectSeq = 0;
 const slot = { chapter: 200, ending: 210, cg: 220, music: 240, fragment: 260, ng: 219 };
 
 function emit(text = "") {
   lines.push(text);
 }
 
-function choiceLabel(label) {
-  const width = 30;
-  const extra = Math.max(0, width - Array.from(label).length);
-  return `${label}${"　".repeat(extra)}`;
+function choiceFile(label) {
+  const id = createHash("sha1").update(label).digest("hex").slice(0, 10);
+  return `ui/btn/${id}.png`;
 }
 
 function emitSelect(pairs) {
-  emit(`select ${pairs.map(([label, target]) => `"${choiceLabel(label)}",${target}`).join(",")}`);
+  const wait = selectSeq;
+  selectSeq += 1;
+  const menu = pairs.length > 4;
+  const top = menu ? 20 : 460;
+  const step = menu ? 38 : 48;
+  const barH = 36;
+  const left = 36;
+  const right = 796;
+  emit("textclear");
+  pairs.forEach(([label], index) => {
+    choiceLabels.add(label);
+    emit(`;choice ${label}`);
+    emit(`lsp ${20 + index},"${choiceFile(label)}",${left},${top + index * step}`);
+  });
+  emit("print 1");
+  emit(`*wait_sel_${wait}`);
+  emit("click");
+  emit("getmousepos %10,%11");
+  emit(`if %10<${left} goto *wait_sel_${wait}`);
+  emit(`if %10>=${right} goto *wait_sel_${wait}`);
+  pairs.forEach(([, target], index) => {
+    const y0 = top + index * step;
+    const y1 = y0 + barH;
+    emit(`if %11<${y0} goto *wait_sel_${wait}_${index}`);
+    emit(`if %11>=${y1} goto *wait_sel_${wait}_${index}`);
+    pairs.forEach((_, sprite) => emit(`csp ${20 + sprite}`));
+    emit("print 1");
+    emit(`goto ${target}`);
+    emit(`*wait_sel_${wait}_${index}`);
+  });
+  emit(`goto *wait_sel_${wait}`);
+}
+
+function playableVoice(clip) {
+  return clip.replace(/\.mp3$/i, ".ogg");
 }
 
 function onceVar(key) {
@@ -160,10 +197,11 @@ function emitDialogue(line, node, spriteState) {
   emit("dwavestop 0");
   if (line.voice !== false && line.who) {
     const clip = voiceFile(line.who, line.face || "", line.text);
-    if (clip) emit(`dwave 0,"voice/${clip}"`);
+    if (clip) emit(`dwave 0,"voice/${playableVoice(clip)}"`);
   }
-  if (line.who && NAME_COLOR[line.who]) emit(`#${NAME_COLOR[line.who]}${line.who}#f7f3ea　${line.text}\\`);
-  else emit(`#f7f3ea${line.text}\\`);
+  if (line.who && NAME_COLOR[line.who]) emit(`#${NAME_COLOR[line.who]}${line.who}#f7f3ea　${line.text}@`);
+  else emit(`#f7f3ea${line.text}@`);
+  emit("textclear");
 }
 
 function emitScene(id) {
@@ -186,7 +224,8 @@ function emitScene(id) {
     emit("bg black,1");
     emit("csp 10");
     emit("print 1");
-    emit(`#f7f3ea${node.title}\\`);
+    emit(`#f7f3ea${node.title}@`);
+    emit("textclear");
     emit(`*chap_${id}_skip`);
   }
   if (node.cg) {
@@ -198,8 +237,10 @@ function emitScene(id) {
     emit(`bg "cg/${node.cg}.jpg",1`);
     emit("csp 10");
     emit("print 1");
-    emit(`#f7f3ea${cg.title}`);
-    emit(`#d7e6f0${cg.caption}\\`);
+    emit(`#f7f3ea${cg.title}@`);
+    emit("textclear");
+    emit(`#d7e6f0${cg.caption}@`);
+    emit("textclear");
     emit(`*cg_${id}_skip`);
   }
   if (node.fragment) {
@@ -232,13 +273,18 @@ function emitEnding(id) {
   const ending = ENDING_COPY[id];
   const index = ["A", "TRUE", "B", "C", "E"].indexOf(id);
   emit(`*card_${id}`);
-  emit(`#d7e6f0${ending.rank} · ${ending.code}`);
-  emit(`#f7f3ea${ending.title}`);
-  emit(`#d7e6f0${ending.tone}`);
+  emit(`#d7e6f0${ending.rank} · ${ending.code}@`);
+  emit("textclear");
+  emit(`#f7f3ea${ending.title}@`);
+  emit("textclear");
+  emit(`#d7e6f0${ending.tone}@`);
+  emit("textclear");
   emit(`#f7f3ea${ending.text}@`);
+  emit("textclear");
   if (id === "B" || id === "C") {
     emit(`if %0>=${WAKE_AT} goto *card_${id}_done`);
     emit("#d7e6f0回看第三章，找出你没有追问的那件事。@");
+    emit("textclear");
     emit(`*card_${id}_done`);
   }
   emit(`savegame2 ${slot.ending + index},"${id}"`);
@@ -281,6 +327,7 @@ function emitScript() {
   emit(";s1280,720");
   emit("*define");
   emit("globalon");
+  emit("transmode alpha");
   emit("savenumber 18");
   emit('rmenu "保存",save,"读取",load,"跳过",skip,"自动",automode,"回顾",lookback,"消去",windowerase,"标题",reset');
   emit('caption "黍琊：醒梦之间"');
@@ -293,11 +340,13 @@ function emitScript() {
   emit("print 1");
   emit("#f7f3ea《黍琊：醒梦之间》");
   emit("#d7e6f0点击画面，开始。右键可以读取。@");
+  emit("textclear");
   emit("gosub *bgm_0");
   emit(`savefileexist %199,${slot.ng}`);
   emit("if %199==1 goto *menu_ng");
   emit("goto *begin0");
   emit("*menu_ng");
+  emit("gosub *menuwin");
   emitSelect([
     ["从头开始", "*begin0"],
     ["二周目", "*begin1"],
@@ -310,18 +359,27 @@ function emitScript() {
   emit("goto *start");
 
   emit("*begin0");
+  emit("gosub *talkwin");
   emit("gosub *wipe");
   emit("mov %5,0");
   emit("goto *pro_rank");
   emit("*begin1");
+  emit("gosub *talkwin");
   emit("gosub *wipe");
   emit("mov %5,1");
   emit("goto *ng_gate");
 
   emit("*boot");
   emit("humanz 15");
-  emit("setwindow 48,600,32,2,36,40,2,8,6,0,1,#c0c0c0,24,580,1256,710");
-  emit("textspeed 28");
+  emit("gosub *talkwin");
+  emit("textspeed 8");
+  emit("return");
+  emit("*talkwin");
+  emit("setwindow 36,468,32,5,28,28,6,8,20,0,1,#14120f,16,440,1264,710");
+  emit("return");
+  emit("*menuwin");
+  emit("textclear");
+  emit("setwindow 72,40,22,16,30,32,2,4,0,0,1,#101418,36,20,1244,700");
   emit("return");
 
   emit("*wipe");
@@ -361,7 +419,7 @@ function emitScript() {
     unlock(`music_${track.id}`, slot.music + index, track.id);
     emit(`if %8==${index + 1} return`);
     emit("mp3stop");
-    emit(`mp3loop "bgm/${track.id}.mp3"`);
+    emit(`mp3loop "bgm/${track.id}.ogg"`);
     emit(`mov %8,${index + 1}`);
     emit("return");
   });
@@ -381,6 +439,7 @@ function emitScript() {
     emit(`*${id}`);
     emit(`gosub *scene_${id}`);
     emit(`*${id}_body`);
+    emit("textclear");
     if (id === "ch4_door") {
       emitDoor();
     } else {
@@ -515,6 +574,7 @@ function emitChoicesHotel() {
 
 function emitGallery() {
   emit("*gallery");
+  emit("gosub *menuwin");
   emit("bg black,1");
   emit("csp 10");
   emit("print 1");
@@ -535,6 +595,7 @@ function emitGallery() {
   });
 
   emit("*musicbox");
+  emit("gosub *menuwin");
   emit("bg black,1");
   emit("print 1");
   emit("#f7f3ea音乐@");
@@ -545,7 +606,7 @@ function emitGallery() {
     emit(`if %199==0 goto *musicmiss_${index}`);
     emit(`mp3stop`);
     emit(`mov %8,0`);
-    emit(`mp3loop "bgm/${track.id}.mp3"`);
+    emit(`mp3loop "bgm/${track.id}.ogg"`);
     emit(`#f7f3ea${track.title}@`);
     emit("goto *musicbox");
     emit(`*musicmiss_${index}`);
@@ -554,6 +615,7 @@ function emitGallery() {
   });
 
   emit("*glossary");
+  emit("gosub *menuwin");
   emit("bg black,1");
   emit("print 1");
   emit("#f7f3ea用语@");
@@ -571,6 +633,7 @@ function emitGallery() {
   });
 
   emit("*flow");
+  emit("gosub *menuwin");
   emit("bg black,1");
   emit("print 1");
   emit("#f7f3ea流程@");
@@ -606,6 +669,7 @@ function emitGallery() {
   emitSelect([["返回", "*start"]]);
 
   emit("*config");
+  emit("gosub *menuwin");
   emit("bg black,1");
   emit("print 1");
   emit("#f7f3ea设定@");
@@ -693,6 +757,7 @@ export async function writeOnsScript() {
     scenes: { real: REAL_SCENES, dream: DREAM_SCENES, anomaly: ANOMALY_SCENES },
   };
   await writeFile(join(gameDir, "manifest.json"), JSON.stringify(assetManifest, null, 2), "utf8");
+  await writeFile(join(gameDir, "choices.json"), JSON.stringify([...choiceLabels], null, 2), "utf8");
   return script;
 }
 

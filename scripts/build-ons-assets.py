@@ -1,11 +1,18 @@
-"""Turn the existing painted assets into files OnscripterYuri can load."""
+"""Turn the existing painted assets into files OnscripterYuri can load.
 
+Web builds cannot decode MP3 with Mix_LoadMUS, so music is Vorbis OGG.
+Backgrounds and event illustrations are baseline JPEG at the script size.
+Character standees stay PNG so transmode alpha can composite them.
+"""
+
+import hashlib
 import json
+import subprocess
 import wave
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
@@ -140,8 +147,11 @@ def compose_cg(plan, size, dest):
         x = size[0] - sprite.width - int(size[0] * 0.04)
         y = size[1] - sprite.height
         scene.paste(sprite, (x, y), sprite)
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    scene.save(dest, quality=86, optimize=True)
+    if size == (1280, 720):
+        save_screen_jpg(scene, dest)
+    else:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        scene.convert("RGB").save(dest, quality=86, optimize=True)
 
 
 def build_aunt():
@@ -158,6 +168,26 @@ def build_aunt():
     path = GAME / "sprites" / "aunt" / "stand.png"
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path, optimize=True)
+
+
+def build_choice_buttons():
+    labels = json.loads((GAME / "choices.json").read_text(encoding="utf-8"))
+    font = ImageFont.truetype(str(ROOT / "vendor" / "wqy-microhei.ttc"), 24)
+    out = GAME / "ui" / "btn"
+    out.mkdir(parents=True, exist_ok=True)
+    keep = set()
+    for label in labels:
+        digest = hashlib.sha1(label.encode("utf-8")).hexdigest()[:10]
+        keep.add(f"{digest}.png")
+        image = Image.new("RGBA", (760, 36), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(image)
+        draw.rounded_rectangle((0, 0, 759, 35), radius=8, fill=(18, 14, 12, 255), outline=(236, 228, 214, 255), width=1)
+        draw.text((16, 4), label, font=font, fill=(247, 243, 234, 255))
+        image.save(out / f"{digest}.png")
+    for stale in out.glob("*.png"):
+        if stale.name not in keep:
+            stale.unlink()
+    return len(labels)
 
 
 def build_window():
@@ -180,14 +210,30 @@ def convert_sprites():
     return count
 
 
+def save_screen_jpg(image, dest):
+    frame = image.convert("RGB")
+    if frame.size != (1280, 720):
+        frame = frame.resize((1280, 720), Image.Resampling.LANCZOS)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    frame.save(dest, quality=86, optimize=True)
+
+
 def convert_backgrounds():
     count = 0
     out = GAME / "bg"
     out.mkdir(parents=True, exist_ok=True)
     for src in sorted((SRC / "backgrounds").glob("*.webp")):
-        Image.open(src).convert("RGB").save(out / f"{src.stem}.jpg", quality=86, optimize=True)
+        save_screen_jpg(Image.open(src), out / f"{src.stem}.jpg")
         count += 1
     return count
+
+
+def to_ogg(src, dest):
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        ["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), "-c:a", "libvorbis", "-q:a", "4", str(dest)],
+        check=True,
+    )
 
 
 def main():
@@ -196,6 +242,7 @@ def main():
     backgrounds = convert_backgrounds()
     build_aunt()
     build_window()
+    buttons = build_choice_buttons()
     for name in manifest["se"]:
         build_se(name)
     for name in manifest["beds"]:
@@ -206,15 +253,15 @@ def main():
     music = GAME / "bgm"
     music.mkdir(parents=True, exist_ok=True)
     for track in manifest["music"]:
-        target = music / f"{track}.mp3"
-        if not target.exists():
-            target.write_bytes((SRC / "music" / f"{track}.mp3").read_bytes())
+        to_ogg(SRC / "music" / f"{track}.mp3", music / f"{track}.ogg")
+    for stale in music.glob("*.mp3"):
+        stale.unlink()
     voice = GAME / "voice"
     voice.mkdir(parents=True, exist_ok=True)
     for file_name in manifest["voices"]:
-        target = voice / file_name
-        if not target.exists():
-            target.write_bytes((SRC / "voice" / file_name).read_bytes())
+        to_ogg(SRC / "voice" / file_name, voice / f"{Path(file_name).stem}.ogg")
+    for stale in voice.glob("*.mp3"):
+        stale.unlink()
     font = GAME / "default.ttf"
     font.write_bytes((ROOT / "vendor" / "wqy-microhei.ttc").read_bytes())
     cursors = GAME
@@ -222,7 +269,7 @@ def main():
     for name in ("uoncur.bmp", "uoffcur.bmp", "doncur.bmp", "doffcur.bmp", "cursor0.bmp", "cursor1.bmp"):
         blank.save(cursors / name)
     print(
-        f"assets sprites={sprites} backgrounds={backgrounds} cgs={len(manifest['cgs'])} se={len(manifest['se'])} beds={len(manifest['beds'])}"
+        f"assets sprites={sprites} backgrounds={backgrounds} cgs={len(manifest['cgs'])} se={len(manifest['se'])} beds={len(manifest['beds'])} buttons={buttons}"
     )
 
 

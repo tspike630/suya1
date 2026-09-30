@@ -7,28 +7,16 @@
         <meta onsyuri_index="onsyuri_index.json">
         <title>Onscripter Yuri v0.7.7</title>
     </head>
-    <body style="margin: 0 auto; background-color:black;">
+    <body style="margin: 0; background-color:black; min-height: 100vh; display: flex; align-items: center; justify-content: center;">
         <canvas id="canvas" oncontextmenu="event.preventDefault()" style="margin: 0 auto; display: block;"></canvas> 
         <video id="video" onended="videoEnded()" style="margin: 0 auto; display: none;"></video>        
         <script type="text/javascript"> // browser universe function
             function scale_full(docobj, ratio=0) {
-                var w = window.innerWidth;
-                var h = window.innerHeight;
-                if(ratio>0) {
-                    if(w/h > ratio) {
-                        docobj.style.width  = h * ratio  + "px";
-                        docobj.style.height = h + "px";
-                    }
-                    else {
-                        docobj.style.width  = w  + "px";
-                        docobj.style.height = w / ratio + "px";
-                    }
-                }
-                else {
-                    docobj.style.width  = w + "px";
-                    docobj.style.height = h + "px";
-                }
-                return {w: docobj.style.width, h: docobj.style.height}
+                var gameW = (typeof g_screen_width === "number" && g_screen_width > 0) ? g_screen_width : (docobj.width || 1280);
+                var gameH = (typeof g_screen_height === "number" && g_screen_height > 0) ? g_screen_height : (docobj.height || 720);
+                docobj.style.width = gameW + "px";
+                docobj.style.height = gameH + "px";
+                return {w: docobj.style.width, h: docobj.style.height};
             }
             
             async function delay(ms) {
