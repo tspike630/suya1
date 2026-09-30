@@ -22,10 +22,12 @@ const gameDir = join(root, "game");
 
 const SCREEN_W = 1280;
 const SCREEN_H = 720;
-// lsp2 x/y is the sprite center. Scale keeps a 900x1600 standee above the text box.
-const SPRITE_SCALE = 36;
-const SPRITE_X = SCREEN_W - 36 - Math.round((900 * SPRITE_SCALE) / 200);
-const SPRITE_Y = 620 - Math.round((1600 * SPRITE_SCALE) / 200);
+// lsp2 x/y is the sprite center. Shoes sit near y=1576 of a 900x1600 canvas.
+// Scale 58 drops that floor line just past the bottom of the 720 frame, so the
+// person stands in the foreground on the right. Dialogue stays left of x=880.
+const SPRITE_SCALE = 58;
+const SPRITE_X = 1040;
+const SPRITE_Y = 410;
 
 const NAME_COLOR = {
   鹿眠: "1d4e6f",
@@ -202,7 +204,8 @@ function showSprite(who, face, pose, layer, spriteState) {
 // put a character up during opening narration, a title card, or a chapter card.
 function emitDialogue(line, node, spriteState) {
   if (line.se) emit(`dwave 2,"se/${line.se}.wav"`);
-  if (node.layer === "limen" || !line.who) {
+  // An event CG is the picture for this beat, so the live standee stays off it.
+  if (node.cg || node.layer === "limen" || !line.who) {
     clearSprite(spriteState);
   } else {
     const face = line.face || node.face || "";
@@ -247,7 +250,7 @@ function emitScene(id) {
     const index = CGS.findIndex((cg) => cg.id === node.cg);
     const cg = CGS[index];
     unlock(`cg_${node.cg}`, slot.cg + index, node.cg);
-    emit(`if %${onceVar(`cg_shown_${id}`)}==1 goto *cg_${id}_skip`);
+    emit(`if %${onceVar(`cg_shown_${id}`)}==1 goto *cg_${id}_keep`);
     emit(`mov %${onceVar(`cg_shown_${id}`)},1`);
     emit(`bg "cg/${node.cg}.jpg",1`);
     emit("csp2 10");
@@ -256,7 +259,12 @@ function emitScene(id) {
     emit("textclear");
     emit(`#d7e6f0${cg.caption}@`);
     emit("textclear");
-    emit(`*cg_${id}_skip`);
+    emit(`goto *cg_${id}_done`);
+    emit(`*cg_${id}_keep`);
+    emit(`bg "cg/${node.cg}.jpg",1`);
+    emit("csp2 10");
+    emit("print 1");
+    emit(`*cg_${id}_done`);
   }
   if (node.fragment) {
     const index = FRAGMENTS.findIndex((item) => item.id === node.fragment);
@@ -267,9 +275,11 @@ function emitScene(id) {
   const bed = SCENE_BEDS[node.bg] || "home";
   const bedIndex = [...new Set(Object.values(SCENE_BEDS))].indexOf(bed);
   emit(`gosub *bed_${bedIndex}`);
-  emit(`bg "bg/${node.bg}.jpg",1`);
-  emit("csp2 10");
-  emit("print 1");
+  if (!node.cg) {
+    emit(`bg "bg/${node.bg}.jpg",1`);
+    emit("csp2 10");
+    emit("print 1");
+  }
   emit("return");
 }
 
@@ -390,9 +400,9 @@ function emitScript() {
   emit("textspeed 8");
   emit("return");
   emit("*talkwin");
-  // Character gap must stay 0. A positive pitch draws past the column clip and cuts the sentence off.
-  // 38 full-width columns at 28px stay inside the box, and the longest sentence still wraps within 4 rows.
-  emit("setwindow 40,508,38,4,28,32,0,6,8,0,1,#14120f,16,488,1264,708");
+  // Pitch stays 0 so a line wraps instead of drawing past the clip.
+  // 30 columns end near x=880, left of the standee, and the longest sentence still fits in 4 rows.
+  emit("setwindow 40,508,30,4,28,32,0,6,8,0,1,#14120f,16,488,1264,708");
   emit("return");
   emit("*menuwin");
   emit("textclear");

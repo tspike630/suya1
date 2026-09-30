@@ -12,7 +12,7 @@ import wave
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
@@ -138,15 +138,55 @@ def fit_sprite(sprite, height):
     return sprite.resize(size, Image.Resampling.LANCZOS)
 
 
+def standee_on_scene(scene, sprite):
+    """One full-body figure, right of center, feet on the screen floor line.
+
+    Matches the live lsp2 staging: shoes near y=1576 of a 900x1600 canvas,
+    scale 58, center (1040, 410) on a 1280x720 frame. Feet fall just past the
+    bottom edge so the person stands in front of the room.
+    """
+    frame = scene.convert("RGBA")
+    width, height = frame.size
+    scale = 0.58 * (height / 720)
+    fitted = sprite.resize(
+        (max(1, int(sprite.width * scale)), max(1, int(sprite.height * scale))),
+        Image.Resampling.LANCZOS,
+    )
+    floor_y = height + int(round(140 * height / 720))
+    center_x = int(round(1040 * width / 1280))
+    center_y = int(round(floor_y - (1576 - sprite.height / 2) * scale))
+    left = center_x - fitted.width // 2
+    top = center_y - fitted.height // 2
+    shadow = Image.new("RGBA", frame.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(shadow)
+    rx = int(78 * width / 1280)
+    ry = int(12 * height / 720)
+    draw.ellipse((center_x - rx, floor_y - ry, center_x + rx, floor_y + ry), fill=(20, 16, 12, 110))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(radius=max(2, int(8 * height / 720))))
+    frame.alpha_composite(shadow)
+    crop = fitted
+    dest_x, dest_y = left, top
+    if dest_x < 0:
+        crop = crop.crop((-dest_x, 0, crop.width, crop.height))
+        dest_x = 0
+    if dest_y < 0:
+        crop = crop.crop((0, -dest_y, crop.width, crop.height))
+        dest_y = 0
+    if dest_x + crop.width > width:
+        crop = crop.crop((0, 0, width - dest_x, crop.height))
+    if dest_y + crop.height > height:
+        crop = crop.crop((0, 0, crop.width, height - dest_y))
+    if crop.width > 0 and crop.height > 0:
+        frame.alpha_composite(crop, (dest_x, dest_y))
+    return frame.convert("RGB")
+
+
 def compose_cg(plan, size, dest):
     scene = Image.open(SRC / "backgrounds" / f"{plan['scene']}.webp").convert("RGB")
     scene = scene.resize(size, Image.Resampling.LANCZOS)
     if plan.get("sprite"):
         sprite = Image.open(SRC / "sprites" / plan["sprite"]).convert("RGBA")
-        sprite = fit_sprite(sprite, int(size[1] * 0.96))
-        x = size[0] - sprite.width - int(size[0] * 0.04)
-        y = size[1] - sprite.height
-        scene.paste(sprite, (x, y), sprite)
+        scene = standee_on_scene(scene, sprite)
     if size == (1280, 720):
         save_screen_jpg(scene, dest)
     else:
