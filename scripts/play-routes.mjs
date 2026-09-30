@@ -1,8 +1,9 @@
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { advance, choose, newSession, optionsFor } from "../src/engine.js";
 import { NODES } from "../src/script.js";
-import { CGS, FRAGMENTS, SPRITE_SHEET, TRACKS, prepareSprite, sceneIds, showMole, spriteKey } from "../src/cast.js";
+import { CGS, FRAGMENTS, SPRITE_SHEET, TRACKS, sceneIds, showMole, spriteKey } from "../src/cast.js";
 import { EFFECT_IDS } from "../src/audio.js";
 
 function decide(goal, options) {
@@ -199,33 +200,33 @@ if (scriptText.includes("秦琊")) throw new Error("protagonist name drifted");
 const spriteRoot = path.resolve("src/sprites");
 const bodies = new Set();
 let spriteCount = 0;
+
+function readSprite(rel) {
+  const file = path.join(spriteRoot, rel);
+  if (!fs.existsSync(file)) throw new Error(`missing sprite ${rel}`);
+  const buf = fs.readFileSync(file);
+  if (!rel.endsWith(".webp") || buf.length < 8000) throw new Error(`sprite file ${rel}`);
+  const hash = crypto.createHash("sha256").update(buf).digest("hex");
+  if (bodies.has(hash)) throw new Error(`duplicate sprite ${rel}`);
+  bodies.add(hash);
+  spriteCount += 1;
+}
+
 for (const [who, sheet] of Object.entries(SPRITE_SHEET)) {
-  const signatures = new Set();
-  for (const pose of sheet.poses) {
-    for (const face of sheet.faces) {
-      const rel = spriteKey(who, face, pose);
-      const file = path.join(spriteRoot, rel);
-      if (!fs.existsSync(file)) throw new Error(`missing sprite ${rel}`);
-      const text = fs.readFileSync(file, "utf8");
-      if (text.includes("<text")) throw new Error(`baked text in ${rel}`);
-      if (bodies.has(text)) throw new Error(`duplicate sprite ${rel}`);
-      bodies.add(text);
-      if (!text.includes(`data-asset="${rel.replace(".svg", "")}"`)) throw new Error(`asset id ${rel}`);
-      if (pose === sheet.defaultPose) {
-        const features = text.slice(text.indexOf('id="features"'), text.indexOf("</svg>"));
-        if (signatures.has(features)) throw new Error(`same expression ${who} ${face}`);
-        signatures.add(features);
-      }
-      spriteCount += 1;
+  if (who === "沈知夏") {
+    for (const set of ["real", "dream"]) {
+      for (const face of sheet.faces) readSprite(spriteKey(who, face, "stand", set));
     }
+    continue;
+  }
+  for (const pose of sheet.poses) {
+    for (const face of sheet.faces) readSprite(spriteKey(who, face, pose));
   }
 }
 if (spriteCount !== 47) throw new Error(`sprite count ${spriteCount}`);
-const shen = fs.readFileSync(path.join(spriteRoot, "shen/stand-quiet.svg"), "utf8");
-if (!shen.includes('id="mole"')) throw new Error("沈知夏 is missing the mole");
-if (prepareSprite(shen, "沈知夏", "dream", "live").includes("mole")) throw new Error("dream sprite kept the mole");
-if (!prepareSprite(shen, "沈知夏", "real", "live").includes("mole")) throw new Error("real sprite lost the mole");
-if (spriteKey("鹿眠", "missing", "missing") !== "lumian/stand-calm.svg") throw new Error("sprite fallback");
-if (spriteKey("郁明", "blank", "sit") !== "yu/sit-blank.svg") throw new Error("sit key");
+if (spriteKey("沈知夏", "quiet", "turn", "dream") !== "shen/dream-quiet.webp") throw new Error("dream key");
+if (spriteKey("沈知夏", "quiet", "stand", "real") !== "shen/real-quiet.webp") throw new Error("real key");
+if (spriteKey("鹿眠", "missing", "missing") !== "lumian/stand-calm.webp") throw new Error("sprite fallback");
+if (spriteKey("郁明", "blank", "sit") !== "yu/sit-blank.webp") throw new Error("sit key");
 
 console.log("routes ok: A, TRUE, B, C, E");

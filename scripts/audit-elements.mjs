@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readdirSync } from "node:fs";
 import { EFFECTS } from "../src/audio.js";
 import { CAST, CGS, FRAGMENTS, TRACKS, sceneIds } from "../src/cast.js";
 import { AUTO_COUNT, QUICK_COUNT, SLOT_COUNT } from "../src/game.js";
@@ -64,4 +65,24 @@ for (const name of CAST_SIX) {
   assert.ok(CAST[name], `missing cast ${name}`);
 }
 
-console.log("elements ok: cg 12, scenes 24, tracks 16, fragments 16, effects 30, slots 90/10/10, cast 6");
+const spriteCounts = {
+  lumian: 16,
+  shen: 12,
+  yu: 10,
+  pei: 4,
+  mother: 3,
+  suya: 2,
+};
+let spriteTotal = 0;
+for (const [folder, count] of Object.entries(spriteCounts)) {
+  const files = readdirSync(new URL(`../src/sprites/${folder}`, import.meta.url)).filter((name) =>
+    name.endsWith(".webp"),
+  );
+  assert.equal(files.length, count, `${folder} sprites`);
+  spriteTotal += files.length;
+}
+assert.equal(spriteTotal, 47);
+
+console.log(
+  "elements ok: cg 12, scenes 24, tracks 16, fragments 16, effects 30, slots 90/10/10, cast 6, sprites 47",
+);
