@@ -22,10 +22,12 @@ const gameDir = join(root, "game");
 
 const SCREEN_W = 1280;
 const SCREEN_H = 720;
-// lsp2 x/y is the sprite center. Scale keeps a 900x1600 standee above the text box.
-const SPRITE_SCALE = 36;
-const SPRITE_X = SCREEN_W - 36 - Math.round((900 * SPRITE_SCALE) / 200);
-const SPRITE_Y = 620 - Math.round((1600 * SPRITE_SCALE) / 200);
+// lsp2 x/y is the sprite center. Shoes sit near y=1576 of a 900x1600 canvas.
+// Scale 58 drops that floor line just past the bottom of the 720 frame, so the
+// person stands in the foreground on the right. Dialogue stays left of x=880.
+const SPRITE_SCALE = 58;
+const SPRITE_X = 1040;
+const SPRITE_Y = 410;
 
 const NAME_COLOR = {
   鹿眠: "1d4e6f",
@@ -202,7 +204,8 @@ function showSprite(who, face, pose, layer, spriteState) {
 // put a character up during opening narration, a title card, or a chapter card.
 function emitDialogue(line, node, spriteState) {
   if (line.se) emit(`dwave 2,"se/${line.se}.wav"`);
-  if (node.layer === "limen" || !line.who) {
+  // An event CG is the picture for this beat, so the live standee stays off it.
+  if (node.cg || node.layer === "limen" || !line.who) {
     clearSprite(spriteState);
   } else {
     const face = line.face || node.face || "";
@@ -272,9 +275,11 @@ function emitScene(id) {
   const bed = SCENE_BEDS[node.bg] || "home";
   const bedIndex = [...new Set(Object.values(SCENE_BEDS))].indexOf(bed);
   emit(`gosub *bed_${bedIndex}`);
-  emit(`bg "bg/${node.bg}.jpg",1`);
-  emit("csp2 10");
-  emit("print 1");
+  if (!node.cg) {
+    emit(`bg "bg/${node.bg}.jpg",1`);
+    emit("csp2 10");
+    emit("print 1");
+  }
   emit("return");
 }
 
