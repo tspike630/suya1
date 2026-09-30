@@ -187,6 +187,7 @@ export function mountGame(root) {
         <button type="button" data-open="flow">流程</button>
         <button type="button" data-open="gallery">回想</button>
         <button type="button" data-open="config">设置</button>
+        <button type="button" data-act="hide">隐藏</button>
       </nav>
       <div class="title-screen" id="title-screen"></div>
       <div class="overlay" id="overlay" hidden></div>
@@ -364,7 +365,14 @@ export function mountGame(root) {
     vn.dataset.phase = session?.phase || screen;
     if (session?.meter) vn.dataset.meter = "1";
     else delete vn.dataset.meter;
-    bg.innerHTML = sceneMarkup(node?.bg || "dorm");
+    const sceneId = node?.bg || "dorm";
+    if (bg.dataset.scene !== sceneId) {
+      bg.dataset.scene = sceneId;
+      bg.classList.remove("is-fading");
+      void bg.offsetWidth;
+      bg.classList.add("is-fading");
+    }
+    bg.innerHTML = sceneMarkup(sceneId);
     const cover = !!(session?.chapterCard || session?.cgMoment);
     place.hidden = screen !== "play" || cover;
     place.textContent = SCENE_NAMES[node?.bg] || "";
@@ -839,6 +847,11 @@ export function mountGame(root) {
       if (skipOn) step();
       return;
     }
+    if (act?.dataset.act === "hide") {
+      hideBox = !hideBox;
+      paintLine();
+      return;
+    }
     if (tab) {
       galleryTab = tab.dataset.tab;
       openScreen("gallery");
@@ -952,6 +965,12 @@ export function mountGame(root) {
   });
   window.addEventListener("keyup", (event) => {
     if (event.key === "Control") fast = false;
+  });
+  vn.addEventListener("contextmenu", (event) => {
+    if (screen !== "play" || !overlay.hidden) return;
+    event.preventDefault();
+    hideBox = !hideBox;
+    paintLine();
   });
 
   function pollPad() {
