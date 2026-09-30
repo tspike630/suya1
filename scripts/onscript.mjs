@@ -375,7 +375,9 @@ function emitScript() {
   emit("textspeed 8");
   emit("return");
   emit("*talkwin");
-  emit("setwindow 36,468,32,5,28,28,6,8,20,0,1,#14120f,16,440,1264,710");
+  // Character gap must stay 0. A positive pitch draws past the column clip and cuts the sentence off.
+  // 38 full-width columns at 28px stay inside the box, and the longest sentence still wraps within 4 rows.
+  emit("setwindow 40,508,38,4,28,32,0,6,8,0,1,#14120f,16,488,1264,708");
   emit("return");
   emit("*menuwin");
   emit("textclear");

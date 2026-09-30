@@ -91,7 +91,7 @@ gosub *talkwin
 textspeed 8
 return
 *talkwin
-setwindow 36,468,32,5,28,28,6,8,20,0,1,#14120f,16,440,1264,710
+setwindow 40,508,38,4,28,32,0,6,8,0,1,#14120f,16,488,1264,708
 return
 *menuwin
 textclear
