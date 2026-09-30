@@ -1,17 +1,20 @@
-import { prepareSprite, spriteKey, useSpriteProvider } from "./cast.js";
+import { spriteKey, useSpriteProvider } from "./cast.js";
 
-const rawSprites = import.meta.glob("./sprites/**/*.svg", {
+const spriteUrls = import.meta.glob("./sprites/**/*.webp", {
   eager: true,
-  query: "?raw",
+  query: "?url",
   import: "default",
 });
 
 export function installSprites() {
-  useSpriteProvider((who, face, pose, layer, slot) => {
-    const key = spriteKey(who, face, pose);
-    if (!key) return "";
-    const svg = rawSprites[`./sprites/${key}`];
-    if (!svg) return "";
-    return prepareSprite(svg, who, layer, slot);
+  useSpriteProvider((who, face, pose, layer) => {
+    const key = spriteKey(who, face, pose, layer);
+    const url = key ? spriteUrls[`./sprites/${key}`] : "";
+    if (!url) return "";
+    const ghost =
+      who === "裴望" && face === "overlap"
+        ? `<img class="tachie ghost" src="${url}" alt="" />`
+        : "";
+    return `<img class="tachie" src="${url}" alt="" />${ghost}`;
   });
 }

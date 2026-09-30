@@ -141,7 +141,7 @@ function remember(session) {
     nodeId: session.nodeId,
     line: session.line,
   });
-  if (session.log.length > 240) session.log.shift();
+  if (session.log.length > 2000) session.log.shift();
 }
 
 export function advance(session) {

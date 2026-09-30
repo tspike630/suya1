@@ -1,86 +1,121 @@
-const PATTERNS = {
-  june: { scale: [0, 2, 4, 7, 9], tempo: 0.62, base: 220, wave: "triangle" },
-  bed: { scale: [0, 1, 5, 7], tempo: 0.9, base: 110, wave: "sine" },
-  exam: { scale: [0, 2, 3, 7, 8], tempo: 0.48, base: 196, wave: "square" },
-  rain: { scale: [0, 3, 5, 10], tempo: 0.7, base: 174, wave: "sine" },
-  white: { scale: [0, 7, 12], tempo: 1.1, base: 392, wave: "sine" },
-  cradle: { scale: [0, 3, 5, 7, 10], tempo: 0.58, base: 196, wave: "triangle" },
-  qinhua: { scale: [0, 4, 7, 11], tempo: 0.52, base: 247, wave: "triangle" },
-  lamp: { scale: [0, 2, 5, 9], tempo: 0.74, base: 165, wave: "sine" },
-  pork: { scale: [0, 1, 6, 7], tempo: 0.46, base: 233, wave: "square" },
-  crack: { scale: [0, 1, 6, 8], tempo: 0.38, base: 185, wave: "sawtooth" },
-  lab: { scale: [0, 2, 6, 9, 12], tempo: 0.5, base: 155, wave: "square" },
-  applause: { scale: [0, 5, 7, 12], tempo: 0.42, base: 262, wave: "triangle" },
-  home: { scale: [0, 5, 7, 12, 16], tempo: 0.8, base: 294, wave: "sine" },
-  heart: { scale: [0, 0, 3, 7], tempo: 0.34, base: 98, wave: "sine" },
-  awake: { scale: [0, 2, 4, 7, 9, 12], tempo: 0.56, base: 262, wave: "triangle" },
-  together: { scale: [0, 4, 7, 12, 16], tempo: 0.66, base: 330, wave: "sine" },
-};
+let musicProvider = () => ({});
+
+export function useMusicProvider(clips) {
+  musicProvider = () => clips;
+}
 
 export const EFFECTS = {
-  creak: ({ blip, noiseHit }) => {
-    blip(180, 0.22, "sawtooth", 0.05);
-    noiseHit(0.18, 0.08, 700);
+  creak: ({ noiseHit }) => noiseHit(0.14, 0.04, 320),
+  snore: ({ noiseHit }) => {
+    noiseHit(0.36, 0.05, 180);
+    setTimeout(() => noiseHit(0.5, 0.04, 120), 420);
   },
-  snore: ({ blip }) => blip(90, 0.4, "sine", 0.06),
-  ac: ({ noiseHit }) => noiseHit(0.35, 0.05, 400),
-  rain: ({ noiseHit }) => noiseHit(0.5, 0.07, 1200),
-  heart: ({ blip }) => {
-    blip(70, 0.12, "sine", 0.1);
-    setTimeout(() => blip(60, 0.16, "sine", 0.08), 160);
+  ac: ({ noiseHit }) => noiseHit(0.45, 0.02, 220),
+  rain: ({ noiseHit }) => noiseHit(0.7, 0.035, 900),
+  heart: ({ noiseHit }) => {
+    noiseHit(0.08, 0.06, 90);
+    setTimeout(() => noiseHit(0.12, 0.04, 70), 150);
   },
-  alarm: ({ blip }) => {
-    blip(880, 0.12, "square", 0.04);
-    setTimeout(() => blip(880, 0.12, "square", 0.04), 180);
+  alarm: ({ noiseHit }) => {
+    noiseHit(0.08, 0.03, 1400);
+    setTimeout(() => noiseHit(0.1, 0.025, 1600), 240);
   },
-  card: ({ blip, noiseHit }) => {
-    noiseHit(0.08, 0.1, 1800);
-    blip(1400, 0.06, "square", 0.03);
-  },
-  chime: ({ blip }) => blip(1320, 0.4, "sine", 0.04),
-  page: ({ noiseHit }) => noiseHit(0.1, 0.06, 2200),
-  pen: ({ noiseHit }) => noiseHit(0.16, 0.04, 3000),
+  card: ({ noiseHit }) => noiseHit(0.05, 0.03, 1200),
+  chime: ({ noiseHit }) => noiseHit(0.2, 0.02, 1800),
+  page: ({ noiseHit }) => noiseHit(0.08, 0.03, 2000),
+  pen: ({ noiseHit }) => noiseHit(0.1, 0.02, 2600),
   drop: ({ drop }) => drop(),
-  phone: ({ blip }) => blip(740, 0.18, "sine", 0.04),
-  clock: ({ blip }) => blip(980, 0.05, "square", 0.03),
-  door: ({ noiseHit }) => noiseHit(0.2, 0.08, 280),
-  elevator: ({ blip }) => blip(420, 0.3, "triangle", 0.03),
-  applause: ({ noiseHit }) => noiseHit(0.45, 0.07, 1600),
-  wind: ({ noiseHit }) => noiseHit(0.5, 0.05, 600),
-  water: ({ noiseHit }) => noiseHit(0.25, 0.05, 900),
-  paper: ({ noiseHit }) => noiseHit(0.12, 0.05, 2500),
-  click: ({ blip }) => blip(240, 0.04, "square", 0.04),
-  step: ({ noiseHit }) => noiseHit(0.08, 0.06, 180),
-  bell: ({ blip }) => blip(660, 0.35, "sine", 0.04),
-  crowd: ({ noiseHit }) => noiseHit(0.4, 0.05, 800),
-  cup: ({ blip }) => blip(520, 0.08, "triangle", 0.04),
-  key: ({ noiseHit }) => noiseHit(0.1, 0.07, 1400),
-  notice: ({ blip }) => blip(1170, 0.08, "sine", 0.03),
-  chair: ({ noiseHit }) => noiseHit(0.12, 0.06, 240),
-  breath: ({ noiseHit }) => noiseHit(0.3, 0.03, 500),
-  knock: ({ noiseHit }) => noiseHit(0.06, 0.08, 320),
-  static: ({ noiseHit }) => noiseHit(0.2, 0.04, 2000),
+  phone: ({ noiseHit }) => {
+    noiseHit(0.12, 0.025, 800);
+    setTimeout(() => noiseHit(0.12, 0.02, 800), 280);
+  },
+  clock: ({ noiseHit }) => noiseHit(0.03, 0.025, 1400),
+  door: ({ noiseHit }) => noiseHit(0.16, 0.04, 240),
+  elevator: ({ noiseHit }) => noiseHit(0.28, 0.02, 300),
+  applause: ({ noiseHit }) => noiseHit(0.3, 0.03, 1000),
+  wind: ({ noiseHit }) => noiseHit(0.55, 0.03, 360),
+  water: ({ noiseHit }) => noiseHit(0.22, 0.025, 700),
+  paper: ({ noiseHit }) => noiseHit(0.08, 0.025, 2200),
+  click: ({ noiseHit }) => noiseHit(0.03, 0.02, 800),
+  step: ({ noiseHit }) => noiseHit(0.06, 0.03, 160),
+  bell: ({ noiseHit }) => noiseHit(0.16, 0.02, 900),
+  crowd: ({ noiseHit }) => noiseHit(0.28, 0.02, 600),
+  cup: ({ noiseHit }) => noiseHit(0.05, 0.025, 1400),
+  key: ({ noiseHit }) => noiseHit(0.06, 0.03, 1100),
+  notice: ({ noiseHit }) => noiseHit(0.06, 0.02, 1600),
+  chair: ({ noiseHit }) => noiseHit(0.08, 0.03, 220),
+  breath: ({ noiseHit }) => noiseHit(0.24, 0.015, 400),
+  knock: ({ noiseHit }) => noiseHit(0.05, 0.04, 280),
+  static: ({ noiseHit }) => noiseHit(0.12, 0.02, 1800),
 };
 
 export const EFFECT_IDS = Object.keys(EFFECTS);
 
-const VOICE = {
-  鹿眠: 520,
-  沈知夏: 440,
-  郁明: 330,
-  裴望: 180,
-  黍母: 240,
-  阿姨: 300,
+export const SCENE_BEDS = {
+  classroom: "class",
+  dorm: "dorm",
+  exam: "exam",
+  home: "home",
+  corridor: "corridor",
+  roof: "wind",
+  rain: "rain",
+  schoolgate: "outdoor",
+  repeat: "class",
+  examout: "outdoor",
+  lobby: "hotel",
+  guest: "hotel",
+  gate: "outdoor",
+  library: "library",
+  lab: "lab",
+  cafeteria: "canteen",
+  award: "award",
+  white: "void",
+  calendar: "uneasy",
+  pork: "canteen",
+  no301: "uneasy",
+  plaque: "outdoor",
+  faceless: "award",
+  diary: "home",
 };
+
+const MOOD = {
+  calm: { gain: 1, rate: 1, cutoff: 1 },
+  hurt: { gain: 0.7, rate: 1.28, cutoff: 0.68 },
+  sting: { gain: 0.66, rate: 1.34, cutoff: 0.6 },
+  distant: { gain: 0.52, rate: 1.4, cutoff: 0.52 },
+  blank: { gain: 0.48, rate: 1.45, cutoff: 0.48 },
+  whisper: { gain: 0.58, rate: 1.18, cutoff: 0.74 },
+  serious: { gain: 0.8, rate: 1.12, cutoff: 0.8 },
+  stern: { gain: 0.78, rate: 1.08, cutoff: 0.76 },
+  smile: { gain: 1.06, rate: 0.9, cutoff: 1.16 },
+  soft: { gain: 0.94, rate: 1, cutoff: 1.05 },
+  warm: { gain: 1, rate: 0.94, cutoff: 1.1 },
+  shy: { gain: 0.84, rate: 1.1, cutoff: 0.88 },
+  quiet: { gain: 0.8, rate: 1.14, cutoff: 0.84 },
+  knowing: { gain: 0.9, rate: 1, cutoff: 0.94 },
+  pause: { gain: 0.58, rate: 1.22, cutoff: 0.66 },
+  bright: { gain: 1.06, rate: 0.88, cutoff: 1.18 },
+  rival: { gain: 0.96, rate: 0.94, cutoff: 1 },
+  gentle: { gain: 0.92, rate: 1.04, cutoff: 1.02 },
+  expect: { gain: 0.9, rate: 1.06, cutoff: 0.96 },
+  look: { gain: 0.88, rate: 1.04, cutoff: 0.98 },
+  professor: { gain: 0.76, rate: 1.1, cutoff: 0.78 },
+  overlap: { gain: 0.6, rate: 1.3, cutoff: 0.58 },
+};
+
+const HEART_MOODS = new Set(["sting", "hurt", "pause"]);
+
+let voiceProvider = () => ({});
+
+export function useVoiceProvider(clips) {
+  voiceProvider = () => clips;
+}
 
 export function createScore() {
   let ctx = null;
-  let musicGain = null;
   let seGain = null;
-  let acGain = null;
-  let timer = null;
+  let musicAudio = null;
   let current = null;
-  let step = 0;
   let wanted = null;
   let volumes = { bgm: 0.6, se: 0.45 };
   let layer = "real";
@@ -93,85 +128,36 @@ export function createScore() {
     const master = ctx.createGain();
     master.gain.value = 0.9;
     master.connect(ctx.destination);
-    musicGain = ctx.createGain();
-    musicGain.gain.value = volumes.bgm;
-    musicGain.connect(master);
     seGain = ctx.createGain();
     seGain.gain.value = 1;
     seGain.connect(master);
-    acGain = ctx.createGain();
-    acGain.gain.value = 0;
-    const filter = ctx.createBiquadFilter();
-    filter.type = "lowpass";
-    filter.frequency.value = 280;
-    const noise = ctx.createBufferSource();
-    const length = ctx.sampleRate * 2;
-    const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < length; i += 1) data[i] = Math.random() * 2 - 1;
-    noise.buffer = buffer;
-    noise.loop = true;
-    noise.connect(filter);
-    filter.connect(acGain);
-    acGain.connect(master);
-    noise.start();
     return true;
   }
 
-  function setAc() {
-    if (!acGain || !ctx) return;
-    const target = layer === "dream" ? 0.02 * volumes.se : 0;
-    acGain.gain.setTargetAtTime(Math.max(0.0001, target), ctx.currentTime, 0.15);
-    if (target === 0) acGain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.2);
+  function setAc() {}
+
+  function musicVolume() {
+    return Math.min(1, Math.max(0, volumes.bgm * (ducked ? 0.32 : 0.72)));
   }
 
-  function musicNote(freq, pattern) {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = pattern.wave;
-    osc.frequency.value = freq;
-    const peak = 0.07 * volumes.bgm;
-    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), ctx.currentTime + 0.03);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + pattern.tempo * 0.9);
-    osc.connect(gain);
-    gain.connect(musicGain);
-    osc.start();
-    osc.stop(ctx.currentTime + pattern.tempo);
-  }
-
-  function loop() {
-    const pattern = PATTERNS[current];
-    if (!pattern || !ctx) return;
-    const degree = pattern.scale[step % pattern.scale.length];
-    musicNote(pattern.base * 2 ** (degree / 12), pattern);
-    step += 1;
+  function stopMusic() {
+    if (musicAudio) {
+      musicAudio.pause();
+      musicAudio = null;
+    }
   }
 
   function start(id) {
-    if (!PATTERNS[id]) return;
-    if (current === id && timer) return;
-    if (timer) clearInterval(timer);
+    const url = musicProvider()[id];
+    if (!url) return;
+    if (current === id && musicAudio && !musicAudio.paused) return;
+    stopMusic();
     current = id;
-    step = 0;
-    if (!ctx) return;
-    loop();
-    timer = setInterval(loop, PATTERNS[id].tempo * 1000);
-  }
-
-  function blip(freq, dur, type, peak) {
-    if (!ctx || volumes.se <= 0) return;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, ctx.currentTime);
-    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak * volumes.se), ctx.currentTime + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
-    osc.connect(gain);
-    gain.connect(seGain);
-    osc.start();
-    osc.stop(ctx.currentTime + dur + 0.02);
+    const audio = new Audio(url);
+    audio.loop = true;
+    audio.volume = musicVolume();
+    musicAudio = audio;
+    audio.play().catch(() => {});
   }
 
   function noiseHit(dur, peak, freq) {
@@ -194,6 +180,21 @@ export function createScore() {
     source.start();
   }
 
+  let voiceAudio = null;
+  let mood = "calm";
+  let lastMood = "";
+  let wantedScene = "";
+  let bedName = "";
+  let bedToken = 0;
+  let bedTimers = [];
+  let bedNodes = [];
+  let ambientGain = null;
+  let ducked = false;
+
+  function moodSpec() {
+    return MOOD[mood] || MOOD.calm;
+  }
+
   function effect(name) {
     if (!ensure()) return;
     if (ctx.state === "suspended") return;
@@ -201,13 +202,164 @@ export function createScore() {
     if (play) play({ blip, noiseHit, drop });
   }
 
+  function ensureAmbient() {
+    if (ambientGain || !ctx) return;
+    ambientGain = ctx.createGain();
+    ambientGain.gain.value = 0.0001;
+    ambientGain.connect(seGain);
+  }
+
+  function clearBed() {
+    bedToken += 1;
+    for (const timer of bedTimers) clearTimeout(timer);
+    bedTimers = [];
+    for (const node of bedNodes) {
+      try {
+        node.stop?.();
+      } catch {
+        /* already stopped */
+      }
+      try {
+        node.disconnect?.();
+      } catch {
+        /* already disconnected */
+      }
+    }
+    bedNodes = [];
+  }
+
+  function later(fn, ms, token) {
+    const timer = setTimeout(() => {
+      bedTimers = bedTimers.filter((item) => item !== timer);
+      if (token !== bedToken) return;
+      fn();
+    }, ms);
+    bedTimers.push(timer);
+  }
+
+  function loopNoise(freq, peak, type = "lowpass") {
+    if (!ctx) return null;
+    const source = ctx.createBufferSource();
+    const length = ctx.sampleRate * 2;
+    const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < length; i += 1) data[i] = Math.random() * 2 - 1;
+    source.buffer = buffer;
+    source.loop = true;
+    const filter = ctx.createBiquadFilter();
+    filter.type = type;
+    filter.frequency.value = freq;
+    filter.Q.value = type === "bandpass" ? 0.7 : 0.6;
+    const gain = ctx.createGain();
+    gain.gain.value = peak;
+    source.connect(filter);
+    filter.connect(gain);
+    gain.connect(ambientGain);
+    source.start();
+    source.baseFreq = freq;
+    source.filter = filter;
+    bedNodes.push(source);
+    return source;
+  }
+
+  function applyMood() {
+    if (!ambientGain || !ctx) return;
+    const spec = moodSpec();
+    const dream = layer === "dream" ? 0.7 : layer === "limen" ? 0.35 : 1;
+    const duck = ducked ? 0.45 : 1;
+    const target = 0.14 * volumes.se * spec.gain * dream * duck;
+    ambientGain.gain.setTargetAtTime(Math.max(0.0001, target), ctx.currentTime, 0.25);
+    for (const node of bedNodes) {
+      if (!node.filter) continue;
+      const cutoff = (node.baseFreq || 800) * spec.cutoff * (layer === "dream" ? 0.82 : 1);
+      node.filter.frequency.setTargetAtTime(Math.max(80, cutoff), ctx.currentTime, 0.25);
+    }
+  }
+
+  function snoreOnce() {
+    noiseHit(0.32, 0.045, 180);
+    later(() => noiseHit(0.46, 0.035, 120), 460, bedToken);
+  }
+
+  function schedule(fn, gap) {
+    const token = bedToken;
+    later(() => {
+      fn();
+      schedule(fn, gap);
+    }, gap * moodSpec().rate * (layer === "dream" ? 1.18 : 1), token);
+  }
+
+  function startBed(name) {
+    if (!ctx || ctx.state === "suspended") return;
+    if (bedName === name && bedNodes.length) {
+      applyMood();
+      return;
+    }
+    clearBed();
+    bedName = name;
+    ensureAmbient();
+    if (name === "dorm") {
+      loopNoise(180, 0.12, "lowpass");
+      schedule(snoreOnce, 4200);
+    } else if (name === "exam") {
+      loopNoise(420, 0.04, "lowpass");
+      schedule(() => effect("clock"), 4000);
+    } else if (name === "home") {
+      loopNoise(260, 0.05, "lowpass");
+    } else if (name === "class") {
+      loopNoise(640, 0.05, "bandpass");
+      schedule(() => effect("paper"), 5200);
+    } else if (name === "corridor") {
+      loopNoise(360, 0.04, "lowpass");
+      schedule(() => effect("step"), 3600);
+    } else if (name === "wind") {
+      loopNoise(280, 0.14, "lowpass");
+    } else if (name === "rain") {
+      loopNoise(1400, 0.12, "highpass");
+      loopNoise(520, 0.08, "bandpass");
+    } else if (name === "outdoor") {
+      loopNoise(420, 0.07, "lowpass");
+    } else if (name === "hotel") {
+      loopNoise(200, 0.08, "lowpass");
+    } else if (name === "library") {
+      loopNoise(320, 0.04, "lowpass");
+      schedule(() => effect("page"), 6400);
+    } else if (name === "lab") {
+      loopNoise(700, 0.04, "bandpass");
+    } else if (name === "canteen") {
+      loopNoise(720, 0.07, "bandpass");
+      schedule(() => effect("cup"), 4800);
+    } else if (name === "award") {
+      loopNoise(1100, 0.05, "bandpass");
+    } else if (name === "uneasy") {
+      loopNoise(200, 0.06, "lowpass");
+    }
+    applyMood();
+  }
+
+  function duck(on) {
+    ducked = on;
+    if (musicAudio) musicAudio.volume = musicVolume();
+    applyMood();
+  }
+
+  function stopVoice() {
+    if (voiceAudio) {
+      voiceAudio.pause();
+      voiceAudio = null;
+    }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    duck(false);
+  }
+
   function drop() {
-    if (!musicGain || !ctx) return;
-    const now = ctx.currentTime;
-    musicGain.gain.cancelScheduledValues(now);
-    musicGain.gain.setValueAtTime(Math.max(0.0001, volumes.bgm), now);
-    musicGain.gain.linearRampToValueAtTime(0.0001, now + 0.04);
-    musicGain.gain.linearRampToValueAtTime(Math.max(0.0001, volumes.bgm), now + 0.34);
+    if (!musicAudio || ducked) return;
+    musicAudio.volume = musicVolume() * 0.4;
+    setTimeout(() => {
+      if (musicAudio && !ducked) musicAudio.volume = musicVolume();
+    }, 480);
   }
 
   return {
@@ -216,6 +368,7 @@ export function createScore() {
       ctx.resume();
       setAc();
       if (wanted) start(wanted);
+      if (wantedScene) startBed(SCENE_BEDS[wantedScene] || "");
     },
     play(id) {
       wanted = id;
@@ -224,20 +377,51 @@ export function createScore() {
     },
     drop,
     effect,
-    voice(who) {
-      const freq = VOICE[who];
-      if (!freq) return;
-      blip(freq, 0.16, "sine", 0.035);
-      blip(freq * 1.5, 0.1, "triangle", 0.015);
+    setScene(id) {
+      const next = id || "";
+      if (next !== wantedScene) {
+        mood = "calm";
+        lastMood = "";
+      }
+      wantedScene = next;
+      if (!ctx || ctx.state === "suspended") return;
+      startBed(wantedScene ? SCENE_BEDS[wantedScene] || "" : "");
+    },
+    setMood(face) {
+      const next = face && MOOD[face] ? face : "calm";
+      const changed = next !== lastMood;
+      mood = next;
+      lastMood = next;
+      applyMood();
+      if (changed && HEART_MOODS.has(next)) effect("heart");
+    },
+    voice(who, text, face) {
+      if (!who || volumes.se <= 0) return;
+      stopVoice();
+      const clips = voiceProvider();
+      const clip = text ? clips[`${who}\u0000${face || ""}\u0000${text}`] : "";
+      if (clip && typeof Audio !== "undefined") {
+        const audio = new Audio(clip);
+        audio.volume = Math.min(1, 0.95 * Math.max(0.2, volumes.se));
+        voiceAudio = audio;
+        duck(true);
+        audio.addEventListener("ended", () => {
+          if (voiceAudio === audio) duck(false);
+        });
+        audio.play().catch(() => duck(false));
+      }
     },
     setLayer(next) {
       layer = next || "real";
       setAc();
+      applyMood();
     },
     setVolumes(next) {
       volumes = { bgm: next.bgm ?? volumes.bgm, se: next.se ?? volumes.se };
-      if (musicGain) musicGain.gain.value = Math.max(0.0001, volumes.bgm);
+      if (musicAudio) musicAudio.volume = musicVolume();
       setAc();
+      applyMood();
+      if (volumes.se <= 0) stopVoice();
     },
     currentId() {
       return current;

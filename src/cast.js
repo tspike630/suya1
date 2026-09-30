@@ -105,28 +105,27 @@ export function nameColor(who) {
   return CAST[who]?.accent || "#f4efe6";
 }
 
-export function spriteKey(who, face, pose) {
+export function spriteKey(who, face, pose, layer) {
   const sheet = SPRITE_SHEET[who];
   if (!sheet) return null;
   const faceName = sheet.faces.includes(face) ? face : sheet.defaultFace;
+  if (who === "沈知夏") {
+    const set = layer === "dream" ? "dream" : "real";
+    return `shen/${set}-${faceName}.webp`;
+  }
   const poseName = sheet.poses.includes(pose) ? pose : sheet.defaultPose;
-  return `${sheet.id}/${poseName}-${faceName}.svg`;
-}
-
-export function prepareSprite(svg, who, layer, slot = "live") {
-  let out = String(svg).replace(/^\uFEFF?/, "").replace(/<\?xml[\s\S]*?\?>/, "");
-  if (!showMole(who, layer)) out = out.replace(/<g id="mole">[\s\S]*?<\/g>/, "");
-  const sheet = SPRITE_SHEET[who];
-  const prefix = `${slot === "cg" ? "cg" : "sp"}-${sheet?.id || "x"}-${layer === "dream" ? "d" : "r"}`;
-  out = out.replace(/\bid="([^"]+)"/g, (_, id) => `id="${prefix}-${id}"`);
-  out = out.replace(/url\(#([^)]+)\)/g, (_, id) => `url(#${prefix}-${id})`);
-  return out;
+  return `${sheet.id}/${poseName}-${faceName}.webp`;
 }
 
 let spriteProvider = () => "";
+let backgroundProvider = () => "";
 
 export function useSpriteProvider(fn) {
   spriteProvider = fn;
+}
+
+export function useBackgroundProvider(fn) {
+  backgroundProvider = fn;
 }
 
 function auntieMarkup(face) {
@@ -152,7 +151,7 @@ export function spriteMarkup(who, face, pose, layer, slot = "live") {
   if (who === "阿姨") return auntieMarkup(faceName);
   const painted = spriteProvider(who, faceName, pose || "stand", layer, slot);
   if (painted) return painted;
-  const key = spriteKey(who, faceName, pose || "stand");
+  const key = spriteKey(who, faceName, pose || "stand", layer);
   if (!key) return auntieMarkup(faceName);
   return "";
 }
@@ -376,6 +375,11 @@ export const SCENE_NAMES = {
 };
 
 export function sceneMarkup(id) {
+  const url = backgroundProvider(id);
+  if (url) {
+    const src = String(url).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+    return `<img class="scene" data-scene="${id}" src="${src}" alt="">`;
+  }
   const draw = SCENES[id] || SCENES.dorm;
   return `<svg class="scene" data-scene="${id}" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${draw(id)}</svg>`;
 }
