@@ -398,6 +398,11 @@ function emitScript() {
   emit("humanz 15");
   emit("gosub *talkwin");
   emit("textspeed 8");
+  // playSound passes music_volume straight to Mix_VolumeMusic (0–128). 100 is the
+  // engine default and stays audible; voice/se are scaled from 0–100 inside playWave.
+  emit("mp3vol 100");
+  emit("voicevol 100");
+  emit("sevol 100");
   emit("return");
   emit("*talkwin");
   // Pitch stays 0 so a line wraps instead of drawing past the clip.

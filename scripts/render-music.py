@@ -255,7 +255,8 @@ def render(name, bpm, bars, events):
         ear += delayed
     stereo = np.stack([mix_l, mix_r], axis=1)
     peak = np.max(np.abs(stereo)) or 1
-    stereo = stereo / peak * 0.46
+    # 0.46 sat under dialogue and read as silence on laptop speakers.
+    stereo = stereo / peak * 0.90
     stereo = crossfade_loop(stereo)
     raw = OUT / f"{name}.f32"
     stereo.astype(np.float32).tofile(raw)

@@ -570,8 +570,26 @@
         <script>
             function resumeOnsAudio() {
                 var mod = window.g_onsyuri_module;
-                var ctx = mod && mod.SDL2 && mod.SDL2.audioContext;
-                if (ctx && ctx.state !== "running") ctx.resume();
+                var sdl = mod && mod.SDL2;
+                var ctx = sdl && sdl.audioContext;
+                if (!ctx) return;
+                var audio = sdl.audio;
+                var node = audio && audio.scriptProcessorNode;
+                // A ScriptProcessor connected while the context is suspended often
+                // never fires onaudioprocess after resume. Reconnect it once.
+                var kick = ctx.state !== "running" || (audio && audio.silenceTimer);
+                function reconnect() {
+                    if (!kick || !node) return;
+                    try { node.disconnect(); } catch (e) {}
+                    try { node.connect(ctx.destination); } catch (e) {}
+                }
+                if (ctx.state !== "running") {
+                    var pending = ctx.resume();
+                    if (pending && pending.then) pending.then(reconnect, reconnect);
+                    else reconnect();
+                } else {
+                    reconnect();
+                }
             }
             window.addEventListener("pointerdown", resumeOnsAudio, true);
             window.addEventListener("keydown", resumeOnsAudio, true);

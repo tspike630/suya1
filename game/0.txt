@@ -89,6 +89,9 @@ goto *ng_gate
 humanz 15
 gosub *talkwin
 textspeed 8
+mp3vol 100
+voicevol 100
+sevol 100
 return
 *talkwin
 setwindow 40,508,30,4,28,32,0,6,8,0,1,#14120f,16,488,1264,708
