@@ -1,17 +1,3 @@
-export const EFFECT_IDS = [
-  "creak",
-  "snore",
-  "ac",
-  "rain",
-  "heart",
-  "alarm",
-  "card",
-  "chime",
-  "page",
-  "pen",
-  "drop",
-];
-
 const PATTERNS = {
   june: { scale: [0, 2, 4, 7, 9], tempo: 0.62, base: 220, wave: "triangle" },
   bed: { scale: [0, 1, 5, 7], tempo: 0.9, base: 110, wave: "sine" },
@@ -30,6 +16,53 @@ const PATTERNS = {
   awake: { scale: [0, 2, 4, 7, 9, 12], tempo: 0.56, base: 262, wave: "triangle" },
   together: { scale: [0, 4, 7, 12, 16], tempo: 0.66, base: 330, wave: "sine" },
 };
+
+export const EFFECTS = {
+  creak: ({ blip, noiseHit }) => {
+    blip(180, 0.22, "sawtooth", 0.05);
+    noiseHit(0.18, 0.08, 700);
+  },
+  snore: ({ blip }) => blip(90, 0.4, "sine", 0.06),
+  ac: ({ noiseHit }) => noiseHit(0.35, 0.05, 400),
+  rain: ({ noiseHit }) => noiseHit(0.5, 0.07, 1200),
+  heart: ({ blip }) => {
+    blip(70, 0.12, "sine", 0.1);
+    setTimeout(() => blip(60, 0.16, "sine", 0.08), 160);
+  },
+  alarm: ({ blip }) => {
+    blip(880, 0.12, "square", 0.04);
+    setTimeout(() => blip(880, 0.12, "square", 0.04), 180);
+  },
+  card: ({ blip, noiseHit }) => {
+    noiseHit(0.08, 0.1, 1800);
+    blip(1400, 0.06, "square", 0.03);
+  },
+  chime: ({ blip }) => blip(1320, 0.4, "sine", 0.04),
+  page: ({ noiseHit }) => noiseHit(0.1, 0.06, 2200),
+  pen: ({ noiseHit }) => noiseHit(0.16, 0.04, 3000),
+  drop: ({ drop }) => drop(),
+  phone: ({ blip }) => blip(740, 0.18, "sine", 0.04),
+  clock: ({ blip }) => blip(980, 0.05, "square", 0.03),
+  door: ({ noiseHit }) => noiseHit(0.2, 0.08, 280),
+  elevator: ({ blip }) => blip(420, 0.3, "triangle", 0.03),
+  applause: ({ noiseHit }) => noiseHit(0.45, 0.07, 1600),
+  wind: ({ noiseHit }) => noiseHit(0.5, 0.05, 600),
+  water: ({ noiseHit }) => noiseHit(0.25, 0.05, 900),
+  paper: ({ noiseHit }) => noiseHit(0.12, 0.05, 2500),
+  click: ({ blip }) => blip(240, 0.04, "square", 0.04),
+  step: ({ noiseHit }) => noiseHit(0.08, 0.06, 180),
+  bell: ({ blip }) => blip(660, 0.35, "sine", 0.04),
+  crowd: ({ noiseHit }) => noiseHit(0.4, 0.05, 800),
+  cup: ({ blip }) => blip(520, 0.08, "triangle", 0.04),
+  key: ({ noiseHit }) => noiseHit(0.1, 0.07, 1400),
+  notice: ({ blip }) => blip(1170, 0.08, "sine", 0.03),
+  chair: ({ noiseHit }) => noiseHit(0.12, 0.06, 240),
+  breath: ({ noiseHit }) => noiseHit(0.3, 0.03, 500),
+  knock: ({ noiseHit }) => noiseHit(0.06, 0.08, 320),
+  static: ({ noiseHit }) => noiseHit(0.2, 0.04, 2000),
+};
+
+export const EFFECT_IDS = Object.keys(EFFECTS);
 
 const VOICE = {
   鹿眠: 520,
@@ -164,33 +197,8 @@ export function createScore() {
   function effect(name) {
     if (!ensure()) return;
     if (ctx.state === "suspended") return;
-    if (name === "creak") {
-      blip(180, 0.22, "sawtooth", 0.05);
-      noiseHit(0.18, 0.08, 700);
-    } else if (name === "snore") {
-      blip(90, 0.4, "sine", 0.06);
-    } else if (name === "ac") {
-      noiseHit(0.35, 0.05, 400);
-    } else if (name === "rain") {
-      noiseHit(0.5, 0.07, 1200);
-    } else if (name === "heart") {
-      blip(70, 0.12, "sine", 0.1);
-      setTimeout(() => blip(60, 0.16, "sine", 0.08), 160);
-    } else if (name === "alarm") {
-      blip(880, 0.12, "square", 0.04);
-      setTimeout(() => blip(880, 0.12, "square", 0.04), 180);
-    } else if (name === "card") {
-      noiseHit(0.08, 0.1, 1800);
-      blip(1400, 0.06, "square", 0.03);
-    } else if (name === "chime") {
-      blip(1320, 0.4, "sine", 0.04);
-    } else if (name === "page") {
-      noiseHit(0.1, 0.06, 2200);
-    } else if (name === "pen") {
-      noiseHit(0.16, 0.04, 3000);
-    } else if (name === "drop") {
-      drop();
-    }
+    const play = EFFECTS[name];
+    if (play) play({ blip, noiseHit, drop });
   }
 
   function drop() {

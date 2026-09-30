@@ -157,7 +157,7 @@ export const NODES = {
       { text: "我把翻身拆成六步：抬腰，挪肩，脚踝压住床沿。像拆炸弹。没用。" },
       { text: "上铺鼾声如雷。空调正对着脸，风像砂纸擦眼皮。", se: "snore" },
       { text: "羊数到三百七十四。母亲的话插进来：这次要是考不好，我们家的脸往哪搁。羊全散了。", se: "ac" },
-      { text: "凌晨三点十七分。我想打电话给老裴，问酒店还订不订得到。" },
+      { text: "凌晨三点十七分。我想打电话给老裴，问酒店还订不订得到。", se: "phone" },
     ],
     options: [
       { id: "down", label: "把手机扣过去", next: "ch1_down" },
@@ -168,7 +168,7 @@ export const NODES = {
     bg: "dorm",
     layer: "real",
     bgm: "bed",
-    lines: [{ text: "太晚了。明天是第一场语文。屏幕暗下去的时候，我松了口气，又恨这口气。" }],
+    lines: [{ text: "太晚了。明天是第一场语文。屏幕暗下去的时候，我松了口气，又恨这口气。", se: "click" }],
     next: "ch1_exam",
   },
   ch1_call: {
@@ -207,7 +207,7 @@ export const NODES = {
     bg: "exam",
     layer: "real",
     bgm: "exam",
-    lines: [{ text: "时针走得很响。我听钟，不听题。" }],
+    lines: [{ text: "时针走得很响。我听钟，不听题。", se: "clock" }],
     next: "ch1_score",
   },
   ch1_score: {
@@ -600,7 +600,7 @@ export const NODES = {
     bg: "roof",
     layer: "dream",
     bgm: "cradle",
-    lines: [{ text: "颁奖结束，天台的风是冷的。还可以把今晚交给一个人。", se: "chime" }],
+    lines: [{ text: "颁奖结束，天台的风是冷的。还可以把今晚交给一个人。", se: "wind" }],
     options: [
       { id: "lu", label: "给鹿眠打电话", next: "acad5", fx: { lu: 5 }, say: { who: "鹿眠", face: "whisper", text: "别在梦里站太高。风大。" } },
       { id: "shen", label: "把沈知夏叫上来", next: "acad5", fx: { shen: 5 }, say: { who: "沈知夏", face: "look", text: "奖杯沉吗。你的手在抖。" } },

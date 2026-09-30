@@ -20,7 +20,22 @@ import { createScore } from "./audio.js";
 
 const META_KEY = "suya-meta-v2";
 const SPEEDS = [0, 18, 42, 80];
-const SLOT_COUNT = 12;
+export const SLOT_COUNT = 90;
+export const AUTO_COUNT = 10;
+export const QUICK_COUNT = 10;
+const PAGE_SIZE = 10;
+
+function padSlots(list, count) {
+  const next = Array.isArray(list) ? list.slice(0, count) : [];
+  while (next.length < count) next.push(null);
+  return next;
+}
+
+function normalizeQuick(quick) {
+  if (Array.isArray(quick)) return padSlots(quick, QUICK_COUNT);
+  if (quick && typeof quick === "object") return padSlots([quick], QUICK_COUNT);
+  return padSlots([], QUICK_COUNT);
+}
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (ch) => ({
@@ -42,9 +57,12 @@ function loadMeta() {
       parsed.music ??= [];
       parsed.fragments ??= [];
       parsed.chapters ??= [];
-      parsed.slots ??= Array(SLOT_COUNT).fill(null);
-      parsed.autos ??= [];
-      parsed.settings ??= { speed: 2, auto: 1, bgm: 0.6, se: 0.45, size: 1 };
+      parsed.slots = padSlots(parsed.slots, SLOT_COUNT);
+      parsed.autos = Array.isArray(parsed.autos) ? parsed.autos.slice(0, AUTO_COUNT) : [];
+      parsed.quick = normalizeQuick(parsed.quick);
+      parsed.quickIndex ??= 0;
+      parsed.settings ??= { speed: 2, auto: 1, bgm: 0.6, se: 0.45, size: 1, font: "sans" };
+      parsed.settings.font ??= "sans";
       return parsed;
     }
   } catch {
@@ -57,11 +75,12 @@ function loadMeta() {
     music: [],
     fragments: [],
     chapters: [],
-    slots: Array(SLOT_COUNT).fill(null),
+    slots: padSlots([], SLOT_COUNT),
     autos: [],
-    quick: null,
+    quick: padSlots([], QUICK_COUNT),
+    quickIndex: 0,
     resume: null,
-    settings: { speed: 2, auto: 1, bgm: 0.6, se: 0.45, size: 1 },
+    settings: { speed: 2, auto: 1, bgm: 0.6, se: 0.45, size: 1, font: "sans" },
   };
 }
 
@@ -180,6 +199,8 @@ export function mountGame(root) {
   let session = null;
   let screen = "title";
   let galleryTab = "cg";
+  let slotPage = 0;
+  let slotKind = "load";
   let shown = 0;
   let full = "";
   let typing = null;
@@ -312,7 +333,7 @@ export function mountGame(root) {
     meta.resume = shot;
     if (!session.flags[`auto:${session.nodeId}`]) {
       session.flags[`auto:${session.nodeId}`] = true;
-      meta.autos = [shot, ...(meta.autos || [])].slice(0, 5);
+      meta.autos = [shot, ...(meta.autos || [])].slice(0, AUTO_COUNT);
     }
     saveMeta(meta);
   }
@@ -534,19 +555,35 @@ export function mountGame(root) {
   }
 
   function slotButtons(kind) {
+    const start = slotPage * PAGE_SIZE;
     return meta.slots
-      .map((slot, index) => {
+      .slice(start, start + PAGE_SIZE)
+      .map((slot, offset) => {
+        const index = start + offset;
         const label = slot ? `${slot.place}　${slot.text.slice(0, 18)}` : "空";
         return `<button type="button" data-slot="${index}" data-kind="${kind}"><b>${index + 1}</b><span>${escapeHtml(label)}</span></button>`;
       })
       .join("");
   }
 
+  function latestQuick() {
+    const slots = normalizeQuick(meta.quick);
+    for (let step = 1; step <= QUICK_COUNT; step += 1) {
+      const index = (meta.quickIndex - step + QUICK_COUNT) % QUICK_COUNT;
+      if (slots[index]) return slots[index];
+    }
+    return null;
+  }
+
   function slotList(kind) {
-    const quick =
-      kind === "save"
-        ? `<button type="button" data-act="quick-save">快速存档</button>`
-        : `<button type="button" data-act="quick-load" ${meta.quick ? "" : "disabled"}>快速读档${meta.quick ? ` · ${escapeHtml(meta.quick.place)}` : ""}</button>`;
+    const pages = Math.ceil(SLOT_COUNT / PAGE_SIZE);
+    const quickSlots = normalizeQuick(meta.quick)
+      .map((slot, index) => {
+        const label = slot ? `${slot.place}　${slot.text.slice(0, 12)}` : "空";
+        const act = kind === "save" ? "quick-save-at" : "quick-load-at";
+        return `<button type="button" data-act="${act}" data-q="${index}" ${slot || kind === "save" ? "" : "disabled"}><b>快 ${index + 1}</b><span>${escapeHtml(label)}</span></button>`;
+      })
+      .join("");
     const autos =
       kind === "load"
         ? meta.autos
@@ -556,7 +593,15 @@ export function mountGame(root) {
             )
             .join("")
         : "";
-    return `<section class="panel"><header><h2>${kind === "save" ? "存档" : "读档"}</h2><button type="button" data-act="close">关闭</button></header>${quick}<div class="slots">${slotButtons(kind)}</div>${autos}</section>`;
+    return `<section class="panel"><header><h2>${kind === "save" ? "存档" : "读档"}</h2><button type="button" data-act="close">关闭</button></header>
+      <div class="slot-pager">
+        <p>手动 ${slotPage * PAGE_SIZE + 1}–${Math.min(SLOT_COUNT, (slotPage + 1) * PAGE_SIZE)} / ${SLOT_COUNT}</p>
+        <div class="seg"><button type="button" data-act="slot-prev">上一页</button><button type="button" data-act="slot-next">下一页</button><span>${slotPage + 1} / ${pages}</span></div>
+      </div>
+      <div class="slots">${slotButtons(kind)}</div>
+      <h3>快速 ${QUICK_COUNT}</h3><div class="slots">${quickSlots}</div>
+      ${autos ? `<h3>自动 ${AUTO_COUNT}</h3><div class="slots">${autos}</div>` : ""}
+    </section>`;
   }
 
   function logView() {
@@ -664,6 +709,10 @@ export function mountGame(root) {
       <p>文字速度</p><div class="seg">${speed}</div>
       <p>自动等待</p><div class="seg">${auto}</div>
       <p>字号</p><div class="seg">${size}</div>
+      <p>字体</p><div class="seg">
+        <button type="button" data-font="sans" data-on="${meta.settings.font === "sans" ? "1" : "0"}">黑体</button>
+        <button type="button" data-font="serif" data-on="${meta.settings.font === "serif" ? "1" : "0"}">宋体</button>
+      </div>
       <p>音乐 <span id="bgm-read">${Math.round(meta.settings.bgm * 100)}</span></p>
       <input data-vol="bgm" type="range" min="0" max="1" step="0.05" value="${meta.settings.bgm}" />
       <p>音效 <span id="se-read">${Math.round(meta.settings.se * 100)}</span></p>
@@ -675,6 +724,7 @@ export function mountGame(root) {
   function openScreen(name) {
     stopTimers();
     overlay.hidden = false;
+    if (name === "save" || name === "load") slotKind = name;
     if (name === "save") overlay.innerHTML = slotList("save");
     else if (name === "load") overlay.innerHTML = slotList("load");
     else if (name === "log") overlay.innerHTML = logView();
@@ -690,10 +740,16 @@ export function mountGame(root) {
     else paintTitle();
   }
 
-  function saveQuick() {
+  function saveQuick(index = meta.quickIndex % QUICK_COUNT) {
     if (!session || screen !== "play") return;
-    meta.quick = stamp(session);
+    meta.quick = normalizeQuick(meta.quick);
+    meta.quick[index] = stamp(session);
+    meta.quickIndex = (index + 1) % QUICK_COUNT;
     saveMeta(meta);
+  }
+
+  function applyFont() {
+    document.documentElement.dataset.font = meta.settings.font === "serif" ? "serif" : "sans";
   }
 
   root.addEventListener("click", (event) => {
@@ -729,7 +785,31 @@ export function mountGame(root) {
       if (!overlay.hidden) openScreen("save");
       return;
     }
-    if (act?.dataset.act === "quick-load" && meta.quick) return begin(meta.quick);
+    if (act?.dataset.act === "quick-load") {
+      const shot = latestQuick();
+      if (shot) return begin(shot);
+      return;
+    }
+    if (act?.dataset.act === "quick-save-at") {
+      saveQuick(Number(act.dataset.q));
+      openScreen("save");
+      return;
+    }
+    if (act?.dataset.act === "quick-load-at") {
+      const shot = normalizeQuick(meta.quick)[Number(act.dataset.q)];
+      if (shot) return begin(shot);
+      return;
+    }
+    if (act?.dataset.act === "slot-prev") {
+      slotPage = Math.max(0, slotPage - 1);
+      openScreen(slotKind);
+      return;
+    }
+    if (act?.dataset.act === "slot-next") {
+      slotPage = Math.min(Math.ceil(SLOT_COUNT / PAGE_SIZE) - 1, slotPage + 1);
+      openScreen(slotKind);
+      return;
+    }
     if (act?.dataset.act === "auto") {
       autoOn = !autoOn;
       if (autoOn) skipOn = false;
@@ -759,8 +839,8 @@ export function mountGame(root) {
       return;
     }
     if (open) return openScreen(open.dataset.open);
-    if (autoSlot && meta.autos[Number(autoSlot.dataset.auto)]) {
-      return begin(meta.autos[Number(autoSlot.dataset.auto)]);
+    if (autoSlot && meta.autos[Number(autoSlot.dataset.autoload)]) {
+      return begin(meta.autos[Number(autoSlot.dataset.autoload)]);
     }
     if (slot) {
       const index = Number(slot.dataset.slot);
@@ -779,21 +859,29 @@ export function mountGame(root) {
       render();
       return;
     }
-    const speed = event.target.closest("[data-speed]");
+    const font = event.target.closest("button[data-font]");
+    if (font) {
+      meta.settings.font = font.dataset.font === "serif" ? "serif" : "sans";
+      applyFont();
+      saveMeta(meta);
+      openScreen("config");
+      return;
+    }
+    const speed = event.target.closest("button[data-speed]");
     if (speed) {
       meta.settings.speed = Number(speed.dataset.speed);
       saveMeta(meta);
       openScreen("config");
       return;
     }
-    const auto = event.target.closest("[data-auto]");
+    const auto = event.target.closest("button[data-auto]");
     if (auto) {
       meta.settings.auto = Number(auto.dataset.auto);
       saveMeta(meta);
       openScreen("config");
       return;
     }
-    const size = event.target.closest("[data-size]");
+    const size = event.target.closest("button[data-size]");
     if (size) {
       meta.settings.size = Number(size.dataset.size);
       saveMeta(meta);
@@ -868,6 +956,7 @@ export function mountGame(root) {
   requestAnimationFrame(pollPad);
 
   applySize();
+  applyFont();
   paintTitle();
   render();
 }

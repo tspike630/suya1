@@ -131,6 +131,14 @@ h1, h2, h3, .name, .chapter-card, .title-copy h1, .ending h2 {
 .name[data-who="黍母"] { background: #8d4b32; }
 .name[data-who="黍琊"] { background: #2a211c; }
 #text { margin: 0; font-size: var(--text, 1.12rem); line-height: 1.75; min-height: 4.8em; }
+html[data-font="serif"] #text {
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-weight: 600;
+}
+html[data-font="sans"] #text {
+  font-family: "Noto Sans SC", "WenQuanYi Micro Hei", "PingFang SC", sans-serif;
+  font-weight: 400;
+}
 .advance[data-limen="1"] #text { min-height: 0; font-size: 1.35rem; color: #1c140f; }
 .advance[data-limen="1"] #text span {
   display: block;
@@ -202,6 +210,16 @@ button:disabled { opacity: 0.4; cursor: default; }
 .gallery button { width: 100%; height: 100%; min-height: 92px; }
 .frag-list li { display: grid; gap: 4px; }
 .seg { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.slot-pager {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0 0 8px;
+  padding: 8px 0 4px;
+  background: #1a1410;
+}
+.slot-pager p { margin: 0 0 8px; }
+.slot-pager .seg { margin-bottom: 0; }
 .seg button[data-on="1"] { border-color: #e7c27a; }
 .panel input[type="range"] { width: 100%; }
 .viewer .cg { position: relative; height: 360px; }
