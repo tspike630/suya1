@@ -1,26 +1,139 @@
-const PATTERNS = {
-  june: { scale: [0, 2, 4, 7, 9], tempo: 0.62, base: 220, wave: "triangle" },
-  bed: { scale: [0, 1, 5, 7], tempo: 0.9, base: 110, wave: "sine" },
-  exam: { scale: [0, 2, 3, 7, 8], tempo: 0.48, base: 196, wave: "square" },
-  rain: { scale: [0, 3, 5, 10], tempo: 0.7, base: 174, wave: "sine" },
-  white: { scale: [0, 7, 12], tempo: 1.1, base: 392, wave: "sine" },
-  cradle: { scale: [0, 3, 5, 7, 10], tempo: 0.58, base: 196, wave: "triangle" },
-  qinhua: { scale: [0, 4, 7, 11], tempo: 0.52, base: 247, wave: "triangle" },
-  lamp: { scale: [0, 2, 5, 9], tempo: 0.74, base: 165, wave: "sine" },
-  pork: { scale: [0, 1, 6, 7], tempo: 0.46, base: 233, wave: "square" },
-  crack: { scale: [0, 1, 6, 8], tempo: 0.38, base: 185, wave: "sawtooth" },
-  lab: { scale: [0, 2, 6, 9, 12], tempo: 0.5, base: 155, wave: "square" },
-  applause: { scale: [0, 5, 7, 12], tempo: 0.42, base: 262, wave: "triangle" },
-  home: { scale: [0, 5, 7, 12, 16], tempo: 0.8, base: 294, wave: "sine" },
-  heart: { scale: [0, 0, 3, 7], tempo: 0.34, base: 98, wave: "sine" },
-  awake: { scale: [0, 2, 4, 7, 9, 12], tempo: 0.56, base: 262, wave: "triangle" },
-  together: { scale: [0, 4, 7, 12, 16], tempo: 0.66, base: 330, wave: "sine" },
+const SHAPES = {
+  M: [0, 4, 7],
+  m: [0, 3, 7],
+  M7: [0, 4, 7, 11],
+  m7: [0, 3, 7, 10],
+  sus: [0, 5, 7],
+};
+
+function piece(bpm, chords, melody) {
+  const events = [];
+  let bars = 4;
+  for (const [b, root, kind, len, vel] of chords) {
+    bars = Math.max(bars, Math.ceil((b + len) / 4));
+    events.push({ b, n: SHAPES[kind].map((interval) => root + interval), v: vel ?? 0.24, l: len });
+  }
+  for (const [b, note, len, vel] of melody) {
+    bars = Math.max(bars, Math.ceil((b + len) / 4));
+    events.push({ b, n: [note], v: vel ?? 0.38, l: len });
+  }
+  return { bpm, bars, events };
+}
+
+const PIECES = {
+  june: piece(68, [
+    [0, 48, "M", 4], [4, 45, "m", 4], [8, 41, "M", 4], [12, 43, "M", 4],
+    [16, 48, "M", 4], [20, 45, "m", 4], [24, 41, "M", 4], [28, 43, "M", 4],
+  ], [
+    [0, 76, 2], [2, 79, 2], [4, 81, 2], [6, 79, 2],
+    [8, 77, 2], [10, 74, 2], [12, 79, 4],
+    [16, 81, 2], [18, 84, 2], [20, 81, 2], [22, 79, 2],
+    [24, 77, 2], [26, 76, 2], [28, 72, 4],
+  ]),
+  bed: piece(52, [
+    [0, 45, "m", 8], [8, 40, "m", 8], [16, 45, "m", 8], [24, 38, "M", 8],
+  ], [
+    [0, 69, 4], [4, 72, 4], [8, 68, 4], [12, 64, 4],
+    [16, 69, 4], [20, 67, 4], [24, 65, 8],
+  ]),
+  exam: piece(56, [
+    [0, 38, "m", 8, 0.16], [8, 41, "M", 8, 0.16], [16, 36, "m", 8, 0.16], [24, 43, "m", 8, 0.16],
+  ], [
+    [2, 65, 4, 0.28], [10, 69, 4, 0.26], [18, 67, 6, 0.24],
+  ]),
+  rain: piece(62, [
+    [0, 41, "M", 4], [4, 48, "M", 4], [8, 38, "m", 4], [12, 46, "M", 4],
+    [16, 41, "M", 4], [20, 48, "M", 4], [24, 43, "m", 4], [28, 41, "M", 4],
+  ], [
+    [0, 69, 2], [2, 72, 2], [4, 74, 2], [6, 72, 2],
+    [8, 70, 4], [12, 69, 4], [16, 74, 2], [18, 77, 2], [20, 74, 4], [24, 72, 4], [28, 69, 4],
+  ]),
+  white: piece(46, [
+    [0, 60, "M", 16, 0.1], [16, 64, "M", 16, 0.1],
+  ], [
+    [4, 84, 6, 0.22], [14, 88, 4, 0.18], [24, 86, 8, 0.16],
+  ]),
+  cradle: piece(60, [
+    [0, 48, "M7", 8], [8, 45, "m7", 8], [16, 41, "M7", 8], [24, 43, "M", 8],
+  ], [
+    [0, 72, 4], [4, 76, 4], [8, 79, 4], [12, 76, 4],
+    [16, 74, 4], [20, 72, 4], [24, 71, 4], [28, 72, 4],
+  ]),
+  qinhua: piece(74, [
+    [0, 43, "M", 4], [4, 38, "M", 4], [8, 40, "m", 4], [12, 48, "M", 4],
+    [16, 43, "M", 4], [20, 38, "M", 4], [24, 41, "M", 4], [28, 43, "M", 4],
+  ], [
+    [0, 79, 2], [2, 83, 2], [4, 81, 2], [6, 79, 2],
+    [8, 76, 2], [10, 79, 2], [12, 83, 4],
+    [16, 86, 2], [18, 83, 2], [20, 81, 2], [22, 79, 2], [24, 78, 4], [28, 79, 4],
+  ]),
+  lamp: piece(56, [
+    [0, 40, "m", 8], [8, 36, "M", 8], [16, 43, "M", 8], [24, 38, "M", 8],
+  ], [
+    [1, 67, 3], [4, 71, 4], [8, 72, 4], [12, 69, 4],
+    [16, 67, 4], [20, 64, 4], [24, 62, 8],
+  ]),
+  pork: piece(66, [
+    [0, 48, "M", 4], [4, 43, "M", 4], [8, 45, "m", 4], [12, 41, "M", 4],
+    [16, 48, "M", 4], [20, 43, "M", 4], [24, 45, "m", 4], [28, 48, "M", 4],
+  ], [
+    [0, 72, 1], [1, 76, 1], [2, 79, 2], [4, 76, 2], [6, 74, 2],
+    [8, 72, 2], [10, 69, 2], [12, 71, 4], [16, 76, 2], [18, 79, 2], [20, 77, 4], [24, 74, 4], [28, 72, 4],
+  ]),
+  crack: piece(50, [
+    [0, 38, "m", 8, 0.18], [8, 41, "m", 8, 0.18], [16, 34, "M", 8, 0.16], [24, 36, "m", 8, 0.16],
+  ], [
+    [0, 65, 3, 0.26], [3, 66, 1, 0.18], [4, 65, 4, 0.24],
+    [8, 68, 4, 0.22], [12, 63, 4, 0.2], [16, 61, 8, 0.22], [24, 62, 8, 0.18],
+  ]),
+  lab: piece(62, [
+    [0, 45, "m", 4], [4, 41, "M", 4], [8, 48, "M", 4], [12, 43, "M", 4],
+    [16, 45, "m", 4], [20, 40, "m", 4], [24, 36, "M", 4], [28, 43, "M", 4],
+  ], [
+    [0, 69, 2], [2, 72, 2], [4, 76, 4], [8, 74, 2], [10, 72, 2], [12, 69, 4],
+    [16, 72, 4], [20, 76, 4], [24, 74, 4], [28, 69, 4],
+  ]),
+  applause: piece(66, [
+    [0, 48, "M", 4], [4, 41, "M", 4], [8, 43, "M", 4], [12, 48, "M", 4],
+    [16, 45, "m", 4], [20, 41, "M", 4], [24, 43, "M", 4], [28, 48, "M", 4],
+  ], [
+    [0, 76, 2], [2, 79, 2], [4, 72, 2], [6, 76, 2],
+    [8, 79, 4], [12, 84, 4], [16, 81, 4], [20, 79, 4], [24, 76, 4], [28, 72, 4],
+  ]),
+  home: piece(64, [
+    [0, 41, "M", 4], [4, 48, "M", 4], [8, 38, "m", 4], [12, 46, "M", 4],
+    [16, 41, "M", 4], [20, 36, "M", 4], [24, 43, "M", 4], [28, 41, "M", 4],
+  ], [
+    [0, 65, 2], [2, 69, 2], [4, 72, 2], [6, 69, 2],
+    [8, 70, 4], [12, 67, 4], [16, 69, 2], [18, 72, 2], [20, 74, 4], [24, 72, 4], [28, 65, 4],
+  ]),
+  heart: piece(48, [
+    [0, 45, "m", 8, 0.2], [8, 41, "m", 8, 0.18], [16, 40, "m", 8, 0.18], [24, 36, "M", 8, 0.16],
+  ], [
+    [0, 48, 1, 0.22], [2, 48, 1, 0.16], [4, 48, 1, 0.22], [6, 48, 1, 0.16],
+    [8, 69, 6, 0.3], [16, 67, 6, 0.26], [24, 64, 8, 0.24],
+  ]),
+  awake: piece(72, [
+    [0, 48, "M", 4], [4, 43, "M", 4], [8, 45, "m", 4], [12, 41, "M", 4],
+    [16, 48, "M", 4], [20, 43, "M", 4], [24, 45, "m", 4], [28, 48, "M", 4],
+  ], [
+    [0, 72, 2], [2, 76, 2], [4, 79, 2], [6, 76, 2],
+    [8, 74, 2], [10, 72, 2], [12, 71, 2], [14, 72, 2],
+    [16, 76, 2], [18, 79, 2], [20, 84, 4], [24, 81, 2], [26, 79, 2], [28, 76, 4],
+  ]),
+  together: piece(70, [
+    [0, 48, "M", 4], [4, 45, "m", 4], [8, 41, "M", 4], [12, 43, "M", 4],
+    [16, 48, "M", 4], [20, 45, "m7", 4], [24, 41, "M", 4], [28, 48, "M", 4],
+  ], [
+    [0, 76, 2], [2, 79, 2], [4, 81, 2], [6, 84, 2],
+    [8, 83, 4], [12, 79, 4], [16, 81, 2], [18, 84, 2], [20, 86, 4], [24, 84, 2], [26, 81, 2], [28, 84, 4],
+  ]),
 };
 
 export const EFFECTS = {
   creak: ({ blip, noiseHit }) => {
-    blip(180, 0.22, "sawtooth", 0.05);
-    noiseHit(0.18, 0.08, 700);
+    blip(196, 0.16, "triangle", 0.03);
+    noiseHit(0.12, 0.035, 480);
   },
   snore: ({ blip, noiseHit }) => {
     noiseHit(0.38, 0.1, 240);
@@ -43,12 +156,12 @@ export const EFFECTS = {
     setTimeout(() => blip(54, 0.16, "sine", 0.08), 150);
   },
   alarm: ({ blip }) => {
-    blip(880, 0.12, "square", 0.04);
-    setTimeout(() => blip(880, 0.12, "square", 0.04), 180);
+    blip(784, 0.16, "sine", 0.03);
+    setTimeout(() => blip(880, 0.18, "sine", 0.025), 220);
   },
   card: ({ blip, noiseHit }) => {
-    noiseHit(0.08, 0.1, 1800);
-    blip(1400, 0.06, "square", 0.03);
+    noiseHit(0.06, 0.04, 1400);
+    blip(988, 0.05, "sine", 0.02);
   },
   chime: ({ blip }) => blip(1320, 0.4, "sine", 0.04),
   page: ({ noiseHit }) => noiseHit(0.1, 0.06, 2200),
@@ -56,8 +169,8 @@ export const EFFECTS = {
   drop: ({ drop }) => drop(),
   phone: ({ blip }) => blip(740, 0.18, "sine", 0.04),
   clock: ({ blip }) => {
-    blip(1800, 0.03, "square", 0.03);
-    setTimeout(() => blip(900, 0.05, "sine", 0.02), 70);
+    blip(1568, 0.025, "sine", 0.018);
+    setTimeout(() => blip(1174, 0.04, "sine", 0.012), 80);
   },
   door: ({ noiseHit }) => noiseHit(0.2, 0.08, 280),
   elevator: ({ blip }) => blip(420, 0.3, "triangle", 0.03),
@@ -71,7 +184,10 @@ export const EFFECTS = {
   },
   water: ({ noiseHit }) => noiseHit(0.25, 0.05, 900),
   paper: ({ noiseHit }) => noiseHit(0.12, 0.05, 2500),
-  click: ({ blip }) => blip(240, 0.04, "square", 0.04),
+  click: ({ blip, noiseHit }) => {
+    noiseHit(0.04, 0.03, 900);
+    blip(520, 0.03, "sine", 0.015);
+  },
   step: ({ noiseHit }) => noiseHit(0.08, 0.06, 180),
   bell: ({ blip }) => blip(660, 0.35, "sine", 0.04),
   crowd: ({ noiseHit }) => noiseHit(0.4, 0.05, 800),
@@ -161,8 +277,9 @@ export function createScore() {
   let seGain = null;
   let acGain = null;
   let timer = null;
+  let musicTimers = [];
+  let musicToken = 0;
   let current = null;
-  let step = 0;
   let wanted = null;
   let volumes = { bgm: 0.6, se: 0.45 };
   let layer = "real";
@@ -177,7 +294,11 @@ export function createScore() {
     master.connect(ctx.destination);
     musicGain = ctx.createGain();
     musicGain.gain.value = volumes.bgm;
-    musicGain.connect(master);
+    const musicFilter = ctx.createBiquadFilter();
+    musicFilter.type = "lowpass";
+    musicFilter.frequency.value = 2400;
+    musicGain.connect(musicFilter);
+    musicFilter.connect(master);
     seGain = ctx.createGain();
     seGain.gain.value = 1;
     seGain.connect(master);
@@ -202,43 +323,82 @@ export function createScore() {
 
   function setAc() {
     if (!acGain || !ctx) return;
-    const target = layer === "dream" ? 0.02 * volumes.se : 0;
+    const target = layer === "dream" ? 0.006 * volumes.se : 0;
     acGain.gain.setTargetAtTime(Math.max(0.0001, target), ctx.currentTime, 0.15);
     if (target === 0) acGain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.2);
   }
 
-  function musicNote(freq, pattern) {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = pattern.wave;
-    osc.frequency.value = freq;
-    const peak = 0.07 * volumes.bgm;
-    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), ctx.currentTime + 0.03);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + pattern.tempo * 0.9);
-    osc.connect(gain);
-    gain.connect(musicGain);
-    osc.start();
-    osc.stop(ctx.currentTime + pattern.tempo);
+  function pianoNote(midi, velocity, beats, beatSec) {
+    const freq = 440 * 2 ** ((midi - 69) / 12);
+    const now = ctx.currentTime;
+    const dur = Math.max(0.45, beats * beatSec * 0.92);
+    const voice = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(900 + velocity * 1600, now);
+    filter.frequency.exponentialRampToValueAtTime(520, now + dur);
+    voice.connect(filter);
+    filter.connect(musicGain);
+    const peak = 0.16 * velocity;
+    voice.gain.setValueAtTime(0.0001, now);
+    voice.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), now + 0.018);
+    voice.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak * 0.38), now + 0.22);
+    voice.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    const partials = [
+      [1, 1],
+      [2, 0.32],
+      [3, 0.14],
+      [4, 0.06],
+    ];
+    for (const [ratio, amp] of partials) {
+      const osc = ctx.createOscillator();
+      const partial = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq * ratio;
+      partial.gain.value = amp;
+      osc.connect(partial);
+      partial.connect(voice);
+      osc.start(now);
+      osc.stop(now + dur + 0.05);
+    }
   }
 
-  function loop() {
-    const pattern = PATTERNS[current];
-    if (!pattern || !ctx) return;
-    const degree = pattern.scale[step % pattern.scale.length];
-    musicNote(pattern.base * 2 ** (degree / 12), pattern);
-    step += 1;
+  function stopMusic() {
+    musicToken += 1;
+    if (timer) clearTimeout(timer);
+    timer = null;
+    for (const id of musicTimers) clearTimeout(id);
+    musicTimers = [];
+  }
+
+  function armPiece(id, origin, loopIndex, token) {
+    const score = PIECES[id];
+    if (!score || token !== musicToken || !ctx) return;
+    const beat = 60 / score.bpm;
+    const loopBeats = score.bars * 4;
+    const startAt = origin + loopIndex * loopBeats * beat;
+    for (const event of score.events) {
+      const when = startAt + event.b * beat;
+      const wait = (when - ctx.currentTime) * 1000;
+      if (wait < -30) continue;
+      const timeout = setTimeout(() => {
+        if (token !== musicToken || !ctx) return;
+        for (const midi of event.n) pianoNote(midi, event.v, event.l, beat);
+      }, Math.max(0, wait));
+      musicTimers.push(timeout);
+    }
+    const nextIn = (startAt + loopBeats * beat - ctx.currentTime) * 1000 - 120;
+    timer = setTimeout(() => armPiece(id, origin, loopIndex + 1, token), Math.max(40, nextIn));
   }
 
   function start(id) {
-    if (!PATTERNS[id]) return;
+    if (!PIECES[id]) return;
     if (current === id && timer) return;
-    if (timer) clearInterval(timer);
+    stopMusic();
     current = id;
-    step = 0;
     if (!ctx) return;
-    loop();
-    timer = setInterval(loop, PATTERNS[id].tempo * 1000);
+    const token = musicToken;
+    armPiece(id, ctx.currentTime + 0.06, 0, token);
   }
 
   function blip(freq, dur, type, peak) {
@@ -376,7 +536,7 @@ export function createScore() {
     const spec = moodSpec();
     const dream = layer === "dream" ? 0.7 : layer === "limen" ? 0.35 : 1;
     const duck = ducked ? 0.45 : 1;
-    const target = 0.9 * volumes.se * spec.gain * dream * duck;
+    const target = 0.14 * volumes.se * spec.gain * dream * duck;
     ambientGain.gain.setTargetAtTime(Math.max(0.0001, target), ctx.currentTime, 0.25);
     for (const node of bedNodes) {
       if (!node.filter) continue;
@@ -416,54 +576,42 @@ export function createScore() {
     bedName = name;
     ensureAmbient();
     if (name === "dorm") {
-      loopNoise(180, 0.35, "lowpass");
-      tone(96, 0.04);
-      schedule(snoreOnce, 3200);
+      loopNoise(180, 0.12, "lowpass");
+      schedule(snoreOnce, 4200);
     } else if (name === "exam") {
-      loopNoise(500, 0.08, "highpass");
-      schedule(() => effect("clock"), 1000);
-      schedule(() => effect("pen"), 2400);
+      loopNoise(420, 0.04, "lowpass");
+      schedule(() => effect("clock"), 4000);
     } else if (name === "home") {
-      loopNoise(300, 0.12, "lowpass");
-      schedule(() => effect("clock"), 2000);
+      loopNoise(260, 0.05, "lowpass");
     } else if (name === "class") {
-      loopNoise(700, 0.16, "bandpass");
-      schedule(() => effect("paper"), 2800);
-      schedule(() => effect("crowd"), 4200);
+      loopNoise(640, 0.05, "bandpass");
+      schedule(() => effect("paper"), 5200);
     } else if (name === "corridor") {
-      loopNoise(400, 0.1, "lowpass");
-      schedule(() => effect("step"), 1700);
+      loopNoise(360, 0.04, "lowpass");
+      schedule(() => effect("step"), 3600);
     } else if (name === "wind") {
-      loopNoise(320, 0.45, "lowpass");
-      loopNoise(140, 0.2, "lowpass");
+      loopNoise(280, 0.14, "lowpass");
     } else if (name === "rain") {
-      loopNoise(1600, 0.4, "highpass");
-      loopNoise(600, 0.28, "bandpass");
+      loopNoise(1400, 0.12, "highpass");
+      loopNoise(520, 0.08, "bandpass");
     } else if (name === "outdoor") {
-      loopNoise(480, 0.22, "lowpass");
-      schedule(() => blip(1480 + Math.random() * 400, 0.12, "sine", 0.02), 3600);
+      loopNoise(420, 0.07, "lowpass");
     } else if (name === "hotel") {
-      loopNoise(220, 0.28, "lowpass");
-      tone(110, 0.025);
+      loopNoise(200, 0.08, "lowpass");
     } else if (name === "library") {
-      loopNoise(350, 0.1, "lowpass");
-      schedule(() => effect("page"), 3400);
+      loopNoise(320, 0.04, "lowpass");
+      schedule(() => effect("page"), 6400);
     } else if (name === "lab") {
-      tone(120, 0.03);
-      loopNoise(900, 0.08, "bandpass");
+      loopNoise(700, 0.04, "bandpass");
     } else if (name === "canteen") {
-      loopNoise(800, 0.22, "bandpass");
-      schedule(() => effect("cup"), 2200);
-      schedule(() => effect("crowd"), 3000);
+      loopNoise(720, 0.07, "bandpass");
+      schedule(() => effect("cup"), 4800);
     } else if (name === "award") {
-      loopNoise(1400, 0.18, "bandpass");
-      schedule(() => effect("applause"), 1600);
+      loopNoise(1100, 0.05, "bandpass");
     } else if (name === "void") {
-      tone(740, 0.012);
+      tone(740, 0.006);
     } else if (name === "uneasy") {
-      tone(92, 0.03);
-      loopNoise(240, 0.16, "lowpass");
-      schedule(() => effect("clock"), 2600);
+      loopNoise(200, 0.06, "lowpass");
     }
     applyMood();
   }
@@ -489,12 +637,13 @@ export function createScore() {
   }
 
   function drop() {
-    if (!musicGain || !ctx) return;
+    if (!musicGain || !ctx || ducked) return;
     const now = ctx.currentTime;
+    const base = Math.max(0.0001, volumes.bgm);
     musicGain.gain.cancelScheduledValues(now);
-    musicGain.gain.setValueAtTime(Math.max(0.0001, volumes.bgm), now);
-    musicGain.gain.linearRampToValueAtTime(0.0001, now + 0.04);
-    musicGain.gain.linearRampToValueAtTime(Math.max(0.0001, volumes.bgm), now + 0.34);
+    musicGain.gain.setValueAtTime(base, now);
+    musicGain.gain.linearRampToValueAtTime(base * 0.62, now + 0.12);
+    musicGain.gain.linearRampToValueAtTime(base, now + 0.7);
   }
 
   return {
