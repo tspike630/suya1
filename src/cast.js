@@ -118,9 +118,14 @@ export function spriteKey(who, face, pose, layer) {
 }
 
 let spriteProvider = () => "";
+let backgroundProvider = () => "";
 
 export function useSpriteProvider(fn) {
   spriteProvider = fn;
+}
+
+export function useBackgroundProvider(fn) {
+  backgroundProvider = fn;
 }
 
 function auntieMarkup(face) {
@@ -370,6 +375,11 @@ export const SCENE_NAMES = {
 };
 
 export function sceneMarkup(id) {
+  const url = backgroundProvider(id);
+  if (url) {
+    const src = String(url).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+    return `<img class="scene" data-scene="${id}" src="${src}" alt="">`;
+  }
   const draw = SCENES[id] || SCENES.dorm;
   return `<svg class="scene" data-scene="${id}" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${draw(id)}</svg>`;
 }

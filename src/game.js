@@ -21,9 +21,14 @@ import { createScore } from "./audio.js";
 const spritesReady =
   typeof window === "undefined"
     ? Promise.resolve()
-    : import("./sprites.js").then((mod) => {
-        mod.installSprites();
-      });
+    : Promise.all([
+        import("./sprites.js").then((mod) => {
+          mod.installSprites();
+        }),
+        import("./backgrounds.js").then((mod) => {
+          mod.installBackgrounds();
+        }),
+      ]);
 
 const META_KEY = "suya-meta-v2";
 const SPEEDS = [0, 18, 42, 80];
@@ -248,20 +253,17 @@ export function mountGame(root) {
       textEl.textContent = full.slice(0, shown);
       return;
     }
-    const lines = getLines(session).slice(0, session.line + 1);
+    const line = getLines(session)[session.line];
     textEl.replaceChildren();
-    lines.forEach((item, index) => {
-      const span = document.createElement("span");
-      const last = index === lines.length - 1;
-      if (item.who) {
-        const label = document.createElement("b");
-        label.textContent = item.who;
-        label.style.color = nameColor(item.who);
-        span.append(label);
-      }
-      span.append(last ? full.slice(0, shown) : item.text);
-      textEl.append(span);
-    });
+    const span = document.createElement("span");
+    if (line?.who) {
+      const label = document.createElement("b");
+      label.textContent = line.who;
+      label.style.color = nameColor(line.who);
+      span.append(label);
+    }
+    span.append(full.slice(0, shown));
+    textEl.append(span);
   }
 
   function queueAuto() {
@@ -964,9 +966,14 @@ export function mountGame(root) {
 
   applySize();
   applyFont();
-  paintTitle();
-  render();
-  spritesReady.then(() => {
-    if (screen === "play") render();
-  });
+  spritesReady.then(
+    () => {
+      paintTitle();
+      render();
+    },
+    () => {
+      paintTitle();
+      render();
+    },
+  );
 }

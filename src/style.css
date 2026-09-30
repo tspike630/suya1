@@ -78,6 +78,7 @@ h1, h2, h3, .name, .chapter-card, .title-copy h1, .ending h2 {
 }
 .bg { position: absolute; inset: 0; }
 .bg svg, .cg-scene svg { width: 100%; height: 100%; display: block; }
+.bg img.scene, .cg-scene img.scene { width: 100%; height: 100%; object-fit: cover; display: block; }
 .vn[data-layer="dream"] .bg { filter: saturate(0.78) hue-rotate(10deg); }
 .vn[data-hold="1"] .bg { animation: freeze 0.3s linear; }
 .vn[data-feedback="drop"] .box { animation: rim 0.45s linear; }
@@ -155,7 +156,7 @@ h1, h2, h3, .name, .chapter-card, .title-copy h1, .ending h2 {
 .name[data-who="裴望"] { background: #3e382f; }
 .name[data-who="黍母"] { background: #8d4b32; }
 .name[data-who="黍琊"] { background: #2a211c; }
-#text { margin: 0; font-size: var(--text, 1.12rem); line-height: 1.75; min-height: 4.8em; }
+#text { margin: 0; font-size: var(--text, 1.12rem); line-height: 1.85; min-height: 4.8em; max-height: 9.2em; overflow: auto; }
 html[data-font="serif"] #text {
   font-family: "Noto Serif SC", "Songti SC", serif;
   font-weight: 600;
@@ -164,7 +165,7 @@ html[data-font="sans"] #text {
   font-family: "Noto Sans SC", "WenQuanYi Micro Hei", "PingFang SC", sans-serif;
   font-weight: 400;
 }
-.advance[data-limen="1"] #text { min-height: 0; font-size: 1.35rem; color: #1c140f; }
+.advance[data-limen="1"] #text { min-height: 0; max-height: none; overflow: visible; font-size: 1.35rem; color: #1c140f; }
 .advance[data-limen="1"] #text span {
   display: block;
   margin: 0.35em 0;

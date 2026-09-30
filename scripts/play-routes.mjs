@@ -63,7 +63,7 @@ function decide(goal, options) {
 
 function play(goal, ngPlus = false) {
   const session = newSession(ngPlus);
-  for (let guard = 0; guard < 500 && session.phase !== "ending"; guard += 1) {
+  for (let guard = 0; guard < 4000 && session.phase !== "ending"; guard += 1) {
     if (session.phase === "choice") {
       const options = optionsFor(session);
       const index = decide(goal, options);
@@ -176,7 +176,7 @@ if (NODES.ch1_dorm.layer !== "real" || NODES.d3.layer !== "dream" || NODES.ch4_d
 if (NODES.ch4.meter !== true || NODES.d3.meter) throw new Error("dissonance should stay hidden until chapter 4");
 
 const probe = newSession(false);
-for (let guard = 0; guard < 400 && !(probe.nodeId === "d1" && probe.phase === "choice"); guard += 1) {
+for (let guard = 0; guard < 2000 && !(probe.nodeId === "d1" && probe.phase === "choice"); guard += 1) {
   if (probe.phase === "choice") choose(probe, decide("TRUE", optionsFor(probe)));
   else advance(probe);
 }
@@ -185,7 +185,7 @@ choose(probe, optionsFor(probe).findIndex((option) => option.id === "ask"));
 if (probe.feedback !== "drop") throw new Error(`D1 plus calendar should cross 10, got ${probe.feedback}`);
 if (probe.meter) throw new Error("meter opened before chapter 4");
 probe.feedback = null;
-for (let guard = 0; guard < 400 && !(probe.nodeId === "d3" && probe.phase === "choice"); guard += 1) {
+for (let guard = 0; guard < 2000 && !(probe.nodeId === "d3" && probe.phase === "choice"); guard += 1) {
   if (probe.phase === "choice") choose(probe, decide("TRUE", optionsFor(probe)));
   else advance(probe);
 }
