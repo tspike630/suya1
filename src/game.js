@@ -31,6 +31,9 @@ const spritesReady =
         import("./voice.js").then((mod) => {
           mod.installVoices();
         }),
+        import("./music.js").then((mod) => {
+          mod.installMusic();
+        }),
       ]);
 
 const META_KEY = "suya-meta-v2";
