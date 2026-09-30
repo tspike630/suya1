@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/sync-pages.mjs",
     "preview": "vite preview",
     "verify": "node scripts/verify-ledger.mjs && node scripts/play-routes.mjs && node scripts/audit-elements.mjs"
   },
