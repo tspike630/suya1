@@ -149,30 +149,35 @@ export const DAILY_COUNT = 4;
 export const ENDING_COPY = {
   A: {
     code: "A",
+    rank: "NE",
     title: "早醒的雨",
     tone: "平淡释然",
     text: "他接过那张折得很深的成绩单。雨还在下。床后来换过，觉慢慢能睡了。那晚的光，他没有再走进去。",
   },
   TRUE: {
     code: "TRUE",
+    rank: "真结局",
     title: "醒来之后",
     tone: "温暖",
     text: "复读的一年没有人替他醒来。通知书很薄。门口的人各自带着牛奶、旧信和笔记，他谁也没有写成奖品。",
   },
   B: {
     code: "B",
+    rank: "BE",
     title: "学术之巅",
     tone: "恐怖余韵",
     text: "他在台上鞠躬。台下的掌声很齐，人脸的位置是平的。奖杯沉得像一口井。",
   },
   C: {
     code: "C",
+    rank: "BE",
     title: "完美人生",
     tone: "细思恐极",
     text: "日子一天不落地圆满。很老的那个晚上，日记最后一页仍是他的字：这不是我的人生。",
   },
   E: {
     code: "E",
+    rank: "GE",
     title: "我也在梦里",
     tone: "元叙事留白",
     text: "牛奶还是热的。他问，如果这也是梦呢。她说，那我们一起醒。钟走到了六月十日。",

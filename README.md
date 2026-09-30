@@ -12,4 +12,4 @@ npm run dev
 npm run verify
 ```
 
-Enter 或点击推进，A 自动，Ctrl 快进。存档在本机浏览器里。
+点击或 Enter 推进。右键、F9 或长按打开菜单，F10 拉伸，F11 全屏，Ctrl 跳过。存档在本机浏览器里。

@@ -176,18 +176,25 @@ export function mountGame(root) {
       </button>
       <div class="choices" id="choices" hidden></div>
       <div class="ending" id="ending" hidden></div>
-      <nav class="dock" id="dock" hidden>
-        <button type="button" data-open="save">存档</button>
-        <button type="button" data-open="load">读档</button>
-        <button type="button" data-act="quick-save">快存</button>
-        <button type="button" data-act="quick-load">快读</button>
+      <nav class="ons-menu" id="ons-menu" hidden aria-label="菜单">
+        <button type="button" data-open="save">保存</button>
+        <button type="button" data-open="load">读取</button>
+        <button type="button" data-act="quick-save">快速保存</button>
+        <button type="button" data-act="quick-load">快速读取</button>
+        <button type="button" data-act="auto">自动模式</button>
+        <button type="button" data-act="skip">跳过[Ctrl]</button>
         <button type="button" data-open="log">回顾</button>
-        <button type="button" data-act="auto">自动</button>
-        <button type="button" data-act="skip">快进</button>
         <button type="button" data-open="flow">流程</button>
         <button type="button" data-open="gallery">回想</button>
-        <button type="button" data-open="config">设置</button>
-        <button type="button" data-act="hide">隐藏</button>
+        <button type="button" data-open="config">设定</button>
+        <button type="button" data-act="hide">文字隐藏</button>
+        <button type="button" data-act="stretch">拉伸[F10]</button>
+        <button type="button" data-act="full">全屏[F11]</button>
+        <button type="button" data-act="export">导出存档[F3]</button>
+        <button type="button" data-act="import">导入存档[F4]</button>
+        <button type="button" data-act="about">关于[F2]</button>
+        <button type="button" data-act="title">标题</button>
+        <button type="button" data-act="menu-close">关闭[F9]</button>
       </nav>
       <div class="title-screen" id="title-screen"></div>
       <div class="overlay" id="overlay" hidden></div>
@@ -209,7 +216,7 @@ export function mountGame(root) {
   const caret = root.querySelector("#caret");
   const choicesEl = root.querySelector("#choices");
   const endingEl = root.querySelector("#ending");
-  const dock = root.querySelector("#dock");
+  const menu = root.querySelector("#ons-menu");
   const titleEl = root.querySelector("#title-screen");
   const overlay = root.querySelector("#overlay");
 
@@ -226,6 +233,7 @@ export function mountGame(root) {
   let skipOn = false;
   let fast = false;
   let hideBox = false;
+  let suppressClick = false;
   let playedKey = "";
   let glitchKey = "";
   let padWas = [false, false];
@@ -273,7 +281,7 @@ export function mountGame(root) {
 
   function queueAuto() {
     clearTimeout(autoTimer);
-    if (!autoOn || !session || screen !== "play" || !overlay.hidden) return;
+    if (!autoOn || !session || screen !== "play" || !overlay.hidden || !menu.hidden) return;
     if (session.chapterCard || session.cgMoment) {
       autoTimer = setTimeout(() => step(), 1100);
       return;
@@ -388,9 +396,8 @@ export function mountGame(root) {
     const title = trackTitle(node?.bgm || score.currentId());
     trackEl.hidden = screen !== "play" || !title || cover;
     trackEl.textContent = title ? `♪ ${title}` : "";
-    dock.hidden = screen !== "play" || !!session?.chapterCard || !!session?.cgMoment;
-    dock.querySelector("[data-act='auto']").dataset.on = autoOn ? "1" : "0";
-    dock.querySelector("[data-act='skip']").dataset.on = skipOn ? "1" : "0";
+    if (screen !== "play") menu.hidden = true;
+    syncMenuFlags();
     if (node?.bgm) score.play(node.bgm);
     score.setLayer(node?.layer || "real");
     score.setScene(screen === "play" && !cover ? node?.bg || "" : "");
@@ -411,7 +418,10 @@ export function mountGame(root) {
     cgFrame.hidden = !showCg;
     if (session.cgMoment) cgFrame.innerHTML = cgMarkup(session.cgMoment);
     advanceHit.dataset.limen = limen ? "1" : "0";
-    advanceHit.classList.toggle("is-hidden", hideBox && !limen && session.phase === "text" && !blocked);
+    const conceal = hideBox && !limen && session.phase === "text" && !blocked;
+    if (conceal) vn.dataset.hide = "1";
+    else delete vn.dataset.hide;
+    advanceHit.classList.toggle("is-hidden", conceal);
     if (blocked) return;
 
     if (session.phase === "ending") {
@@ -424,7 +434,7 @@ export function mountGame(root) {
           : "";
       const scoreLine = session.meter ? `<p class="hint-line">违和感 ${session.dissonance}</p>` : "";
       endingEl.innerHTML = `
-        <p class="kicker">${escapeHtml(ending.code)}</p>
+        <p class="kicker">${escapeHtml(ending.rank)} · ${escapeHtml(ending.code)}</p>
         <h2>${escapeHtml(ending.title)}</h2>
         <p class="tone">${escapeHtml(ending.tone)}</p>
         <p>${escapeHtml(ending.text)}</p>
@@ -504,15 +514,15 @@ export function mountGame(root) {
         <button type="button" data-open="load">读取</button>
         <button type="button" data-open="gallery">回想</button>
         <button type="button" data-open="flow">流程</button>
-        <button type="button" data-open="config">设置</button>
+        <button type="button" data-open="config">设定</button>
       </div>
-      <p class="hint">点击推进 · Enter · A 自动 · Ctrl 快进</p>
+      <p class="hint">点击或 Enter 推进 · 右键 / F9 菜单 · F10 拉伸 · F11 全屏 · Ctrl 跳过</p>
     `;
   }
 
   function render() {
     if (!session || screen === "title") {
-      dock.hidden = true;
+      menu.hidden = true;
       advanceHit.hidden = true;
       choicesEl.hidden = true;
       endingEl.hidden = true;
@@ -525,6 +535,7 @@ export function mountGame(root) {
       place.hidden = true;
       bg.innerHTML = sceneMarkup("dorm");
       vn.dataset.layer = "real";
+      applyStretchFrame();
       paintTitle();
       return;
     }
@@ -537,6 +548,7 @@ export function mountGame(root) {
     paintChrome();
     paintLine();
     consumePulse();
+    applyStretchFrame();
     if (session.chapterCard || session.cgMoment) queueAuto();
     autosave();
   }
@@ -557,7 +569,7 @@ export function mountGame(root) {
   }
 
   function step() {
-    if (!session || screen !== "play" || !overlay.hidden) return;
+    if (!session || screen !== "play" || !overlay.hidden || !menu.hidden) return;
     if (session.chapterCard) {
       session.chapterCard = null;
       render();
@@ -648,7 +660,7 @@ export function mountGame(root) {
         const ending = ENDING_COPY[id];
         const on = meta.endings.includes(id);
         const gate = on ? ending.title : ENDING_GATES[id];
-        return `<li data-on="${on ? "1" : "0"}"><b>${on ? ending.code : "未达"}</b><span>${escapeHtml(on ? ending.title : gate)}</span></li>`;
+        return `<li data-on="${on ? "1" : "0"}"><b>${escapeHtml(ending.rank)}</b><span>${escapeHtml(on ? ending.title : gate)}</span></li>`;
       })
       .join("");
     const cracks = (session?.choices || [])
@@ -728,7 +740,7 @@ export function mountGame(root) {
           `<button type="button" data-size="${index}" data-on="${meta.settings.size === index ? "1" : "0"}">${label}</button>`,
       )
       .join("");
-    return `<section class="panel"><header><h2>设置</h2><button type="button" data-act="close">关闭</button></header>
+    return `<section class="panel"><header><h2>设定</h2><button type="button" data-act="close">关闭</button></header>
       <p>文字速度</p><div class="seg">${speed}</div>
       <p>自动等待</p><div class="seg">${auto}</div>
       <p>字号</p><div class="seg">${size}</div>
@@ -775,7 +787,131 @@ export function mountGame(root) {
     document.documentElement.dataset.font = meta.settings.font === "serif" ? "serif" : "sans";
   }
 
+  function syncMenuFlags() {
+    const autoBtn = menu.querySelector("[data-act='auto']");
+    const skipBtn = menu.querySelector("[data-act='skip']");
+    const hideBtn = menu.querySelector("[data-act='hide']");
+    const stretchBtn = menu.querySelector("[data-act='stretch']");
+    if (autoBtn) autoBtn.dataset.on = autoOn ? "1" : "0";
+    if (skipBtn) skipBtn.dataset.on = skipOn ? "1" : "0";
+    if (hideBtn) hideBtn.dataset.on = hideBox ? "1" : "0";
+    if (stretchBtn) stretchBtn.dataset.on = vn.dataset.stretch === "1" ? "1" : "0";
+  }
+
+  function applyStretchFrame() {
+    const ratio = vn.dataset.stretch === "1" ? "none" : "xMidYMid slice";
+    vn.querySelectorAll("svg.scene").forEach((node) => node.setAttribute("preserveAspectRatio", ratio));
+  }
+
+  function toggleStretch() {
+    if (vn.dataset.stretch === "1") delete vn.dataset.stretch;
+    else vn.dataset.stretch = "1";
+    applyStretchFrame();
+    syncMenuFlags();
+  }
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  }
+
+  function exportSave() {
+    const blob = new Blob([localStorage.getItem(META_KEY) || "{}"], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "suya-save.json";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+  function importSave() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json,.json";
+    input.addEventListener("change", () => {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        localStorage.setItem(META_KEY, String(reader.result || "{}"));
+        window.location.reload();
+      };
+      reader.readAsText(file);
+    });
+    input.click();
+  }
+
+  function showAbout() {
+    menu.hidden = true;
+    stopTimers();
+    overlay.hidden = false;
+    overlay.innerHTML = `<section class="ons-about"><p>黍琊：醒梦之间</p><p>右键、长按或 F9 打开菜单。</p><p>F10 拉伸画面，F11 全屏，Ctrl 跳过。</p><button type="button" data-act="close">关闭</button></section>`;
+  }
+
+  function toggleHide() {
+    hideBox = !hideBox;
+    syncMenuFlags();
+    if (session && screen === "play") paintLine();
+  }
+
+  function toggleAuto() {
+    autoOn = !autoOn;
+    if (autoOn) skipOn = false;
+    syncMenuFlags();
+    paintChrome();
+    queueAuto();
+  }
+
+  function toggleSkip() {
+    skipOn = !skipOn;
+    if (skipOn) autoOn = false;
+    syncMenuFlags();
+    paintChrome();
+    if (skipOn && menu.hidden && overlay.hidden) step();
+  }
+
+  let menuToggleAt = 0;
+
+  function closeMenu() {
+    if (menu.hidden) return;
+    menu.hidden = true;
+    menuToggleAt = 0;
+    if (skipOn && overlay.hidden) step();
+    else queueAuto();
+  }
+
+  function toggleMenu() {
+    if (screen !== "play") return;
+    menuToggleAt = performance.now();
+    if (menu.hidden) {
+      clearTimeout(autoTimer);
+      autoTimer = null;
+      syncMenuFlags();
+      menu.hidden = false;
+      return;
+    }
+    closeMenu();
+  }
+
+  function requestMenuToggle() {
+    if (performance.now() - menuToggleAt < 650) return;
+    toggleMenu();
+  }
+
   root.addEventListener("click", (event) => {
+    if (suppressClick) {
+      suppressClick = false;
+      return;
+    }
+    const inMenu = !!event.target.closest("#ons-menu");
+    if (!menu.hidden && !inMenu) {
+      closeMenu();
+      return;
+    }
+    if (inMenu) {
+      menu.hidden = true;
+      menuToggleAt = 0;
+    }
     const act = event.target.closest("[data-act]");
     const open = event.target.closest("[data-open]");
     const choice = event.target.closest("[data-choice]");
@@ -799,10 +935,26 @@ export function mountGame(root) {
     if (act?.dataset.act === "close") return closeOverlay();
     if (act?.dataset.act === "back-gallery") return openScreen("gallery");
     if (act?.dataset.act === "full") {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else document.documentElement.requestFullscreen();
+      toggleFullscreen();
       return;
     }
+    if (act?.dataset.act === "stretch") {
+      toggleStretch();
+      return;
+    }
+    if (act?.dataset.act === "export") {
+      exportSave();
+      return;
+    }
+    if (act?.dataset.act === "import") {
+      importSave();
+      return;
+    }
+    if (act?.dataset.act === "about") {
+      showAbout();
+      return;
+    }
+    if (act?.dataset.act === "menu-close") return;
     if (act?.dataset.act === "quick-save") {
       saveQuick();
       if (!overlay.hidden) openScreen("save");
@@ -834,22 +986,15 @@ export function mountGame(root) {
       return;
     }
     if (act?.dataset.act === "auto") {
-      autoOn = !autoOn;
-      if (autoOn) skipOn = false;
-      paintChrome();
-      queueAuto();
+      toggleAuto();
       return;
     }
     if (act?.dataset.act === "skip") {
-      skipOn = !skipOn;
-      if (skipOn) autoOn = false;
-      paintChrome();
-      if (skipOn) step();
+      toggleSkip();
       return;
     }
     if (act?.dataset.act === "hide") {
-      hideBox = !hideBox;
-      paintLine();
+      toggleHide();
       return;
     }
     if (tab) {
@@ -941,47 +1086,111 @@ export function mountGame(root) {
   });
 
   window.addEventListener("keydown", (event) => {
+    if (event.key === "F2") {
+      event.preventDefault();
+      showAbout();
+      return;
+    }
+    if (event.key === "F3") {
+      event.preventDefault();
+      exportSave();
+      return;
+    }
+    if (event.key === "F4") {
+      event.preventDefault();
+      importSave();
+      return;
+    }
+    if (event.key === "F9") {
+      event.preventDefault();
+      toggleMenu();
+      return;
+    }
+    if (event.key === "F10") {
+      event.preventDefault();
+      toggleStretch();
+      return;
+    }
+    if (event.key === "F11") {
+      event.preventDefault();
+      toggleFullscreen();
+      return;
+    }
     if (event.key === "Control") {
       fast = true;
-      if (screen === "play" && overlay.hidden) step();
+      if (screen === "play" && overlay.hidden && menu.hidden) step();
       return;
     }
     if (event.key === "Escape") {
-      if (!overlay.hidden) closeOverlay();
-      else if (screen === "play") openScreen("log");
+      if (!menu.hidden) closeMenu();
+      else if (!overlay.hidden) closeOverlay();
       return;
     }
-    if (event.key.toLowerCase() === "a" && screen === "play" && overlay.hidden && !event.ctrlKey && !event.metaKey) {
-      autoOn = !autoOn;
-      if (autoOn) skipOn = false;
-      paintChrome();
-      queueAuto();
+    if (event.key.toLowerCase() === "a" && screen === "play" && overlay.hidden && menu.hidden && !event.ctrlKey && !event.metaKey) {
+      toggleAuto();
       return;
     }
-    if ((event.key === "Enter" || event.key === " ") && screen === "play" && overlay.hidden) {
+    if ((event.key === "Enter" || event.key === " ") && screen === "play") {
       event.preventDefault();
-      step();
+      if (!menu.hidden) {
+        closeMenu();
+        return;
+      }
+      if (overlay.hidden) step();
     }
   });
   window.addEventListener("keyup", (event) => {
     if (event.key === "Control") fast = false;
   });
   vn.addEventListener("contextmenu", (event) => {
-    if (screen !== "play" || !overlay.hidden) return;
     event.preventDefault();
-    hideBox = !hideBox;
-    paintLine();
+    if (screen !== "play") return;
+    requestMenuToggle();
   });
+
+  const LONG_MS = 500;
+  let pressTimer = null;
+
+  function clearPress() {
+    clearTimeout(pressTimer);
+    pressTimer = null;
+  }
+
+  vn.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (event.target.closest("#ons-menu")) return;
+    clearPress();
+    pressTimer = setTimeout(() => {
+      pressTimer = null;
+      suppressClick = true;
+      if (screen === "play") requestMenuToggle();
+    }, LONG_MS);
+  });
+  vn.addEventListener("pointerup", clearPress);
+  vn.addEventListener("pointercancel", clearPress);
+  vn.addEventListener(
+    "touchstart",
+    (event) => {
+      const count = event.touches.length;
+      if (count < 3 || screen !== "play") return;
+      clearPress();
+      suppressClick = true;
+      if (count >= 4) toggleSkip();
+      else toggleMenu();
+    },
+    { passive: true },
+  );
 
   function pollPad() {
     const pads = navigator.getGamepads?.() || [];
     const pad = pads[0];
     if (pad && screen === "play") {
       const pressed = [!!pad.buttons[0]?.pressed, !!pad.buttons[1]?.pressed];
-      if (pressed[0] && !padWas[0] && overlay.hidden) step();
+      if (pressed[0] && !padWas[0] && overlay.hidden && menu.hidden) step();
       if (pressed[1] && !padWas[1]) {
-        if (!overlay.hidden) closeOverlay();
-        else openScreen("log");
+        if (!menu.hidden) closeMenu();
+        else if (!overlay.hidden) closeOverlay();
+        else toggleMenu();
       }
       padWas = pressed;
     }
