@@ -162,8 +162,8 @@ function emitDialogue(line, node, spriteState) {
     const clip = voiceFile(line.who, line.face || "", line.text);
     if (clip) emit(`dwave 0,"voice/${clip}"`);
   }
-  if (line.who && NAME_COLOR[line.who]) emit(`#${NAME_COLOR[line.who]}${line.who}#f7f3ea　${line.text}@`);
-  else emit(`#f7f3ea${line.text}@`);
+  if (line.who && NAME_COLOR[line.who]) emit(`#${NAME_COLOR[line.who]}${line.who}#f7f3ea　${line.text}\\`);
+  else emit(`#f7f3ea${line.text}\\`);
 }
 
 function emitScene(id) {
@@ -320,7 +320,7 @@ function emitScript() {
 
   emit("*boot");
   emit("humanz 15");
-  emit("setwindow 48,560,34,3,34,38,2,6,6,0,1,#c8c8c8,24,540,1256,708");
+  emit("setwindow 48,600,32,2,36,40,2,8,6,0,1,#c0c0c0,24,580,1256,710");
   emit("textspeed 28");
   emit("return");
 
