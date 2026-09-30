@@ -579,5 +579,15 @@
             <button onclick="toggle_webinfo()">about[F2]</button>
             <button onclick="toggle_webmenu()">close[F9]</button>
         </div>
+        <script>
+            function resumeOnsAudio() {
+                var mod = window.g_onsyuri_module;
+                var ctx = mod && mod.SDL2 && mod.SDL2.audioContext;
+                if (ctx && ctx.state !== "running") ctx.resume();
+            }
+            window.addEventListener("pointerdown", resumeOnsAudio, true);
+            window.addEventListener("keydown", resumeOnsAudio, true);
+            window.addEventListener("touchstart", resumeOnsAudio, true);
+        </script>
     </body>
 </html>

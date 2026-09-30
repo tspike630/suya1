@@ -21,11 +21,9 @@ const gameDir = join(root, "game");
 
 const SCREEN_W = 1280;
 const SCREEN_H = 720;
-const SPRITE_SCALE = 45;
-const SPRITE_W = Math.round((900 * SPRITE_SCALE) / 100);
-const SPRITE_H = Math.round((1600 * SPRITE_SCALE) / 100);
-const SPRITE_X = Math.round(SCREEN_W - SPRITE_W / 2 - 28);
-const SPRITE_Y = Math.round(SCREEN_H - SPRITE_H / 2);
+const SPRITE_SCALE = 70;
+const SPRITE_X = 860;
+const SPRITE_Y = 470;
 
 const NAME_COLOR = {
   鹿眠: "1d4e6f",
@@ -49,6 +47,16 @@ const slot = { chapter: 200, ending: 210, cg: 220, music: 240, fragment: 260, ng
 
 function emit(text = "") {
   lines.push(text);
+}
+
+function choiceLabel(label) {
+  const width = 30;
+  const extra = Math.max(0, width - Array.from(label).length);
+  return `${label}${"　".repeat(extra)}`;
+}
+
+function emitSelect(pairs) {
+  emit(`select ${pairs.map(([label, target]) => `"${choiceLabel(label)}",${target}`).join(",")}`);
 }
 
 function onceVar(key) {
@@ -241,8 +249,7 @@ function emitEnding(id) {
 function emitStaticChoices(id) {
   const node = NODES[id];
   if (typeof node.options === "function" || !node.options?.length) return;
-  const parts = node.options.map((option) => `"${option.label}",*pick_${id}_${option.id}`);
-  emit(`select ${parts.join(",")}`);
+  emitSelect(node.options.map((option) => [option.label, `*pick_${id}_${option.id}`]));
   for (const option of node.options) {
     emit(`*pick_${id}_${option.id}`);
     emitFx(option.fx);
@@ -284,15 +291,19 @@ function emitScript() {
   emit('bg "bg/schoolgate.jpg",1');
   emit("csp 10");
   emit("print 1");
-  emit("gosub *bgm_0");
   emit("#f7f3ea《黍琊：醒梦之间》");
-  emit("#d7e6f0醒梦之间@");
-  emit("textclear");
+  emit("#d7e6f0点击画面，开始。右键可以读取。@");
+  emit("gosub *bgm_0");
   emit(`savefileexist %199,${slot.ng}`);
   emit("if %199==1 goto *menu_ng");
-  emit('select "开始",*begin0,"读取",*do_load,"回想",*gallery,"音乐",*musicbox,"用语",*glossary,"流程",*flow,"设定",*config');
+  emit("goto *begin0");
   emit("*menu_ng");
-  emit('select "开始",*begin0,"二周目",*begin1,"读取",*do_load,"回想",*gallery,"音乐",*musicbox,"用语",*glossary,"流程",*flow,"设定",*config');
+  emitSelect([
+    ["从头开始", "*begin0"],
+    ["二周目", "*begin1"],
+    ["回想", "*gallery"],
+    ["音乐", "*musicbox"],
+  ]);
 
   emit("*do_load");
   emit("systemcall load");
@@ -309,7 +320,7 @@ function emitScript() {
 
   emit("*boot");
   emit("humanz 15");
-  emit('setwindow 64,500,34,4,30,32,2,6,8,0,1,"ui/window.png",20,490');
+  emit("setwindow 48,560,34,3,34,38,2,6,6,0,1,#c8c8c8,24,540,1256,708");
   emit("textspeed 28");
   emit("return");
 
@@ -455,9 +466,12 @@ function emitDoor() {
   emitBody("ch4_door", low.slice(shared));
   emit("*ch4_door_opts");
   emit(`if %0<${WAKE_AT} goto *ch4_door_stayonly`);
-  emit('select "醒来——回到那晚",*ch4_door_wake,"留在这里——继续这场人生",*ch4_door_stay');
+  emitSelect([
+    ["醒来——回到那晚", "*ch4_door_wake"],
+    ["留在这里——继续这场人生", "*ch4_door_stay"],
+  ]);
   emit("*ch4_door_stayonly");
-  emit('select "留在这里——继续这场人生",*ch4_door_stay');
+  emitSelect([["留在这里——继续这场人生", "*ch4_door_stay"]]);
   emit("*ch4_door_wake");
   emit("goto *finale");
   emit("*ch4_door_stay");
@@ -469,9 +483,16 @@ function emitChoicesWhite() {
   emit("*ch2_white_opts");
   emit("if %5==0 goto *ch2_white_base");
   emit("if %20==1 goto *ch2_white_base");
-  emit('select "认命，接受成绩单",*pick_ch2_accept,"再来一次，开启新的人生",*pick_ch2_again,"你好像在哪里见过她",*pick_ch2_seen');
+  emitSelect([
+    ["认命，接受成绩单", "*pick_ch2_accept"],
+    ["再来一次，开启新的人生", "*pick_ch2_again"],
+    ["你好像在哪里见过她", "*pick_ch2_seen"],
+  ]);
   emit("*ch2_white_base");
-  emit('select "认命，接受成绩单",*pick_ch2_accept,"再来一次，开启新的人生",*pick_ch2_again');
+  emitSelect([
+    ["认命，接受成绩单", "*pick_ch2_accept"],
+    ["再来一次，开启新的人生", "*pick_ch2_again"],
+  ]);
   emit("*pick_ch2_accept");
   emit("goto *end_a");
   emit("*pick_ch2_again");
@@ -486,7 +507,10 @@ function emitChoicesHotel() {
   emit("if %5==0 goto *second_exam");
   emit(`if %0<${HIDDEN_DISSONANCE} goto *second_exam`);
   emit(`if %1<${HIDDEN_LU} goto *second_exam`);
-  emit('select "我们是不是见过",*end_e,"我是来住一晚的",*second_exam');
+  emitSelect([
+    ["我们是不是见过", "*end_e"],
+    ["我是来住一晚的", "*second_exam"],
+  ]);
 }
 
 function emitGallery() {
@@ -495,9 +519,7 @@ function emitGallery() {
   emit("csp 10");
   emit("print 1");
   emit("#f7f3ea回想@");
-  const parts = CGS.map((cg, index) => `"${cg.title}",*cgview_${index}`);
-  parts.push('"返回",*start');
-  emit(`select ${parts.join(",")}`);
+  emitSelect([...CGS.map((cg, index) => [cg.title, `*cgview_${index}`]), ["返回", "*start"]]);
   CGS.forEach((cg, index) => {
     emit(`*cgview_${index}`);
     emit(`savefileexist %199,${slot.cg + index}`);
@@ -516,9 +538,7 @@ function emitGallery() {
   emit("bg black,1");
   emit("print 1");
   emit("#f7f3ea音乐@");
-  const musicParts = TRACKS.map((track, index) => `"${track.title}",*music_${index}`);
-  musicParts.push('"返回",*start');
-  emit(`select ${musicParts.join(",")}`);
+  emitSelect([...TRACKS.map((track, index) => [track.title, `*music_${index}`]), ["返回", "*start"]]);
   TRACKS.forEach((track, index) => {
     emit(`*music_${index}`);
     emit(`savefileexist %199,${slot.music + index}`);
@@ -537,9 +557,7 @@ function emitGallery() {
   emit("bg black,1");
   emit("print 1");
   emit("#f7f3ea用语@");
-  const words = FRAGMENTS.map((item, index) => `"${item.title}",*word_${index}`);
-  words.push('"返回",*start');
-  emit(`select ${words.join(",")}`);
+  emitSelect([...FRAGMENTS.map((item, index) => [item.title, `*word_${index}`]), ["返回", "*start"]]);
   FRAGMENTS.forEach((item, index) => {
     emit(`*word_${index}`);
     emit(`savefileexist %199,${slot.fragment + index}`);
@@ -585,13 +603,18 @@ function emitGallery() {
     emit(`*flowendnext_${index}`);
   });
   emit("#d7e6f0二周目在通关后出现。隐藏结局要违和够高，鹿眠也够。@");
-  emit('select "返回",*start');
+  emitSelect([["返回", "*start"]]);
 
   emit("*config");
   emit("bg black,1");
   emit("print 1");
   emit("#f7f3ea设定@");
-  emit('select "文字慢",*speed_slow,"文字中",*speed_mid,"文字快",*speed_fast,"返回",*start');
+  emitSelect([
+    ["文字慢", "*speed_slow"],
+    ["文字中", "*speed_mid"],
+    ["文字快", "*speed_fast"],
+    ["返回", "*start"],
+  ]);
   emit("*speed_slow");
   emit("textspeed 60");
   emit("goto *config");
