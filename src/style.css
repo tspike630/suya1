@@ -49,11 +49,14 @@
 
 * { box-sizing: border-box; }
 html, body, #app { height: 100%; margin: 0; }
+html, body, #app, .vn {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
 body {
-  background: #090807;
+  background: #120e0c;
   color: #f4efe6;
   font-family: "Noto Sans SC", "WenQuanYi Micro Hei", "PingFang SC", sans-serif;
-  overflow: hidden;
 }
 button, input { font: inherit; color: inherit; }
 h1, h2, h3, .name, .chapter-card, .title-copy h1, .ending h2 {
@@ -62,7 +65,7 @@ h1, h2, h3, .name, .chapter-card, .title-copy h1, .ending h2 {
 }
 [hidden] { display: none !important; }
 
-.vn { position: relative; height: 100%; overflow: hidden; background: #120e0c; }
+.vn { position: relative; height: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: #120e0c; }
 .vn[data-layer="dream"]::before {
   content: "";
   position: absolute;

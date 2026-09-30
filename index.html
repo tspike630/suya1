@@ -7,8 +7,15 @@
     <meta name="description" content="视觉小说《黍琊：醒梦之间》。在留下与醒来之间做出选择。" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   </head>
-  <body>
+  <body style="margin:0;background:#120e0c;color:#f6efe6">
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+    <script>
+      window.addEventListener("error", function (event) {
+        var app = document.querySelector("#app");
+        if (!app || app.childElementCount) return;
+        app.textContent = "页面没有启动：" + (event.message || "脚本加载失败");
+      });
+    </script>
   </body>
 </html>
