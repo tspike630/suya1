@@ -18,6 +18,13 @@ import {
 } from "./cast.js";
 import { createScore } from "./audio.js";
 
+const spritesReady =
+  typeof window === "undefined"
+    ? Promise.resolve()
+    : import("./sprites.js").then((mod) => {
+        mod.installSprites();
+      });
+
 const META_KEY = "suya-meta-v2";
 const SPEEDS = [0, 18, 42, 80];
 export const SLOT_COUNT = 90;
@@ -959,4 +966,7 @@ export function mountGame(root) {
   applyFont();
   paintTitle();
   render();
+  spritesReady.then(() => {
+    if (screen === "play") render();
+  });
 }

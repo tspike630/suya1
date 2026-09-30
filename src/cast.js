@@ -47,11 +47,49 @@ const DEFAULT_FACE = {
   阿姨: "calm",
 };
 
-const POSE = {
-  stand: "translate(0 0)",
-  lean: "rotate(-7 100 300)",
-  sit: "translate(0 30)",
-  side: "translate(16 0)",
+export const SPRITE_SHEET = {
+  鹿眠: {
+    id: "lumian",
+    poses: ["stand", "lean"],
+    faces: ["calm", "soft", "knowing", "distant", "smile", "serious", "whisper", "sting"],
+    defaultFace: "calm",
+    defaultPose: "stand",
+  },
+  沈知夏: {
+    id: "shen",
+    poses: ["stand", "turn"],
+    faces: ["quiet", "shy", "hurt", "pause", "smile", "look"],
+    defaultFace: "quiet",
+    defaultPose: "stand",
+  },
+  郁明: {
+    id: "yu",
+    poses: ["stand", "sit"],
+    faces: ["bright", "rival", "blank", "sting", "soft"],
+    defaultFace: "bright",
+    defaultPose: "stand",
+  },
+  裴望: {
+    id: "pei",
+    poses: ["stand"],
+    faces: ["stern", "soft", "professor", "overlap"],
+    defaultFace: "stern",
+    defaultPose: "stand",
+  },
+  黍母: {
+    id: "mother",
+    poses: ["stand"],
+    faces: ["expect", "gentle", "warm"],
+    defaultFace: "expect",
+    defaultPose: "stand",
+  },
+  黍琊: {
+    id: "suya",
+    poses: ["stand"],
+    faces: ["still", "awake"],
+    defaultFace: "still",
+    defaultPose: "stand",
+  },
 };
 
 export function showMole(who, layer) {
@@ -67,70 +105,56 @@ export function nameColor(who) {
   return CAST[who]?.accent || "#f4efe6";
 }
 
-function mouthPath(kind) {
-  if (kind === "smile") return `<path d="M88 132 Q100 146 112 132" fill="none" stroke="#7a4544" stroke-width="2.4"/>`;
-  if (kind === "soft") return `<path d="M90 134 Q100 140 110 134" fill="none" stroke="#7a4544" stroke-width="2"/>`;
-  if (kind === "open") return `<ellipse cx="100" cy="136" rx="7" ry="5" fill="#7a4544"/>`;
-  if (kind === "down") return `<path d="M88 140 Q100 130 112 140" fill="none" stroke="#7a4544" stroke-width="2.2"/>`;
-  return `<path d="M90 136 H110" stroke="#7a4544" stroke-width="2"/>`;
+export function spriteKey(who, face, pose) {
+  const sheet = SPRITE_SHEET[who];
+  if (!sheet) return null;
+  const faceName = sheet.faces.includes(face) ? face : sheet.defaultFace;
+  const poseName = sheet.poses.includes(pose) ? pose : sheet.defaultPose;
+  return `${sheet.id}/${poseName}-${faceName}.svg`;
 }
 
-function hairPath(who) {
-  const fill = CAST[who]?.hair || "#1c140f";
-  if (who === "鹿眠") return `<path d="M62 86 Q100 18 138 86 L146 230 Q100 248 54 230 Z" fill="${fill}"/>`;
-  if (who === "沈知夏") return `<path d="M66 84 Q100 34 134 84 L130 176 Q100 192 70 176 Z" fill="${fill}"/>`;
-  if (who === "郁明") return `<path d="M72 90 Q100 46 128 90 L124 136 Q100 146 76 136 Z" fill="${fill}"/>`;
-  if (who === "裴望") return `<path d="M74 98 Q100 62 126 98 L122 132 Q100 122 78 132 Z" fill="${fill}"/>`;
-  if (who === "黍母") return `<path d="M64 90 Q100 36 136 90 L132 164 Q100 184 68 164 Z" fill="${fill}"/>`;
-  if (who === "阿姨") {
-    return `<ellipse cx="100" cy="74" rx="30" ry="14" fill="#6d5c4c"/><path d="M76 92 Q100 58 124 92 L120 128 Q100 118 80 128 Z" fill="${fill}"/>`;
-  }
-  return `<path d="M74 88 Q100 48 126 88 L122 134 Q100 144 78 134 Z" fill="${fill}"/>`;
+export function prepareSprite(svg, who, layer, slot = "live") {
+  let out = String(svg).replace(/^\uFEFF?/, "").replace(/<\?xml[\s\S]*?\?>/, "");
+  if (!showMole(who, layer)) out = out.replace(/<g id="mole">[\s\S]*?<\/g>/, "");
+  const sheet = SPRITE_SHEET[who];
+  const prefix = `${slot === "cg" ? "cg" : "sp"}-${sheet?.id || "x"}-${layer === "dream" ? "d" : "r"}`;
+  out = out.replace(/\bid="([^"]+)"/g, (_, id) => `id="${prefix}-${id}"`);
+  out = out.replace(/url\(#([^)]+)\)/g, (_, id) => `url(#${prefix}-${id})`);
+  return out;
 }
 
-function figure(who, faceName, layer) {
-  const cast = CAST[who];
-  const face = FACES[faceName];
-  const look = (face.look || 0) * 4;
-  const eyeH = 2 + face.eye * 8;
-  const eyeFill = face.empty ? "#f7f3ee" : "#1c140f";
-  const brow = face.brow || 0;
-  const mole = showMole(who, layer) ? `<circle cx="126" cy="118" r="2.6" fill="#6a3834"/>` : "";
-  const glasses =
-    who === "裴望"
-      ? `<g fill="none" stroke="#241c16" stroke-width="2"><circle cx="86" cy="112" r="11"/><circle cx="114" cy="112" r="11"/><path d="M97 112 H103"/></g>`
-      : "";
-  return `
-    <ellipse cx="100" cy="338" rx="54" ry="10" fill="rgba(0,0,0,0.18)"/>
-    ${hairPath(who)}
-    <path d="M78 168 L70 250 Q100 268 130 250 L122 168 Z" fill="${cast.cloth}"/>
-    <path d="M70 250 L62 330 H92 L100 250 Z" fill="${cast.accent}"/>
-    <path d="M130 250 L138 330 H108 L100 250 Z" fill="${cast.accent}"/>
-    <rect x="58" y="188" width="16" height="78" rx="8" fill="${cast.cloth}"/>
-    <rect x="126" y="188" width="16" height="78" rx="8" fill="${cast.cloth}"/>
-    <circle cx="66" cy="270" r="8" fill="${cast.skin}"/>
-    <circle cx="134" cy="270" r="8" fill="${cast.skin}"/>
-    <ellipse cx="100" cy="118" rx="32" ry="36" fill="${cast.skin}"/>
-    <path d="M74 ${102 - brow} L94 ${106 + brow}" stroke="#3a2a24" stroke-width="2" fill="none"/>
-    <path d="M126 ${102 - brow} L106 ${106 + brow}" stroke="#3a2a24" stroke-width="2" fill="none"/>
-    <ellipse cx="${86 + look}" cy="112" rx="7" ry="${eyeH}" fill="${eyeFill}"/>
-    <ellipse cx="${114 + look}" cy="112" rx="7" ry="${eyeH}" fill="${eyeFill}"/>
-    ${face.empty ? "" : `<circle cx="${88 + look}" cy="112" r="2" fill="#f4efe6"/><circle cx="${116 + look}" cy="112" r="2" fill="#f4efe6"/>`}
-    ${mole}
-    ${glasses}
-    ${mouthPath(face.mouth)}
-  `;
+let spriteProvider = () => "";
+
+export function useSpriteProvider(fn) {
+  spriteProvider = fn;
 }
 
-export function spriteMarkup(who, face, pose, layer) {
+function auntieMarkup(face) {
+  const cast = CAST["阿姨"];
+  const mouth =
+    face === "pause"
+      ? `<ellipse cx="380" cy="500" rx="18" ry="14" fill="#7a4544"/>`
+      : `<path d="M330 492 Q380 518 430 492" fill="none" stroke="#7a4544" stroke-width="4" stroke-linecap="round"/>`;
+  return `<svg viewBox="0 0 760 1200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M250 340 Q380 160 510 340 L540 720 Q380 790 220 720 Z" fill="${cast.hair}"/>
+    <ellipse cx="380" cy="250" rx="78" ry="30" fill="#6d5c4c"/>
+    <path d="M190 700 L150 1220 H610 L570 700 Q380 620 190 700 Z" fill="${cast.cloth}"/>
+    <ellipse cx="380" cy="430" rx="128" ry="150" fill="${cast.skin}"/>
+    <path d="M300 400 H348" stroke="#3a2a24" stroke-width="5" stroke-linecap="round"/>
+    <path d="M412 400 H460" stroke="#3a2a24" stroke-width="5" stroke-linecap="round"/>
+    ${mouth}
+  </svg>`;
+}
+
+export function spriteMarkup(who, face, pose, layer, slot = "live") {
   if (!CAST[who]) return "";
   const faceName = resolveFace(who, face);
-  const body = figure(who, faceName, layer);
-  const transform = POSE[pose] || POSE.stand;
-  const ghost = FACES[faceName].ghost
-    ? `<g opacity="0.35" transform="translate(12 0)">${body}</g>`
-    : "";
-  return `<svg viewBox="0 0 200 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g transform="${transform}">${body}</g>${ghost}</svg>`;
+  if (who === "阿姨") return auntieMarkup(faceName);
+  const painted = spriteProvider(who, faceName, pose || "stand", layer, slot);
+  if (painted) return painted;
+  const key = spriteKey(who, faceName, pose || "stand");
+  if (!key) return auntieMarkup(faceName);
+  return "";
 }
 
 function sky(id, top, bottom) {
@@ -378,7 +402,7 @@ export const CGS = [
 export function cgMarkup(id) {
   const cg = CGS.find((item) => item.id === id);
   if (!cg) return "";
-  const cast = cg.who ? spriteMarkup(cg.who, cg.face, cg.pose || "stand", cg.layer) : "";
+  const cast = cg.who ? spriteMarkup(cg.who, cg.face, cg.pose || "stand", cg.layer, "cg") : "";
   return `<div class="cg cg-${cg.layer} cg-${cg.id}"><div class="cg-scene">${sceneMarkup(cg.scene)}</div><div class="cg-cast">${cast}</div><div class="cg-copy"><p>${cg.title}</p><span>${cg.caption}</span></div></div>`;
 }
 

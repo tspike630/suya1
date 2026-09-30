@@ -79,6 +79,7 @@ export const NODES = {
     bgm: "june",
     who: "沈知夏",
     face: "shy",
+    pose: "turn",
     lines: [
       { text: "沈知夏把一张折好的纸放在我桌上。" },
       { text: "右眼角那颗痣，我看了三年。" },
@@ -96,7 +97,7 @@ export const NODES = {
     face: "quiet",
     lines: [
       { text: "纸上只有一句：别只看着名次。" },
-      { who: "沈知夏", face: "shy", voice: true, text: "你要是想假装没看见，也行。" },
+      { who: "沈知夏", face: "shy", pose: "turn", voice: true, text: "你要是想假装没看见，也行。" },
     ],
     next: "pro_pei",
   },
@@ -379,7 +380,7 @@ export const NODES = {
     lines: [{ text: "入学第一周，下午空出一截。我不知道该把这段时间交给谁。" }],
     options: [
       { id: "lu", label: "去前台找鹿眠", next: "acad1", fx: { lu: 5 }, say: { who: "鹿眠", face: "soft", text: "你又来。咖啡是热的。你却总看着电梯。" } },
-      { id: "shen", label: "去找沈知夏", next: "acad1", fx: { shen: 5 }, say: { who: "沈知夏", face: "shy", text: "学姐？……你这么叫我，我会不习惯。" } },
+      { id: "shen", label: "去找沈知夏", next: "acad1", fx: { shen: 5 }, say: { who: "沈知夏", face: "shy", pose: "turn", text: "学姐？……你这么叫我，我会不习惯。" } },
       { id: "yu", label: "去找郁明", next: "acad1", fx: { yu: 5 }, say: { who: "郁明", face: "rival", text: "来得正好。这道题我跟你争。" } },
     ],
   },
@@ -502,7 +503,7 @@ export const NODES = {
     layer: "dream",
     bgm: "cradle",
     who: "黍母",
-    face: "gentle",
+    face: "expect",
     lines: [{ text: "母亲来电话。她的声音轻得不像她。" }],
     options: [
       {
@@ -603,7 +604,7 @@ export const NODES = {
     lines: [{ text: "颁奖结束，天台的风是冷的。还可以把今晚交给一个人。", se: "wind" }],
     options: [
       { id: "lu", label: "给鹿眠打电话", next: "acad5", fx: { lu: 5 }, say: { who: "鹿眠", face: "whisper", text: "别在梦里站太高。风大。" } },
-      { id: "shen", label: "把沈知夏叫上来", next: "acad5", fx: { shen: 5 }, say: { who: "沈知夏", face: "look", text: "奖杯沉吗。你的手在抖。" } },
+      { id: "shen", label: "把沈知夏叫上来", next: "acad5", fx: { shen: 5 }, say: { who: "沈知夏", face: "look", pose: "turn", text: "奖杯沉吗。你的手在抖。" } },
       { id: "yu", label: "跟郁明分一瓶汽水", next: "acad5", fx: { yu: 5 }, say: { who: "郁明", face: "rival", text: "下一篇，我们还是对手。" } },
     ],
   },
