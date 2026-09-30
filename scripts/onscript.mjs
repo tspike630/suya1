@@ -118,8 +118,8 @@ function voiceFile(who, face, text) {
 
 function sayLine(line, node) {
   const who = line.who || "";
-  const face = line.face || node.face || "";
-  const pose = line.pose || node.pose || "stand";
+  const face = who ? line.face || node.face || "" : "";
+  const pose = who ? line.pose || node.pose || "stand" : "stand";
   return { who, face, pose, text: line.text, se: line.se || "", voice: line.voice, kind: line.kind || "" };
 }
 
@@ -171,28 +171,43 @@ function emitFx(fx) {
   }
 }
 
+function clearSprite(spriteState) {
+  if (!spriteState.current) return;
+  // lsp2 lives on the extended-sprite layer. csp only clears lsp.
+  emit("csp2 10");
+  emit("print 1");
+  spriteState.current = "";
+  spriteState.who = "";
+  spriteState.face = "";
+  spriteState.pose = "stand";
+}
+
+function showSprite(who, face, pose, layer, spriteState) {
+  const file = spriteFile(who, face, pose, layer);
+  if (!file) {
+    clearSprite(spriteState);
+    return;
+  }
+  if (file === spriteState.current) return;
+  emit(`lsp2 10,"${file}",${SPRITE_X},${SPRITE_Y},${SPRITE_SCALE},${SPRITE_SCALE},0`);
+  emit("print 1");
+  spriteState.current = file;
+  spriteState.who = who;
+  spriteState.face = face;
+  spriteState.pose = pose;
+}
+
+// The standee follows the sentence on screen. A line with `who` shows that
+// face before its text. A line with no speaker clears it. Node defaults never
+// put a character up during opening narration, a title card, or a chapter card.
 function emitDialogue(line, node, spriteState) {
   if (line.se) emit(`dwave 2,"se/${line.se}.wav"`);
-  if (line.who) {
-    spriteState.who = line.who;
-    spriteState.face = line.face || node.face || "";
-    spriteState.pose = line.pose || node.pose || "stand";
-  } else if (line.face) {
-    spriteState.face = line.face;
-  }
-  if (node.layer === "limen") {
-    if (spriteState.current) {
-      emit("csp 10");
-      emit("print 1");
-      spriteState.current = "";
-    }
-  } else if (spriteState.who) {
-    const file = spriteFile(spriteState.who, spriteState.face, spriteState.pose, node.layer);
-    if (file && file !== spriteState.current) {
-      emit(`lsp2 10,"${file}",${SPRITE_X},${SPRITE_Y},${SPRITE_SCALE},${SPRITE_SCALE},0`);
-      emit("print 1");
-      spriteState.current = file;
-    }
+  if (node.layer === "limen" || !line.who) {
+    clearSprite(spriteState);
+  } else {
+    const face = line.face || node.face || "";
+    const pose = line.pose || node.pose || "stand";
+    showSprite(line.who, face, pose, node.layer, spriteState);
   }
   emit("dwavestop 0");
   if (line.voice !== false && line.who) {
@@ -222,7 +237,7 @@ function emitScene(id) {
     emit(`if %${shown}==1 goto *chap_${id}_skip`);
     emit(`mov %${shown},1`);
     emit("bg black,1");
-    emit("csp 10");
+    emit("csp2 10");
     emit("print 1");
     emit(`#f7f3ea${node.title}@`);
     emit("textclear");
@@ -235,7 +250,7 @@ function emitScene(id) {
     emit(`if %${onceVar(`cg_shown_${id}`)}==1 goto *cg_${id}_skip`);
     emit(`mov %${onceVar(`cg_shown_${id}`)},1`);
     emit(`bg "cg/${node.cg}.jpg",1`);
-    emit("csp 10");
+    emit("csp2 10");
     emit("print 1");
     emit(`#f7f3ea${cg.title}@`);
     emit("textclear");
@@ -253,7 +268,7 @@ function emitScene(id) {
   const bedIndex = [...new Set(Object.values(SCENE_BEDS))].indexOf(bed);
   emit(`gosub *bed_${bedIndex}`);
   emit(`bg "bg/${node.bg}.jpg",1`);
-  emit("csp 10");
+  emit("csp2 10");
   emit("print 1");
   emit("return");
 }
@@ -262,9 +277,9 @@ function emitBody(id, rows) {
   const node = NODES[id];
   const spriteState = {
     current: "",
-    who: node.who || "",
-    face: node.face || "",
-    pose: node.pose || "stand",
+    who: "",
+    face: "",
+    pose: "stand",
   };
   for (const line of rows) emitDialogue(line, node, spriteState);
 }
@@ -336,7 +351,7 @@ function emitScript() {
   emit("*start");
   emit("gosub *boot");
   emit('bg "bg/schoolgate.jpg",1');
-  emit("csp 10");
+  emit("csp2 10");
   emit("print 1");
   emit("#f7f3ea《黍琊：醒梦之间》");
   emit("#d7e6f0点击画面，开始。右键可以读取。@");
@@ -578,7 +593,7 @@ function emitGallery() {
   emit("*gallery");
   emit("gosub *menuwin");
   emit("bg black,1");
-  emit("csp 10");
+  emit("csp2 10");
   emit("print 1");
   emit("#f7f3ea回想@");
   emitSelect([...CGS.map((cg, index) => [cg.title, `*cgview_${index}`]), ["返回", "*start"]]);

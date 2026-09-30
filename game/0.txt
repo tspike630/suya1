@@ -9,7 +9,7 @@ game
 *start
 gosub *boot
 bg "bg/schoolgate.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea《黍琊：醒梦之间》
 #d7e6f0点击画面，开始。右键可以读取。@
@@ -469,7 +469,7 @@ savegame2 200,"序章 · 一模之后"
 if %57==1 goto *chap_ng_gate_skip
 mov %57,1
 bg black,1
-csp 10
+csp2 10
 print 1
 #f7f3ea序章 · 一模之后@
 textclear
@@ -477,7 +477,7 @@ textclear
 gosub *bgm_0
 gosub *bed_7
 bg "bg/schoolgate.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_pro_rank
@@ -488,7 +488,7 @@ savegame2 200,"序章 · 一模之后"
 if %57==1 goto *chap_pro_rank_skip
 mov %57,1
 bg black,1
-csp 10
+csp2 10
 print 1
 #f7f3ea序章 · 一模之后@
 textclear
@@ -500,7 +500,7 @@ savegame2 220,"cg_rank"
 if %59==1 goto *cg_pro_rank_skip
 mov %59,1
 bg "cg/cg_rank.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea一模放榜@
 textclear
@@ -514,63 +514,63 @@ savegame2 260,"second"
 gosub *bgm_0
 gosub *bed_0
 bg "bg/classroom.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_pro_yu
 gosub *bgm_0
 gosub *bed_0
 bg "bg/classroom.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_pro_leave
 gosub *bgm_0
 gosub *bed_4
 bg "bg/corridor.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_pro_shen
 gosub *bgm_0
 gosub *bed_0
 bg "bg/classroom.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_pro_open
 gosub *bgm_0
 gosub *bed_0
 bg "bg/classroom.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_pro_pocket
 gosub *bgm_0
 gosub *bed_0
 bg "bg/classroom.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_pro_pei
 gosub *bgm_0
 gosub *bed_4
 bg "bg/corridor.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_pro_pride
 gosub *bgm_0
 gosub *bed_4
 bg "bg/corridor.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_pro_money
 gosub *bgm_0
 gosub *bed_4
 bg "bg/corridor.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch1_dorm
@@ -581,7 +581,7 @@ savegame2 201,"第一章 · 考点之夜"
 if %62==1 goto *chap_ch1_dorm_skip
 mov %62,1
 bg black,1
-csp 10
+csp2 10
 print 1
 #f7f3ea第一章 · 考点之夜@
 textclear
@@ -593,7 +593,7 @@ savegame2 221,"cg_bed"
 if %64==1 goto *cg_ch1_dorm_skip
 mov %64,1
 bg "cg/cg_bed.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea考点之夜失眠@
 textclear
@@ -607,49 +607,49 @@ savegame2 261,"bed"
 gosub *bgm_1
 gosub *bed_1
 bg "bg/dorm.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch1_down
 gosub *bgm_1
 gosub *bed_1
 bg "bg/dorm.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch1_call
 gosub *bgm_1
 gosub *bed_1
 bg "bg/dorm.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch1_exam
 gosub *bgm_2
 gosub *bed_2
 bg "bg/exam.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch1_read
 gosub *bgm_2
 gosub *bed_2
 bg "bg/exam.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch1_clock
 gosub *bgm_2
 gosub *bed_2
 bg "bg/exam.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch1_score
 gosub *bgm_0
 gosub *bed_3
 bg "bg/home.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch2_white
@@ -660,7 +660,7 @@ savegame2 202,"第二章 · 白光的选项"
 if %67==1 goto *chap_ch2_white_skip
 mov %67,1
 bg black,1
-csp 10
+csp2 10
 print 1
 #f7f3ea第二章 · 白光的选项@
 textclear
@@ -672,7 +672,7 @@ savegame2 222,"cg_white"
 if %69==1 goto *cg_ch2_white_skip
 mov %69,1
 bg "cg/cg_white.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea白光选择@
 textclear
@@ -686,21 +686,21 @@ savegame2 262,"white"
 gosub *bgm_4
 gosub *bed_13
 bg "bg/white.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch2_ng
 gosub *bgm_4
 gosub *bed_13
 bg "bg/white.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_end_a
 gosub *bgm_3
 gosub *bed_6
 bg "bg/rain.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch3_hotel
@@ -711,7 +711,7 @@ savegame2 203,"第三章 · 重来之日"
 if %72==1 goto *chap_ch3_hotel_skip
 mov %72,1
 bg black,1
-csp 10
+csp2 10
 print 1
 #f7f3ea第三章 · 重来之日@
 textclear
@@ -719,14 +719,14 @@ textclear
 gosub *bgm_5
 gosub *bed_8
 bg "bg/lobby.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch3_sleep
 gosub *bgm_5
 gosub *bed_8
 bg "bg/guest.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch3_out
@@ -737,7 +737,7 @@ savegame2 224,"cg_exam_ok"
 if %74==1 goto *cg_ch3_out_skip
 mov %74,1
 bg "cg/cg_exam_ok.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea高考顺利出考场@
 textclear
@@ -747,7 +747,7 @@ textclear
 gosub *bgm_5
 gosub *bed_7
 bg "bg/examout.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d1
@@ -758,7 +758,7 @@ savegame2 223,"cg_desk"
 if %76==1 goto *cg_d1_skip
 mov %76,1
 bg "cg/cg_desk.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea酒店前台初遇@
 textclear
@@ -768,7 +768,7 @@ textclear
 gosub *bgm_5
 gosub *bed_8
 bg "bg/lobby.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_crack_cal
@@ -784,7 +784,7 @@ savegame2 263,"june9"
 gosub *bgm_9
 gosub *bed_14
 bg "bg/calendar.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d2
@@ -795,7 +795,7 @@ savegame2 225,"cg_gate"
 if %79==1 goto *cg_d2_skip
 mov %79,1
 bg "cg/cg_gate.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea秦华校门@
 textclear
@@ -805,7 +805,7 @@ textclear
 gosub *bgm_6
 gosub *bed_7
 bg "bg/gate.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d2_plaque
@@ -816,28 +816,28 @@ savegame2 264,"plaque"
 gosub *bgm_9
 gosub *bed_7
 bg "bg/plaque.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_daily1
 gosub *bgm_6
 gosub *bed_7
 bg "bg/gate.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_acad1
 gosub *bgm_7
 gosub *bed_9
 bg "bg/library.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d3
 gosub *bgm_8
 gosub *bed_11
 bg "bg/cafeteria.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d3_plate
@@ -848,7 +848,7 @@ savegame2 265,"pork"
 gosub *bgm_9
 gosub *bed_11
 bg "bg/pork.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_crack_id
@@ -864,56 +864,56 @@ savegame2 266,"status"
 gosub *bgm_9
 gosub *bed_0
 bg "bg/classroom.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d4
 gosub *bgm_5
 gosub *bed_1
 bg "bg/dorm.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_acad2
 gosub *bgm_10
 gosub *bed_10
 bg "bg/lab.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d5
 gosub *bgm_7
 gosub *bed_9
 bg "bg/library.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_daily2
 gosub *bgm_7
 gosub *bed_9
 bg "bg/library.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d6
 gosub *bgm_5
 gosub *bed_8
 bg "bg/guest.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_acad3
 gosub *bgm_10
 gosub *bed_10
 bg "bg/lab.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d7
 gosub *bgm_9
 gosub *bed_14
 bg "bg/no301.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_crack_301
@@ -929,35 +929,35 @@ savegame2 269,"room301"
 gosub *bgm_9
 gosub *bed_14
 bg "bg/no301.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_acad4
 gosub *bgm_10
 gosub *bed_10
 bg "bg/lab.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d8
 gosub *bgm_11
 gosub *bed_12
 bg "bg/award.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_daily3
 gosub *bgm_5
 gosub *bed_5
 bg "bg/roof.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_acad5
 gosub *bgm_10
 gosub *bed_10
 bg "bg/lab.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch3_paper
@@ -968,7 +968,7 @@ savegame2 226,"cg_journal"
 if %85==1 goto *cg_ch3_paper_skip
 mov %85,1
 bg "cg/cg_journal.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea实验室顶刊@
 textclear
@@ -978,28 +978,28 @@ textclear
 gosub *bgm_10
 gosub *bed_10
 bg "bg/lab.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_d9
 gosub *bgm_7
 gosub *bed_9
 bg "bg/library.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_acad6
 gosub *bgm_10
 gosub *bed_10
 bg "bg/lab.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_daily4
 gosub *bgm_5
 gosub *bed_8
 bg "bg/lobby.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch4
@@ -1010,7 +1010,7 @@ savegame2 204,"第四章 · 梦的裂缝"
 if %87==1 goto *chap_ch4_skip
 mov %87,1
 bg black,1
-csp 10
+csp2 10
 print 1
 #f7f3ea第四章 · 梦的裂缝@
 textclear
@@ -1022,7 +1022,7 @@ savegame2 271,"gohome"
 gosub *bgm_12
 gosub *bed_8
 bg "bg/lobby.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_ch4_door
@@ -1033,7 +1033,7 @@ savegame2 272,"heart"
 gosub *bgm_4
 gosub *bed_13
 bg "bg/white.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_end_b
@@ -1044,7 +1044,7 @@ savegame2 227,"cg_faceless"
 if %91==1 goto *cg_end_b_skip
 mov %91,1
 bg "cg/cg_faceless.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea颁奖台无脸@
 textclear
@@ -1058,14 +1058,14 @@ savegame2 275,"faceless"
 gosub *bgm_11
 gosub *bed_12
 bg "bg/faceless.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_end_c
 gosub *bgm_9
 gosub *bed_3
 bg "bg/diary.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_finale
@@ -1076,7 +1076,7 @@ savegame2 205,"终章 · 醒来之后"
 if %94==1 goto *chap_finale_skip
 mov %94,1
 bg black,1
-csp 10
+csp2 10
 print 1
 #f7f3ea终章 · 醒来之后@
 textclear
@@ -1088,7 +1088,7 @@ savegame2 228,"cg_wake"
 if %96==1 goto *cg_finale_skip
 mov %96,1
 bg "cg/cg_wake.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea梦醒@
 textclear
@@ -1098,14 +1098,14 @@ textclear
 gosub *bgm_13
 gosub *bed_1
 bg "bg/dorm.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_f1
 gosub *bgm_14
 gosub *bed_3
 bg "bg/home.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_repeat_room
@@ -1116,7 +1116,7 @@ savegame2 229,"cg_repeat"
 if %98==1 goto *cg_repeat_room_skip
 mov %98,1
 bg "cg/cg_repeat.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea复读教室@
 textclear
@@ -1126,21 +1126,21 @@ textclear
 gosub *bgm_14
 gosub *bed_0
 bg "bg/repeat.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_f2
 gosub *bgm_14
 gosub *bed_1
 bg "bg/dorm.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_f3
 gosub *bgm_14
 gosub *bed_4
 bg "bg/corridor.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_fin_hotel
@@ -1151,14 +1151,14 @@ savegame2 274,"milk"
 gosub *bgm_14
 gosub *bed_8
 bg "bg/lobby.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_fin_home
 gosub *bgm_14
 gosub *bed_3
 bg "bg/home.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_second_exam
@@ -1169,7 +1169,7 @@ savegame2 230,"cg_outside"
 if %101==1 goto *cg_second_exam_skip
 mov %101,1
 bg "cg/cg_outside.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea二考考场外@
 textclear
@@ -1179,7 +1179,7 @@ textclear
 gosub *bgm_14
 gosub *bed_7
 bg "bg/examout.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_epi_lu
@@ -1190,7 +1190,7 @@ savegame2 231,"cg_reunion"
 if %103==1 goto *cg_epi_lu_skip
 mov %103,1
 bg "cg/cg_reunion.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea秦华重逢@
 textclear
@@ -1200,7 +1200,7 @@ textclear
 gosub *bgm_14
 gosub *bed_7
 bg "bg/gate.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_epi_shen
@@ -1211,7 +1211,7 @@ savegame2 231,"cg_reunion"
 if %104==1 goto *cg_epi_shen_skip
 mov %104,1
 bg "cg/cg_reunion.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea秦华重逢@
 textclear
@@ -1221,7 +1221,7 @@ textclear
 gosub *bgm_14
 gosub *bed_0
 bg "bg/classroom.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_epi_yu
@@ -1232,7 +1232,7 @@ savegame2 231,"cg_reunion"
 if %105==1 goto *cg_epi_yu_skip
 mov %105,1
 bg "cg/cg_reunion.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea秦华重逢@
 textclear
@@ -1242,7 +1242,7 @@ textclear
 gosub *bgm_14
 gosub *bed_3
 bg "bg/home.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_epi_default
@@ -1253,7 +1253,7 @@ savegame2 231,"cg_reunion"
 if %106==1 goto *cg_epi_default_skip
 mov %106,1
 bg "cg/cg_reunion.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea秦华重逢@
 textclear
@@ -1263,7 +1263,7 @@ textclear
 gosub *bgm_14
 gosub *bed_2
 bg "bg/exam.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_epi_tie
@@ -1274,7 +1274,7 @@ savegame2 231,"cg_reunion"
 if %107==1 goto *cg_epi_tie_skip
 mov %107,1
 bg "cg/cg_reunion.jpg",1
-csp 10
+csp2 10
 print 1
 #f7f3ea秦华重逢@
 textclear
@@ -1284,14 +1284,14 @@ textclear
 gosub *bgm_14
 gosub *bed_7
 bg "bg/gate.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *scene_end_e
 gosub *bgm_15
 gosub *bed_13
 bg "bg/white.jpg",1
-csp 10
+csp2 10
 print 1
 return
 *ng_gate
@@ -1299,8 +1299,6 @@ gosub *scene_ng_gate
 *ng_gate_body
 textclear
 dwave 2,"se/wind.wav"
-lsp2 10,"sprites/lumian/stand-distant.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea校门口的梧桐刚冒芽。白衬衫从门柱那边过去，步子不快。@
 textclear
@@ -1316,8 +1314,6 @@ gosub *scene_pro_rank
 *pro_rank_body
 textclear
 dwave 2,"se/paper.wav"
-lsp2 10,"sprites/yu/stand-bright.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea一模的榜贴在一楼拐角。纸边被风掀起来，又被谁用图钉按回去。@
 textclear
@@ -1373,6 +1369,8 @@ dwavestop 0
 dwave 0,"voice/2187c7835fe9.ogg"
 #8a6230郁明#f7f3ea　第二也好啊。秦华的线，我们都够得着。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea他笑起来没有刺。刺长在我身上。@
 textclear
@@ -1382,7 +1380,7 @@ dwavestop 0
 dwave 0,"voice/1229f3075a07.ogg"
 #8a6230郁明#f7f3ea　你要是那两天睡好了，站这儿的说不定是我。一张榜，别看成一辈子。@
 textclear
-lsp2 10,"sprites/yu/stand-bright.png",1082,332,36,36,0
+csp2 10
 print 1
 dwavestop 0
 #f7f3ea他是来卸我的。我听成了另一句：这三分，是你没睡好，该付的。@
@@ -1417,8 +1415,6 @@ gosub *scene_pro_shen
 *pro_shen_body
 textclear
 dwave 2,"se/paper.wav"
-lsp2 10,"sprites/shen/real-shy.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea沈知夏把一张折好的纸放在我桌上。折痕压得很死。@
 textclear
@@ -1471,8 +1467,6 @@ goto *pro_pocket
 gosub *scene_pro_open
 *pro_open_body
 textclear
-lsp2 10,"sprites/shen/real-quiet.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea纸上只有一句：别只看着名次。字很小，能看出停过笔。@
 textclear
@@ -1485,7 +1479,7 @@ dwavestop 0
 dwave 0,"voice/dc18a2e34159.ogg"
 #8f3d48沈知夏#f7f3ea　你要是想假装没看见，也行。我又不是来收账的。@
 textclear
-lsp2 10,"sprites/shen/real-quiet.png",1082,332,36,36,0
+csp2 10
 print 1
 dwavestop 0
 #f7f3ea退路是她先递过来的。她比我清楚我会逃。@
@@ -1505,19 +1499,21 @@ gosub *scene_pro_pocket
 *pro_pocket_body
 textclear
 dwave 2,"se/paper.wav"
-lsp2 10,"sprites/shen/real-hurt.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我把纸按进口袋。按得很死，像怕它自己叫出声。@
 textclear
 dwavestop 0
 #f7f3ea她的目光在我肩上停了一下，就移开了。手收回去，还装作本来就没伸。@
 textclear
+lsp2 10,"sprites/shen/real-hurt.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/b04d317350fc.ogg"
 #8f3d48沈知夏#f7f3ea　口袋里也行。别揉烂就行。@
 textclear
 dwave 2,"se/step.wav"
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea我点头。她转身，裙摆碰了一下桌角。@
 textclear
@@ -1535,6 +1531,8 @@ dwavestop 0
 dwave 0,"voice/880b346bca8d.ogg"
 #3e382f裴望#f7f3ea　学校可以订酒店。考点旁边，眠夏。你那个失眠，我知道。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea他说话不绕。羊数到三百还在，他知道。高二我在他办公室趴到天亮，卷子上全是口水。@
 textclear
@@ -1547,7 +1545,7 @@ dwavestop 0
 dwave 0,"voice/9dbba744c76e.ogg"
 #3e382f裴望#f7f3ea　不是开小灶。是一张床。你要觉得这是恩典，那是你自己想多了。@
 textclear
-lsp2 10,"sprites/pei/stand-stern.png",1082,332,36,36,0
+csp2 10
 print 1
 dwavestop 0
 #f7f3ea他这么说，我就更欠他。@
@@ -1586,8 +1584,6 @@ goto *pro_money
 gosub *scene_pro_pride
 *pro_pride_body
 textclear
-lsp2 10,"sprites/pei/stand-stern.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我说不用。被单独留下一张床，我会更睡不着。同宿舍的人会问。@
 textclear
@@ -1601,7 +1597,7 @@ dwave 0,"voice/e675843e9c2b.ogg"
 #3e382f裴望#f7f3ea　随你。考场见。别跟自己过不去。过不去的那天，题不会等你。@
 textclear
 dwave 2,"se/step.wav"
-lsp2 10,"sprites/pei/stand-stern.png",1082,332,36,36,0
+csp2 10
 print 1
 dwavestop 0
 #f7f3ea他走了。我站了一会儿。很小的一个回合，赢完手心是空的。@
@@ -1611,8 +1607,6 @@ goto *ch1_dorm
 gosub *scene_pro_money
 *pro_money_body
 textclear
-lsp2 10,"sprites/pei/stand-stern.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我说家里的钱不该花在一张床上。母亲这个月已经把肉买少了。@
 textclear
@@ -1625,7 +1619,7 @@ dwavestop 0
 dwave 0,"voice/d0f65a47d579.ogg"
 #3e382f裴望#f7f3ea　嘴硬。考场见。钱的事你不用拿来堵我。我又不是来收你学费的。@
 textclear
-lsp2 10,"sprites/pei/stand-stern.png",1082,332,36,36,0
+csp2 10
 print 1
 dwavestop 0
 #f7f3ea他看穿了，不戳破。我宁愿他骂我矫情。@
@@ -1710,21 +1704,25 @@ gosub *scene_ch1_call
 *ch1_call_body
 textclear
 dwave 2,"se/phone.wav"
-lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea电话响了两声他就接了。@
 textclear
+lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/ec802b958622.ogg"
 #3e382f裴望#f7f3ea　喂？黍琊？这会儿订不到了。你先把手机放下，把眼睛闭上。闭不上，也别睁着跟天花板打架。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea我闭上了。眼睛还是干的。他的声音稳，低，没有责备。@
 textclear
 dwavestop 0
 #f7f3ea我在黑暗里说了声对不起。他说不用。@
 textclear
+lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/cefb3b133e9f.ogg"
 #3e382f裴望#f7f3ea　语文先把字写端正。端正不是给判卷的人看的。是给你自己一个能抓住的东西。@
@@ -1811,8 +1809,6 @@ goto *ch1_score
 gosub *scene_ch1_score
 *ch1_score_body
 textclear
-lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea出分那天，家里没有开灯。黄昏从窗帘缝里进来，把桌子切成一条亮、一条暗。@
 textclear
@@ -1829,11 +1825,15 @@ textclear
 dwavestop 0
 #f7f3ea老裴来了。他没说还有机会，也没说复读。@
 textclear
+lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/53c76b95b30c.ogg"
 #3e382f裴望#f7f3ea　先喝水。@
 textclear
 dwave 2,"se/cup.wav"
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea水是温的。我喝了。他坐在对面，看自己的手，不看我。@
 textclear
@@ -1988,18 +1988,20 @@ reset
 gosub *scene_ch3_hotel
 *ch3_hotel_body
 textclear
-lsp2 10,"sprites/pei/stand-professor.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea白光一收，日历翻回六月五日。空气里有一种刚铺好床单的气味，干净得过分。@
 textclear
 dwavestop 0
 #f7f3ea我还记得落榜。记得的方式却变轻了，像记得别人的一场雨。@
 textclear
+lsp2 10,"sprites/pei/stand-professor.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/54658ca9b501.ogg"
 #3e382f裴望#f7f3ea　学校把酒店订了。眠夏，八楼。你好好睡。这次别跟自己较劲。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea他的声音还是老裴，衣服却不像高中老师。我没问为什么。在这个轻飘飘的六月五日里，不问是很容易的。@
 textclear
@@ -2046,18 +2048,20 @@ goto *d1
 gosub *scene_d1
 *d1_body
 textclear
-lsp2 10,"sprites/lumian/stand-knowing.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea前台的玻璃后面站着一个女孩。她看着我，没有把目光挪去别处。@
 textclear
 dwavestop 0
 #f7f3ea白衬衫。校门口没看清的那张脸，好像在这块玻璃里停住了。@
 textclear
+lsp2 10,"sprites/lumian/stand-knowing.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/e32da5681488.ogg"
 #1d4e6f鹿眠#f7f3ea　考完了？@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea两个字。像问住客要不要续房。我习惯的问法是：能不能上线。@
 textclear
@@ -2101,6 +2105,8 @@ dwavestop 0
 dwave 0,"voice/99786f3e4092.ogg"
 #1d4e6f鹿眠#f7f3ea　你看起来，像是终于睡过一觉的人。别急着把这觉当成你应得的。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea心里那根刺动了一下。@
 textclear
@@ -2416,6 +2422,8 @@ dwavestop 0
 dwave 0,"voice/189fa26332a5.ogg"
 #6a5b4a阿姨#f7f3ea　同学，食堂哪来的红烧肉？你看清楚。今天是青菜。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea我低头。盘子里分明是。油在灯下闪。@
 textclear
@@ -2448,15 +2456,17 @@ goto *d4
 gosub *scene_d4
 *d4_body
 textclear
-lsp2 10,"sprites/yu/sit-blank.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea郁明坐在床沿上，膝上搁着一小块蛋糕。蜡烛是后来插上去的，歪着。@
 textclear
+lsp2 10,"sprites/yu/sit-blank.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/263e0b96b39c.ogg"
 #8a6230郁明#f7f3ea　今天我生日。大概。你来了就行，日期这种东西，过了就过了。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea蛋糕上的日期被奶油糊住了。糊住的地方我很想刮开。刮开如果什么都没有，那他这个人就被梦擦掉了一块。@
 textclear
@@ -2506,6 +2516,8 @@ dwavestop 0
 dwave 0,"voice/7a88984ec4a2.ogg"
 #8a6230郁明#f7f3ea　我……想不起来。奇怪。我以前记得很清楚。清楚到能拿来气你。现在气不起来，空得很。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea心里那根刺动了一下。@
 textclear
@@ -2514,8 +2526,6 @@ goto *acad2_body
 goto *acad2__from_d4_skip
 *acad2__from_d4_skip
 gosub *scene_acad2
-lsp2 10,"sprites/pei/stand-professor.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我们碰了杯。他笑着，眼睛是空的。我跟着笑。两个空的人碰杯，声音还是清的。清脆不能当生日。@
 textclear
@@ -2530,6 +2540,8 @@ dwavestop 0
 dwave 0,"voice/02a7a9cf0d15.ogg"
 #3e382f裴望#f7f3ea　我这里有个课题。你要不要接下来。接下来，后面的路会干净很多。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea干净。他又用了这种词。高中时他让我把字写端正，是给我一个能抓住的东西。现在的干净，像要把我身上那些夜里、折痕、没拆的信都洗掉。@
 textclear
@@ -2568,8 +2580,6 @@ gosub *add_ac
 goto *d5__from_acad2_a
 *d5__from_acad2_a
 gosub *scene_d5
-lsp2 10,"sprites/shen/dream-quiet.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea课题本上写下我的名字。笔顺很熟，像老裴批改作文的那支。熟让我安心，也让我害怕：我又一次用顺从来换一张床。@
 textclear
@@ -2580,8 +2590,6 @@ gosub *add_ac
 goto *d5__from_acad2_b
 *d5__from_acad2_b
 gosub *scene_d5
-lsp2 10,"sprites/shen/dream-quiet.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我说再看看。他点头，好像早知我会这样。早知是一种爱，也是一种把人写进括号里的习惯。@
 textclear
@@ -2590,8 +2598,6 @@ goto *d5_body
 gosub *scene_d5
 *d5_body
 textclear
-lsp2 10,"sprites/shen/dream-quiet.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea沈知夏站在书架尽头。在这里她是学姐。声音还是那个声音，慢，停得准。@
 textclear
@@ -2648,6 +2654,8 @@ dwavestop 0
 dwave 0,"voice/7d4ec90ec914.ogg"
 #8f3d48沈知夏#f7f3ea　痣？我没有吧。你记错人了。记错也没关系，学弟。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea她的笑停了零点三秒。零点三秒里，那个会把退路先递给我的人好像回来了，又被学姐这个词盖住。@
 textclear
@@ -2755,8 +2763,6 @@ goto *d6_body
 gosub *scene_d6
 *d6_body
 textclear
-lsp2 10,"sprites/mother/stand-expect.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea母亲来电话。她的声音轻得不像她。轻得像怕吓着一个已经成功的儿子。@
 textclear
@@ -2808,6 +2814,8 @@ dwavestop 0
 dwave 0,"voice/1ce5058fe4bf.ogg"
 #8d4b32黍母#f7f3ea　我在做饭呀。你想吃什么，妈都给你做。红烧肉也行，什么都行。你不用再替家里省。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea心里那根刺动了一下。@
 textclear
@@ -2865,8 +2873,6 @@ gosub *add_ac
 goto *d7__from_acad3_a
 *d7__from_acad3_a
 gosub *scene_d7
-lsp2 10,"sprites/lumian/stand-serious.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea天亮的时候，曲线终于闭合。我没有困。不困不是休息够了，是这具身体被成功借用了，它暂时不向我要觉。@
 textclear
@@ -2875,8 +2881,6 @@ goto *d7_body
 goto *d7__from_acad3_b
 *d7__from_acad3_b
 gosub *scene_d7
-lsp2 10,"sprites/lumian/stand-serious.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我躺下。梦里的床太软，软得像没有重量。没有重量的睡眠，醒过来也不觉得自己活过那几个小时。@
 textclear
@@ -2886,8 +2890,6 @@ gosub *scene_d7
 *d7_body
 textclear
 dwave 2,"se/card.wav"
-lsp2 10,"sprites/lumian/stand-serious.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea房卡上印着 301。我在八楼走了一圈。302 在，303 在，中间那一段墙是平的。没有这个门。@
 textclear
@@ -2937,6 +2939,8 @@ dwavestop 0
 dwave 0,"voice/07fcecfc07e3.ogg"
 #1d4e6f鹿眠#f7f3ea　你终于来问了。八楼没有 301。你的卡却每天都在刷它。刷不开的时候，你有没有觉得是自己不够努力。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea卡是凉的。凉得不像塑料。她没有安慰我。不安慰，是她肯把我当一个还醒着的人。@
 textclear
@@ -2967,18 +2971,20 @@ goto *acad4
 gosub *scene_acad4
 *acad4_body
 textclear
-lsp2 10,"sprites/shen/dream-quiet.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea学术会议和沈知夏的消息来自同一个傍晚。一个要我去被看见，一个只是问我在不在。@
 textclear
 dwavestop 0
 #f7f3ea被看见是成功的货币。在不在，是另一回事。一个人可以在领奖台上被看见，同时对某个等他的人来说并不在。@
 textclear
+lsp2 10,"sprites/shen/dream-quiet.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/f8ebdc167a3f.ogg"
 #8f3d48沈知夏#f7f3ea　你要是忙，就去。我不是来跟你的前途抢时间的。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea她又把退路递给我。我听得出这不是客气。这是她怕自己变成我成功路上的一个障碍，所以先把自己放低。放低的人，最不该被丢下，也最容易被丢下。@
 textclear
@@ -3014,8 +3020,6 @@ gosub *add_ac
 goto *d8__from_acad4_a
 *d8__from_acad4_a
 gosub *scene_d8
-lsp2 10,"sprites/pei/stand-professor.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea会场的灯很冷。我的名字被念到，掌声整齐。整齐的时候我想起她说的那句「就去」。我去了。她的低，被我收成了一场出席。@
 textclear
@@ -3045,6 +3049,8 @@ dwavestop 0
 dwave 0,"voice/1a07cc229f1a.ogg"
 #3e382f裴望#f7f3ea　年度最年轻学者。这个词我替你担着。你只要站好。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea颁奖词下面，年份是去年。去年的我还在铁架床上数羊。掌声很齐。没有人看那一行小字。@
 textclear
@@ -3096,6 +3102,8 @@ dwavestop 0
 dwave 0,"voice/025a8b30139e.ogg"
 #3e382f裴望#f7f3ea　年份？印刷的问题。你去准备下一场。下一场才是你的。过去那种东西，留着没用。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea心里那根刺动了一下。@
 textclear
@@ -3209,6 +3217,8 @@ dwavestop 0
 dwave 0,"voice/62f7d807ff19.ogg"
 #8a6230郁明#f7f3ea　一作写谁。编辑催了。催的人不管我们高一怎么争，他只管名字的顺序。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea顺序是一种很老的伤口。全市第一和第二，被缩进论文的第一行和第二行。缩进去之后，还是那三分的形状。@
 textclear
@@ -3253,8 +3263,6 @@ gosub *add_ac
 goto *ch3_paper__from_acad5_a
 *ch3_paper__from_acad5_a
 gosub *scene_ch3_paper
-lsp2 10,"sprites/pei/stand-professor.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我把名字放在第一个。他看着我，没有争。不争的那几秒，我赢了，也丢了点什么。丢掉的东西不写在论文上。@
 textclear
@@ -3276,18 +3284,20 @@ goto *d9_body
 gosub *scene_ch3_paper
 *ch3_paper_body
 textclear
-lsp2 10,"sprites/pei/stand-professor.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea顶刊的清样摊在实验台上。我的名字印在第一行。二十岁。二十岁四个字被很多人反复说，说成一种奇迹。@
 textclear
 dwavestop 0
 #f7f3ea奇迹不提铁架床，不提母亲的折痕，不提我曾经在考场上听钟。奇迹只喜欢闭合的曲线。@
 textclear
+lsp2 10,"sprites/pei/stand-professor.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/ab19e9145cdf.ogg"
 #3e382f裴望#f7f3ea　去准备颁奖。词我写好了。你照着念就行。念的时候看台下，不要看年份。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea我接过那一页词。词比我的人生整齐。整齐是他给我的又一份照顾。我开始分不清照顾和改写。@
 textclear
@@ -3296,8 +3306,6 @@ goto *d9
 gosub *scene_d9
 *d9_body
 textclear
-lsp2 10,"sprites/lumian/lean-knowing.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea深夜十一点。论文初稿刚写完。玻璃门外站着鹿眠。她不是学生，门禁却像认识她。@
 textclear
@@ -3347,6 +3355,8 @@ dwavestop 0
 dwave 0,"voice/4a48cdbe995a.ogg"
 #1d4e6f鹿眠#f7f3ea　你记得酒店八楼没有 301 房吧？你昨晚又拿房卡去刷了。刷的时候你很专心。专心是你的长处，也是你的病。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea心里那根刺动了一下。@
 textclear
@@ -3355,8 +3365,6 @@ goto *acad6_body
 goto *acad6__from_d9_skip
 *acad6__from_d9_skip
 gosub *scene_acad6
-lsp2 10,"sprites/pei/stand-professor.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我低下头。门外的人影等了一会儿，走了。走的声音很轻。轻让我愧疚。愧疚没有让我追出去。论文上还有一个逗号没放好。@
 textclear
@@ -3371,6 +3379,8 @@ dwavestop 0
 dwave 0,"voice/42250977ed5d.ogg"
 #3e382f裴望#f7f3ea　留下读博，或者现在就出去。你自己定。自己定的意思是，两条我都给你铺过了。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea铺过了的路还叫自己定吗。我看着他。他眼里有期待，期待我选那条能继续让他写词的路。@
 textclear
@@ -3493,8 +3503,6 @@ gosub *add_shen
 goto *ch4__from_daily4_shen
 *ch4__from_daily4_shen
 gosub *scene_ch4
-lsp2 10,"sprites/lumian/stand-soft.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea信上的字会动。痣那一句，时有时无。有的时候我读到她，无的时候我读到一个学姐。我把信按在桌上，按不住。@
 textclear
@@ -3517,18 +3525,20 @@ gosub *scene_ch4
 *ch4_body
 textclear
 dwave 2,"se/card.wav"
-lsp2 10,"sprites/lumian/stand-soft.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea鹿眠把一张房卡推过大理石台面。卡上印着 301。大理石很亮，亮得能看见我自己的下巴。@
 textclear
 dwavestop 0
 #f7f3ea八楼没有 301。这件事我早就知道了。知道了还每天去刷，是因为刷不开的门，至少证明我还在找一个出口。@
 textclear
+lsp2 10,"sprites/lumian/stand-soft.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/d375f9ffbe58.ogg"
 #1d4e6f鹿眠#f7f3ea　睡够了，就回家。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea像在提醒一个忘记退房的客人。她不拉我的手。@
 textclear
@@ -3737,18 +3747,20 @@ goto *f1
 gosub *scene_f1
 *f1_body
 textclear
-lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea天亮以后，家里还是没有把灯全打开。不同的是，母亲把一杯水放在我手边，没有把成绩单再折一次。@
 textclear
 dwavestop 0
 #f7f3ea老裴来得早。他眼睛里有血丝。血丝让我安心。梦里的他从没有血丝，梦里的他永远来得及替我写好下一场的词。@
 textclear
+lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/aff7c9e87004.ogg"
 #3e382f裴望#f7f3ea　复读的表在这儿。报名费我可以先垫。你要是觉得这又是安排，那你就自己交。我不是来收你的人生的。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea这句话他梦里没说过。梦里的照顾是铺路。醒着的照顾肯把路从自己手里放开。@
 textclear
@@ -3785,8 +3797,6 @@ goto *wait_sel_30
 goto *repeat_room__from_f1_self
 *repeat_room__from_f1_self
 gosub *scene_repeat_room
-lsp2 10,"sprites/pei/stand-stern.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我把积下来的钱数了一遍。够。数的时候手指发紧。这是我自己的一年。自己的，不是说没有人帮过我，是这笔钱的重量我认。@
 textclear
@@ -3806,18 +3816,20 @@ goto *repeat_room_body
 gosub *scene_repeat_room
 *repeat_room_body
 textclear
-lsp2 10,"sprites/pei/stand-stern.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea复读班的教室比去年更挤。黑板上的倒计时从三百多天开始。粉笔灰落在第一排的桌上，没有人觉得这是耻辱的灰尘。@
 textclear
 dwavestop 0
 #f7f3ea有人比我大两岁。有人眼睛更红。没有人问我是不是那个全市第二。第二在这里不是勋章，也不是伤口的展示牌。它只是你来过的证明。@
 textclear
+lsp2 10,"sprites/pei/stand-stern.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/e5e2178d4993.ogg"
 #3e382f裴望#f7f3ea　坐后面。别挑灯光好的位置。灯光好，人就容易又去演一个好学生。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea我把铁架床的声音留在去年。这张桌子是醒着的。醒着的桌子上，我会把字写坏，再写一遍。写坏不再等于我家的脸掉在地上。@
 textclear
@@ -3873,8 +3885,6 @@ goto *f3__from_f2_alarm
 *f3__from_f2_alarm
 gosub *scene_f3
 dwave 2,"se/alarm.wav"
-lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea梦醒的那一天，我把它改成出发的那一天。不是纪念失败。是让那个曾经只用来睡着的凌晨，改成我肯起床的凌晨。@
 textclear
@@ -3883,8 +3893,6 @@ goto *f3_body
 goto *f3__from_f2_morning
 *f3__from_f2_morning
 gosub *scene_f3
-lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea明天先到。六月九日会自己来。它来的时候，我如果还醒着，就够了。不必先把它刻成一个节日。@
 textclear
@@ -3893,15 +3901,17 @@ goto *f3_body
 gosub *scene_f3
 *f3_body
 textclear
-lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea一年里我睡过好觉，也睡错过。字端正过，也飘过。飘的那天我没有去听钟。我把笔握紧，写完那个发虚的句子。@
 textclear
+lsp2 10,"sprites/pei/stand-soft.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/eaea896570f9.ogg"
 #3e382f裴望#f7f3ea　二考前夜，学校还是订了酒店。眠夏。去不去，你定。这次我把「我知道你失眠」这句话咽回去。你自己比我清楚。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea他咽回去的那句，是把我从他的学生这个身份里放出来一寸。一寸就够我决定。决定不再是拒绝恩典，也不再是接受安排。@
 textclear
@@ -3941,18 +3951,20 @@ goto *fin_home
 gosub *scene_fin_hotel
 *fin_hotel_body
 textclear
-lsp2 10,"sprites/lumian/stand-smile.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea前台抬起头。是她。这次我记住了。不是梦补完的那张脸，是一个会在夜班里打哈欠、又把哈欠咽回去的人。@
 textclear
 dwavestop 0
 #f7f3ea白衬衫的袖口有一点洗旧。洗旧很好。梦里的白衬衫永远是新的。@
 textclear
+lsp2 10,"sprites/lumian/stand-smile.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/040d16f315b8.ogg"
 #1d4e6f鹿眠#f7f3ea　热牛奶。高考那两天我也递过。你没接住。不是你的错，那时候你的手里只有准考证。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea牛奶上结了一层薄皮。我看着那层皮，没有立刻把它当成象征。它就是皮。我把它吹开，喝了一口。烫。@
 textclear
@@ -3962,7 +3974,7 @@ dwavestop 0
 dwave 0,"voice/d7d13bfc2667.ogg"
 #1d4e6f鹿眠#f7f3ea　八楼有房间。房间号是印得出来的那种。你要是再刷出一面平墙，就下来找我。这次我会说，你看错了，而不是说你不够努力。@
 textclear
-lsp2 10,"sprites/lumian/stand-smile.png",1082,332,36,36,0
+csp2 10
 print 1
 dwavestop 0
 #f7f3ea我点头。点头不再是今天唯一会做的事。我还可以把杯子放下，还可以问她叫什么。问之前我已经知道答案。知道和听见，不是同一件事。@
@@ -4001,18 +4013,20 @@ goto *wait_sel_33
 gosub *scene_fin_home
 *fin_home_body
 textclear
-lsp2 10,"sprites/mother/stand-warm.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea我住在家里。厨房的灯开着。灯不是为了迎接一个考生，是粥要看火。@
 textclear
 dwavestop 0
 #f7f3ea母亲把切好的水果推过来，没再提名次。水果切得大小不一。大小不一让我鼻子一酸。梦里的她不会切出这种笨拙。@
 textclear
+lsp2 10,"sprites/mother/stand-warm.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/5be595e7a188.ogg"
 #8d4b32黍母#f7f3ea　早点睡。明天我叫你。叫你的时候要是你烦，就烦。别再把我一句话背一整年。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea她知道。她知道那句关于脸的话被我背熟了。知道了不解释，只把以后的早晨许给我。解释会变成另一场辩论。早晨只是早晨。@
 textclear
@@ -4044,15 +4058,17 @@ goto *epi_pick
 gosub *scene_epi_lu
 *epi_lu_body
 textclear
-lsp2 10,"sprites/lumian/stand-smile.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea复读的一年很长。长不是因为苦。苦我早就认识。长是因为每一天都有具体的重量，不能用一张软床买掉。@
 textclear
+lsp2 10,"sprites/lumian/stand-smile.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/d41176c4a07d.ogg"
 #1d4e6f鹿眠#f7f3ea　这次醒着考。我在门口。不在你的成功里面，在门口。你要是过了线，我也还是在门口。别把我写进通知书。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea一年后，秦华的校门没有多出来的笔画。石头是旧的，旧得有手摸过。她把热牛奶放进我手里。皮还是那层皮。我吹开，喝了。@
 textclear
@@ -4068,18 +4084,20 @@ reset
 gosub *scene_epi_shen
 *epi_shen_body
 textclear
-lsp2 10,"sprites/shen/real-smile.png",1082,332,36,36,0
-print 1
 dwavestop 0
 #f7f3ea复读的一年里，我把那张折着的纸读了很多遍。读到后来，纸软了。软了的纸还是那一句：别只看着名次。@
 textclear
 dwavestop 0
 #f7f3ea我给她写过信。信写得很笨。笨在我终于不用第二名当开头。开头是天气，是食堂的菜，是我今天没有把谁当成对手。@
 textclear
+lsp2 10,"sprites/shen/real-smile.png",1082,332,36,36,0
+print 1
 dwavestop 0
 dwave 0,"voice/6209955f1052.ogg"
 #8f3d48沈知夏#f7f3ea　通知书到了？右眼角……你还在看。看就看。这次别假装看黑板。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea痣还在。没有被改写成一个更适合成功故事的学姐。她还是那个会先把退路递给我的人。我这次没有把退路收进口袋。@
 textclear
@@ -4104,6 +4122,8 @@ dwavestop 0
 dwave 0,"voice/07ec08c8bb2d.ogg"
 #8a6230郁明#f7f3ea　笔记我寄来了。生日我也想起来了。是三月。你要是再问我大概，我就真跟你翻脸。@
 textclear
+csp2 10
+print 1
 dwavestop 0
 #f7f3ea我笑了一下。梦里的他记不住的东西，醒着的他都在。在，不是因为他完美。是因为没有人用奶油把他糊住。@
 textclear
@@ -4116,7 +4136,7 @@ dwavestop 0
 dwave 0,"voice/e65e1395cd44.ogg"
 #8a6230郁明#f7f3ea　秦华要是我们都在，你别让着我。让着我的那种谢，我消化不了。@
 textclear
-lsp2 10,"sprites/yu/stand-bright.png",1082,332,36,36,0
+csp2 10
 print 1
 dwavestop 0
 #f7f3ea通知书很薄。我把它和那叠笔记放在一起。薄的纸和厚的笔记压在桌上，谁也不必变成谁的奖杯。@
@@ -4293,7 +4313,7 @@ goto *epi_yu
 *gallery
 gosub *menuwin
 bg black,1
-csp 10
+csp2 10
 print 1
 #f7f3ea回想@
 textclear
