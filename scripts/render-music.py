@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-SR = 22050
+SR = 44100
 OUT = Path(__file__).resolve().parents[1] / "src" / "music"
 SHAPES = {
     "M": [0, 4, 7],
@@ -131,58 +131,84 @@ PIECES = {
 }
 
 
-def note(freq, dur, vel, chord):
-    count = int(SR * dur)
-    if count < 8:
-        return np.zeros(8, dtype=np.float32)
+def piano(freq, dur, vel, chord):
+    count = max(8, int(SR * dur))
     t = np.arange(count, dtype=np.float32) / SR
     wave = np.zeros(count, dtype=np.float32)
-    stiffness = 0.00015
-    for partial in range(1, 6):
+    # Felt upright: fewer bright partials when the hand is soft.
+    partials = 5 if chord or vel < 0.2 else 8
+    stiffness = 0.00022
+    for partial in range(1, partials + 1):
         stretched = freq * partial * np.sqrt(1 + stiffness * partial * partial)
-        decay = np.exp(-t * (0.85 + 0.28 * partial) * (0.72 if chord else 1))
-        wave += (0.55 / partial) * vel * decay * np.sin(2 * np.pi * stretched * t)
-    hammer_n = min(count, int(SR * 0.01))
-    hammer = np.random.randn(hammer_n).astype(np.float32) * vel * (0.04 if chord else 0.07)
-    hammer *= np.linspace(1, 0, hammer_n, dtype=np.float32)
-    wave[:hammer_n] += hammer
-    attack = min(count, int(SR * 0.006))
+        decay = np.exp(-t * (0.55 + 0.42 * partial) * (0.62 if chord else 0.9))
+        weight = vel * (0.9 / partial) * (0.55 if chord else 1)
+        wave += weight * decay * np.sin(2 * np.pi * stretched * t)
+    hammer_n = min(count, int(SR * (0.012 if chord else 0.008)))
+    noise = np.random.randn(hammer_n).astype(np.float32)
+    # Knock the soundboard, then let only the note's band through.
+    kernel = np.exp(-np.linspace(0, 6, 48, dtype=np.float32))
+    knock = np.convolve(noise, kernel, mode="full")[:hammer_n]
+    knock *= np.linspace(1, 0, hammer_n, dtype=np.float32) ** 2
+    wave[:hammer_n] += knock * vel * (0.035 if chord else 0.06)
+    attack = min(count, int(SR * 0.004))
     wave[:attack] *= np.linspace(0, 1, attack, dtype=np.float32)
     return wave
 
 
+def place(mix, body, index):
+    end = min(len(mix), index + len(body))
+    if end <= index:
+        return
+    mix[index:end] += body[: end - index]
+
+
 def render(name, bpm, bars, events):
     beat = 60 / bpm
-    length = int(SR * (bars * 4 * beat + 1.2))
-    mix = np.zeros(length, dtype=np.float32)
+    length = int(SR * (bars * 4 * beat + 1.6))
+    left = np.zeros(length, dtype=np.float32)
+    right = np.zeros(length, dtype=np.float32)
     rng = np.random.default_rng(abs(hash(name)) % (2**32))
     for start, notes, vel, beats, chord in events:
-        dur = max(0.7, beats * beat * (1.15 if chord else 0.98))
-        when = start * beat + float(rng.normal(0, 0.012))
-        index = max(0, int(SR * when))
-        for midi in notes:
-            freq = 440 * 2 ** ((midi - 69) / 12)
-            body = note(freq, dur, vel * float(rng.uniform(0.92, 1.05)), chord)
-            end = min(length, index + len(body))
-            mix[index:end] += body[: end - index]
-    # A short room, not a synth pad.
-    delayed = np.zeros_like(mix)
-    for delay, gain in ((int(SR * 0.037), 0.18), (int(SR * 0.073), 0.1), (int(SR * 0.11), 0.05)):
-        delayed[delay:] += mix[:-delay] * gain
-    mix = mix + delayed
-    peak = np.max(np.abs(mix)) or 1
-    mix = mix / peak * 0.72
-    # Fade the join so the loop does not click.
-    fade = int(SR * 0.08)
-    mix[:fade] *= np.linspace(0, 1, fade, dtype=np.float32)
-    mix[-fade:] *= np.linspace(1, 0, fade, dtype=np.float32)
+        dur = max(0.85, beats * beat * (1.35 if chord else 1.05))
+        when = start * beat + float(rng.normal(0, 0.008 if chord else 0.014))
+        if chord:
+            order = [notes[0], notes[-1], notes[min(1, len(notes) - 1)]]
+            for step, midi in enumerate(order):
+                freq = 440 * 2 ** ((midi - 69) / 12)
+                body = piano(freq, dur, vel * 0.72, True)
+                index = max(0, int(SR * (when + step * beat * 0.5)))
+                place(left if step != 1 else right, body, index)
+                place(right if step != 1 else left, body * 0.72, index + int(SR * 0.0008))
+        else:
+            # A phrase breathes: the long notes sit a little under the short ones.
+            shaped = vel * (0.86 if beats >= 3 else 1)
+            freq = 440 * 2 ** ((notes[0] - 69) / 12)
+            body = piano(freq, dur, shaped, False)
+            index = max(0, int(SR * when))
+            place(left, body * 0.92, index)
+            detuned = piano(freq * 1.0015, dur, shaped * 0.88, False)
+            place(right, detuned, index + int(SR * 0.004))
+    mix_l = left
+    mix_r = right
+    for ear in (mix_l, mix_r):
+        delayed = np.zeros_like(ear)
+        for delay, gain in ((int(SR * 0.029), 0.16), (int(SR * 0.061), 0.08)):
+            delayed[delay:] += ear[:-delay] * gain
+        ear += delayed
+    stereo = np.stack([mix_l, mix_r], axis=1)
+    peak = np.max(np.abs(stereo)) or 1
+    stereo = stereo / peak * 0.78
+    fade = int(SR * 0.12)
+    ramp = np.linspace(0, 1, fade, dtype=np.float32)[:, None]
+    stereo[:fade] *= ramp
+    stereo[-fade:] *= ramp[::-1]
     raw = OUT / f"{name}.f32"
-    mix.tofile(raw)
+    stereo.astype(np.float32).tofile(raw)
     dest = OUT / f"{name}.mp3"
     subprocess.run(
         [
-            "ffmpeg", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", str(raw),
-            "-codec:a", "libmp3lame", "-q:a", "6", str(dest),
+            "ffmpeg", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", str(raw),
+            "-codec:a", "libmp3lame", "-q:a", "4", str(dest),
         ],
         check=True,
         stdout=subprocess.DEVNULL,

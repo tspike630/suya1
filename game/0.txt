@@ -1196,30 +1196,32 @@ return
 *ng_gate
 gosub *scene_ng_gate
 *ng_gate_body
+dwave 2,"se/wind.wav"
 lsp2 10,"sprites/lumian/stand-distant.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea校门口的梧桐刚冒芽。有个人穿白衬衫从门柱那边过去，步子不快。@
+#f7f3ea校门口的梧桐刚冒芽。白衬衫从门柱那边过去，步子不快。@
 dwavestop 0
-#f7f3ea我该看见她的脸。风把叶子掀起来，等叶子落回去，人已经不在了。@
+#f7f3ea叶子掀起来。等它落回去，人已经不在了。我没看见她的脸。@
 dwavestop 0
-#f7f3ea后来我才知道，有些人不是出现在你准备好的时候。他们先从你眼睛边上走掉。@
+#f7f3ea有些人就是这样。先从你眼睛边上走掉。@
 goto *pro_rank
 *pro_rank
 gosub *scene_pro_rank
 *pro_rank_body
+dwave 2,"se/paper.wav"
 lsp2 10,"sprites/yu/stand-bright.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea一模的榜贴在一楼拐角。纸边被风掀起来，又被谁用图钉按回去。全市第二。第一名是郁明。差我三分。@
+#f7f3ea一模的榜贴在一楼拐角。纸边被风掀起来，又被谁用图钉按回去。@
 dwavestop 0
-#f7f3ea三分能写成一行小字。我站在榜前面，把它站成一条缝。缝那边是他，缝这边是我。人从缝里挤过去，没有谁被割到。@
+#f7f3ea全市第二。第一名是郁明。差我三分。@
 dwavestop 0
-#f7f3ea有人拍我的肩，说第二也够得着秦华。我点头。点头的时候牙关是咬着的，对方只看见我点头。@
+#f7f3ea有人拍我的肩，说第二也够得着秦华。我点头。牙关是咬着的。@
 dwavestop 0
-#f7f3ea郁明的名字写得很端正，像他这个人。端正得让人没法痛快地恨，也没法大大方方地站到他旁边。@
+#f7f3ea郁明的名字写得很端正。端正得让人没法痛快地恨。@
 dwavestop 0
-#f7f3ea我在那张纸上看见自己的未来被量过了。不是被判死刑，是被量出短了三寸。短三寸的人还得走路，还得向量他的人微笑。@
+#f7f3ea我在那张纸上看见自己被量过了。短了三寸。短三寸的人还得走路，还得对他笑。@
 select "去找郁明",*pick_pro_rank_yu,"先离开榜单",*pick_pro_rank_leave
 *pick_pro_rank_yu
 goto *pro_yu
@@ -1231,49 +1233,51 @@ gosub *scene_pro_yu
 lsp2 10,"sprites/yu/stand-bright.png",1050,360,45,45,0
 print 1
 dwavestop 0
-dwave 0,"voice/9b87b35ecc9c.mp3"
-#8a6230郁明#f7f3ea　第二也很好。秦华的线，我们都够得到。@
+dwave 0,"voice/2187c7835fe9.mp3"
+#8a6230郁明#f7f3ea　第二也好啊。秦华的线，我们都够得着。@
 dwavestop 0
-#f7f3ea他笑起来没有刺。刺长在我身上。我看着他的笑，忽然很想把那三分还给他，又知道还不回去。@
+#f7f3ea他笑起来没有刺。刺长在我身上。@
 lsp2 10,"sprites/yu/stand-soft.png",1050,360,45,45,0
 print 1
 dwavestop 0
-dwave 0,"voice/b8c4bff43d08.mp3"
-#8a6230郁明#f7f3ea　你要是那两天睡好了，站在这儿的说不定是我。别把一张榜看成一辈子。@
+dwave 0,"voice/1229f3075a07.mp3"
+#8a6230郁明#f7f3ea　你要是那两天睡好了，站这儿的说不定是我。一张榜，别看成一辈子。@
 lsp2 10,"sprites/yu/stand-bright.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea他是来卸我的。我听成了另一句：你没睡好，所以这三分是你该付的。@
+#f7f3ea他是来卸我的。我听成了另一句：这三分，是你没睡好，该付的。@
 dwavestop 0
-#f7f3ea我恨这个听法。更恨自己没法告诉他，你这样对我，我反而欠你。欠着的人没法做朋友，也没法做干净的敌人。@
+#f7f3ea我恨这个听法。更恨自己没法告诉他：你这样对我，我反而欠你。@
 dwavestop 0
-#f7f3ea我们从高一就在争同一道题。争到后来，题不算什么了，算的是谁先低头。他先把台阶递过来。我站在台阶下面，一步也不想上。@
+#f7f3ea高一我们就争同一道题。后来争的是谁先低头。他先把台阶递过来。我一步也不想上。@
 goto *pro_shen
 *pro_leave
 gosub *scene_pro_leave
 *pro_leave_body
+dwave 2,"se/step.wav"
 dwavestop 0
-#f7f3ea我把榜单留在身后。走廊里有人喊我的名字，喊得很亲。我没应。@
+#f7f3ea我把榜单留在身后。走廊里有人喊我的名字。我没应。@
 dwavestop 0
-#f7f3ea不应不是清高。是我怕一回头，就要把「还行」这两个字说给别人听。说出来，那三分就变成我自己承认的尺寸。@
+#f7f3ea一回头，就得把「还行」说给别人听。说出来，那三分就成了我自己承认的尺寸。@
 dwavestop 0
-#f7f3ea窗外面操场有人在跑。他们的名次写在地上，风一吹就没了。我的名次贴在墙上，要等到下一张榜来覆盖。@
+#f7f3ea窗外有人在跑。他们的名次写在地上，风一吹就没了。我的贴在墙上。@
 dwavestop 0
-#f7f3ea郁明大概还站在榜前面，给每个来道贺的人让出半步。他让得很自然。我走得也很自然。两种自然，中间隔着一条空走廊。@
+#f7f3ea郁明大概还站在榜前面，给每个道贺的人让出半步。我走我的。中间是一条空走廊。@
 goto *pro_shen
 *pro_shen
 gosub *scene_pro_shen
 *pro_shen_body
+dwave 2,"se/paper.wav"
 lsp2 10,"sprites/shen/real-shy.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea沈知夏把一张折好的纸放在我桌上。折痕压得很死，像怕它自己张开。@
+#f7f3ea沈知夏把一张折好的纸放在我桌上。折痕压得很死。@
 dwavestop 0
-#f7f3ea她不看我。右眼角那颗痣，我看了三年。看的时候总把目光假装落在黑板上，再从黑板边上滑过去。@
+#f7f3ea她不看我。右眼角那颗痣，我看了三年。看的时候总假装在看黑板。@
 dwavestop 0
-#f7f3ea三年里我们做过同桌，传过卷子，没传过一句多余的话。多余的话都在我肚子里，发酵成名次。名次一高，话就更说不出口。好像说了，就是拿第二去换她看我一眼。@
+#f7f3ea同桌三年，卷子传过，多余的话没有。名次一高，话就更说不出口。@
 dwavestop 0
-#f7f3ea她把纸推过来的手指很稳。稳得让我难堪。难堪的不是纸，是她早就知道我只会盯着榜。@
+#f7f3ea她把纸推过来的手指很稳。她知道我只会盯着榜。@
 lsp2 10,"sprites/shen/real-quiet.png",1050,360,45,45,0
 print 1
 dwavestop 0
@@ -1290,9 +1294,9 @@ gosub *scene_pro_open
 lsp2 10,"sprites/shen/real-quiet.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea纸上只有一句：别只看着名次。字很小，写得很慢，能看出停过笔。@
+#f7f3ea纸上只有一句：别只看着名次。字很小，能看出停过笔。@
 dwavestop 0
-#f7f3ea没有称呼，没有落款。她知道落款会把这件事变成一封信，而一封信是要回的。她不逼我回。@
+#f7f3ea没有称呼，没有落款。落款会把这件事变成一封要回的信。她不逼我回。@
 lsp2 10,"sprites/shen/real-shy.png",1050,360,45,45,0
 print 1
 dwavestop 0
@@ -1301,9 +1305,9 @@ dwave 0,"voice/dc18a2e34159.mp3"
 lsp2 10,"sprites/shen/real-quiet.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea她把退路先递给我。我这才发觉，她比我清楚我会逃。被这样清楚的人看着，比被爱更让人站不直。@
+#f7f3ea退路是她先递过来的。她比我清楚我会逃。@
 dwavestop 0
-#f7f3ea我抬眼的时候，她已经在看窗外。痣还在。窗外没有榜。我忽然很想说一句跟名次无关的话，嘴张了张，只吐出一口气。@
+#f7f3ea我抬眼的时候，她已经在看窗外。痣还在。我想说一句跟名次无关的话，嘴张了张，只吐出一口气。@
 lsp2 10,"sprites/shen/real-hurt.png",1050,360,45,45,0
 print 1
 dwavestop 0
@@ -1313,19 +1317,21 @@ goto *pro_pei
 *pro_pocket
 gosub *scene_pro_pocket
 *pro_pocket_body
+dwave 2,"se/paper.wav"
 lsp2 10,"sprites/shen/real-hurt.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea我把纸按进口袋。按的时候用了点力，像按住一个会叫出声的东西。@
+#f7f3ea我把纸按进口袋。按得很死，像怕它自己叫出声。@
 dwavestop 0
-#f7f3ea她的目光在我肩上停了一下，就移开了。不是生气的移开。是一个人把刚伸出的手收回去，还要装作本来就没伸。@
+#f7f3ea她的目光在我肩上停了一下，就移开了。手收回去，还装作本来就没伸。@
 dwavestop 0
 dwave 0,"voice/b04d317350fc.mp3"
 #8f3d48沈知夏#f7f3ea　口袋里也行。别揉烂就行。@
+dwave 2,"se/step.wav"
 dwavestop 0
-#f7f3ea我点头。点头成了我今天唯一会做的事。她转身时裙摆碰了一下桌角，声音很轻。@
+#f7f3ea我点头。她转身，裙摆碰了一下桌角。@
 dwavestop 0
-#f7f3ea我恨这轻。三年的注视被我收成口袋里的一张纸，而她还来嘱咐我别揉烂。被这样对待的人，不配觉得自己只是差了三分。@
+#f7f3ea三年的注视，被我收成口袋里的一张纸。她还来嘱咐我别揉烂。@
 goto *pro_pei
 *pro_pei
 gosub *scene_pro_pei
@@ -1333,21 +1339,21 @@ gosub *scene_pro_pei
 lsp2 10,"sprites/pei/stand-stern.png",1050,360,45,45,0
 print 1
 dwavestop 0
-dwave 0,"voice/09cd522c5fe7.mp3"
-#3e382f裴望#f7f3ea　学校可以订酒店。考点旁边那家，眠夏。你那个失眠，我知道。@
+dwave 0,"voice/880b346bca8d.mp3"
+#3e382f裴望#f7f3ea　学校可以订酒店。考点旁边，眠夏。你那个失眠，我知道。@
 dwavestop 0
-#f7f3ea老裴说话不绕。他知道我夜里数羊，知道羊数到三百还在。他知道，是因为我高二有一次在他办公室趴到天亮，醒的时候卷子上全是口水。@
+#f7f3ea他说话不绕。羊数到三百还在，他知道。高二我在他办公室趴到天亮，卷子上全是口水。@
 dwavestop 0
-#f7f3ea被老师知道弱点，和被父母知道不一样。父母会把弱点收进家里的脸。老师会把它收进一份照顾。照顾是好的。好的东西压在头上，也会让人喘不上气。@
+#f7f3ea父母会把这个收进家里的脸。他把它收进一张床。床是好的。好的东西压在头上，也喘不上气。@
 lsp2 10,"sprites/pei/stand-soft.png",1050,360,45,45,0
 print 1
 dwavestop 0
-dwave 0,"voice/a46d90951d0b.mp3"
-#3e382f裴望#f7f3ea　不是开小灶。是一张床。你要是觉得这是恩典，那是你自己想多了。@
+dwave 0,"voice/9dbba744c76e.mp3"
+#3e382f裴望#f7f3ea　不是开小灶。是一张床。你要觉得这是恩典，那是你自己想多了。@
 lsp2 10,"sprites/pei/stand-stern.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea他这么说，我就更欠他。不把恩典当恩典的人，最难拒绝。@
+#f7f3ea他这么说，我就更欠他。@
 select "不想被单独对待",*pick_pro_pei_pride,"家里不该花这笔钱",*pick_pro_pei_money
 *pick_pro_pei_pride
 goto *pro_pride
@@ -1359,18 +1365,19 @@ gosub *scene_pro_pride
 lsp2 10,"sprites/pei/stand-stern.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea我说不用。被单独留下一张床，我会更睡不着。同宿舍的人会问，我答不上来。@
+#f7f3ea我说不用。被单独留下一张床，我会更睡不着。同宿舍的人会问。@
 dwavestop 0
-#f7f3ea答不上来的不是酒店。是我为什么值得被从九十厘米的铁架上拎出去。第二名如果还要被拎，那第二名就只是一个还没倒下来的病人。@
+#f7f3ea问的不是酒店。是我为什么值得被从九十厘米的铁架上拎出去。@
 lsp2 10,"sprites/pei/stand-soft.png",1050,360,45,45,0
 print 1
 dwavestop 0
-dwave 0,"voice/ee300f9410c6.mp3"
-#3e382f裴望#f7f3ea　随你。考场见。别跟自己过不去，过不去的那天，题不会等你。@
+dwave 0,"voice/e675843e9c2b.mp3"
+#3e382f裴望#f7f3ea　随你。考场见。别跟自己过不去。过不去的那天，题不会等你。@
+dwave 2,"se/step.wav"
 lsp2 10,"sprites/pei/stand-stern.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea他走了。走廊恢复成走廊。我站了一会儿，觉得自己赢了一个很小的回合，赢完手心是空的。@
+#f7f3ea他走了。我站了一会儿。很小的一个回合，赢完手心是空的。@
 goto *ch1_dorm
 *pro_money
 gosub *scene_pro_money
@@ -1378,18 +1385,18 @@ gosub *scene_pro_money
 lsp2 10,"sprites/pei/stand-stern.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea我说家里的钱不该花在一张床上。母亲这个月已经把肉买少了。少的那点，不该变成我的弹簧床垫。@
+#f7f3ea我说家里的钱不该花在一张床上。母亲这个月已经把肉买少了。@
 dwavestop 0
-#f7f3ea这话半真半假。真的是肉。假的是我用肉来挡住他的眼睛。我不想让他看见我怕的不是钱，是被安排。@
+#f7f3ea真的是肉。假的是我用肉挡住他的眼睛。我怕的不是钱，是被安排。@
 lsp2 10,"sprites/pei/stand-soft.png",1050,360,45,45,0
 print 1
 dwavestop 0
-dwave 0,"voice/8908293965a5.mp3"
-#3e382f裴望#f7f3ea　嘴硬。考场见。钱的事你不用拿来堵我，我又不是来收你学费的。@
+dwave 0,"voice/d0f65a47d579.mp3"
+#3e382f裴望#f7f3ea　嘴硬。考场见。钱的事你不用拿来堵我。我又不是来收你学费的。@
 lsp2 10,"sprites/pei/stand-stern.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea他看穿了，却不戳破。这种看穿比训斥更让我无地自容。我宁愿他骂我矫情。@
+#f7f3ea他看穿了，不戳破。我宁愿他骂我矫情。@
 goto *ch1_dorm
 *ch1_dorm
 gosub *scene_ch1_dorm
@@ -1398,20 +1405,20 @@ dwave 2,"se/creak.wav"
 dwavestop 0
 #f7f3ea床是铁架的，九十厘米宽。翻个身，整栋楼都听得见。@
 dwavestop 0
-#f7f3ea我把翻身拆成六步：抬腰，挪肩，脚踝压住床沿，停三秒，再把重量交回去。像拆炸弹。炸弹不响，人也不睡。@
+#f7f3ea抬腰，挪肩，脚踝压住床沿，停三秒，再把重量交回去。六步。人也不睡。@
 dwave 2,"se/snore.wav"
 dwavestop 0
-#f7f3ea上铺的鼾声一阵一阵，像有人在很近的地方锯木头。空调正对着脸，风像砂纸擦眼皮。@
+#f7f3ea上铺的鼾声一阵一阵，像有人在很近的地方锯木头。@
 dwave 2,"se/ac.wav"
 dwavestop 0
-#f7f3ea羊数到三百七十四。母亲的话从羊群里挤进来：这次要是考不好，我们家的脸往哪搁。羊全散了。@
+#f7f3ea空调正对着脸。羊数到三百七十四。@
 dwavestop 0
-#f7f3ea她只说过一次。一次就够我背到现在。背得比课文熟。课文可以忘，这句话会自己找到空当。@
+#f7f3ea母亲的话从羊群里挤进来：这次要是考不好，我们家的脸往哪搁。羊全散了。@
 dwavestop 0
-#f7f3ea我恨这句话。也恨自己把它从她嘴里摘下来，种在每个夜里。她那天也许只是怕。怕被我养成了一根刺，刺的是我，也回头扎她。@
+#f7f3ea她只说过一次。一次就够我背到现在。背得比课文熟。@
 dwave 2,"se/phone.wav"
 dwavestop 0
-#f7f3ea凌晨三点十七分。手机亮着。我想打给老裴，问酒店还订不订得到。想打，又觉得这一打，就把下午拒绝他的那点骨气交回去。@
+#f7f3ea凌晨三点十七分。手机亮着。想打给老裴，又觉得这一打，就把下午那点骨气交回去。@
 select "把手机扣过去",*pick_ch1_dorm_down,"拨给老裴",*pick_ch1_dorm_call
 *pick_ch1_dorm_down
 goto *ch1_down
@@ -1422,42 +1429,43 @@ gosub *scene_ch1_down
 *ch1_down_body
 dwave 2,"se/click.wav"
 dwavestop 0
-#f7f3ea太晚了。明天是第一场语文。屏幕暗下去的时候，我松了口气，又恨这口气。@
+#f7f3ea太晚了。明天是第一场语文。屏幕暗下去。@
 dwavestop 0
-#f7f3ea松的是没求人。恨的是我把没求人当成了睡觉的理由。床还是九十厘米。理由不占地方，也不带来睡意。@
+#f7f3ea我松了口气，又恨这口气。没求人，并不能当睡觉的理由。床还是九十厘米。@
 dwavestop 0
-#f7f3ea我把手机压在枕头底下。压住之后还听得见它不响。不响也是一种声音。@
+#f7f3ea手机压在枕头底下。还听得见它不响。@
 goto *ch1_exam
 *ch1_call
 gosub *scene_ch1_call
 *ch1_call_body
+dwave 2,"se/phone.wav"
 lsp2 10,"sprites/pei/stand-soft.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea电话响了两声他就接了。接得太快。快得像他根本没睡，在等一个他知道会打来的人。@
+#f7f3ea电话响了两声他就接了。@
 dwavestop 0
-dwave 0,"voice/471abc4a74db.mp3"
-#3e382f裴望#f7f3ea　喂？黍琊？这会儿订不到了。你先把手机放下，把眼睛闭上。闭不上也别睁着跟天花板打架。@
+dwave 0,"voice/ec802b958622.mp3"
+#3e382f裴望#f7f3ea　喂？黍琊？这会儿订不到了。你先把手机放下，把眼睛闭上。闭不上，也别睁着跟天花板打架。@
 dwavestop 0
-#f7f3ea我闭上了。眼睛还是干的。干的眼睛里有他的声音，稳，低，没有责备。@
+#f7f3ea我闭上了。眼睛还是干的。他的声音稳，低，没有责备。@
 dwavestop 0
-#f7f3ea没有责备比责备难接。我在黑暗里说了声对不起。他说不用。两个字，把我下午的拒绝轻轻揭过去了。揭过去不是原谅，是他不跟一个睡不着的学生计较输赢。@
+#f7f3ea我在黑暗里说了声对不起。他说不用。@
 dwavestop 0
-dwave 0,"voice/e744bac2a1c4.mp3"
-#3e382f裴望#f7f3ea　语文先把字写端正。端正不是给判卷的人看的，是给你自己一个能抓住的东西。@
+dwave 0,"voice/cefb3b133e9f.mp3"
+#3e382f裴望#f7f3ea　语文先把字写端正。端正不是给判卷的人看的。是给你自己一个能抓住的东西。@
 goto *ch1_exam
 *ch1_exam
 gosub *scene_ch1_exam
 *ch1_exam_body
 dwave 2,"se/pen.wav"
 dwavestop 0
-#f7f3ea六月七日，七点四十分。我坐在考场里，像一块泡过水的饼干。座位是木头的，木头比铁架安静。@
+#f7f3ea六月七日，七点四十分。座位是木头的。木头比铁架安静。@
 dwavestop 0
-#f7f3ea字在纸上发虚。第一题我读了三遍，三遍都像在读别人的卷子。@
+#f7f3ea字在纸上发虚。第一题我读了三遍，三遍都像别人的卷子。@
 dwavestop 0
-#f7f3ea旁边的人已经在写了。笔尖的声音很密。密得让我觉得自己被落下，不是落下名次，是落下那种还能动笔的身体。@
+#f7f3ea旁边的人已经在写了。笔尖很密。@
 dwavestop 0
-#f7f3ea我想起老裴说的端正。端正需要一个睡过觉的手。我的手在，觉不在。@
+#f7f3ea老裴说的端正，需要一个睡过觉的手。手在。觉不在。@
 select "把题再读一遍",*pick_ch1_exam_read,"看了一眼时钟",*pick_ch1_exam_clock
 *pick_ch1_exam_read
 goto *ch1_read
@@ -1491,36 +1499,39 @@ gosub *scene_ch1_score
 lsp2 10,"sprites/pei/stand-soft.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea出分那天，家里没有开灯。黄昏从窗帘缝里进来，把桌子切成亮的一条、暗的一条。@
+#f7f3ea出分那天，家里没有开灯。黄昏从窗帘缝里进来，把桌子切成一条亮、一条暗。@
+dwave 2,"se/paper.wav"
 dwavestop 0
-#f7f3ea母亲把成绩单折好。折一下，再折一下。折痕很深，深过印在上面的数字。@
+#f7f3ea母亲把成绩单折好。折一下，再折一下。折痕深过上面的数字。@
 dwavestop 0
-#f7f3ea她没说话。不说话比那句「脸往哪搁」更重。我准备好了被责问，责问没有来。没有来的责问会在房间里找别的东西落脚，最后落在那道折痕上。@
+#f7f3ea她没说话。我准备好了被责问。责问没有来。@
 dwavestop 0
-#f7f3ea我想说对不起。话到嘴边，觉得对不起太轻，也太像一种求饶。她不是要我求饶。她只是不知道手该放在哪里。@
+#f7f3ea对不起到了嘴边，又咽回去。她不知道手该放在哪里。@
 dwavestop 0
-#f7f3ea老裴来了。他没有说还有机会，没有说复读，没有把我的失败收成一份计划。@
+#f7f3ea老裴来了。他没说还有机会，也没说复读。@
 dwavestop 0
 dwave 0,"voice/53c76b95b30c.mp3"
 #3e382f裴望#f7f3ea　先喝水。@
+dwave 2,"se/cup.wav"
 dwavestop 0
-#f7f3ea水是温的。我喝了。喝的时候眼眶热了一下，热完就过去了。他坐在对面，看自己的手，不看我。给一个垮掉的人留出不被观看的几分钟，是他为数不多的温柔。@
+#f7f3ea水是温的。我喝了。他坐在对面，看自己的手，不看我。@
 dwavestop 0
-#f7f3ea郁明的消息亮了一下。我没点开。我知道会是恭喜之外的那种恭喜，真诚，因此更难接。沈知夏的信在门口，我让它待着。待着不是不在乎。是我现在配不上拆开它。@
+#f7f3ea郁明的消息亮了一下。我没点开。沈知夏的信在门口，我让它待着。@
+dwave 2,"se/creak.wav"
 dwavestop 0
-#f7f3ea六月九日凌晨。我躺回那张让我落榜的床，铁架响了一声，终于睡着了。睡着不是和解。是身体先于我投降。@
+#f7f3ea六月九日凌晨。我躺回那张让我落榜的床。铁架响了一声。我睡着了。@
 goto *ch2_white
 *ch2_white
 gosub *scene_ch2_white
 *ch2_white_body
 dwavestop 0
-#f7f3ea光没有来处。像候考室的灯，又像什么都不是。@
+#f7f3ea光没有来处。像候考室的灯。@
 dwavestop 0
 #f7f3ea成绩单、折痕、没拆的信，都停在光的外面。@
 dwavestop 0
 #f7f3ea有个人影站在光的另一头。白衬衫。我看不清她的脸。@
 dwavestop 0
-#f7f3ea她不催我。光也不催。催我的是我自己：再来一次，会不会就不再短那三寸。@
+#f7f3ea她不催我。催我的是我自己。再来一次，会不会就不再短那三寸。@
 *ch2_white_opts
 if %5==0 goto *ch2_white_base
 if %20==1 goto *ch2_white_base
@@ -1553,19 +1564,19 @@ dwave 2,"se/rain.wav"
 dwavestop 0
 #f7f3ea我接过成绩单。雨从楼道尽头淌进来，把鞋面打湿。@
 dwavestop 0
-#f7f3ea母亲后来把那张纸收进抽屉最底下。我们都不再翻。不翻不是遗忘，是把一件已经发生的事从每天的饭桌上请出去。@
+#f7f3ea母亲后来把那张纸收进抽屉最底下。我们都不再翻。@
 dwavestop 0
-#f7f3ea我上了一所普通的一本。宿舍的床还是窄，窄法不一样，铁架不那么响。觉是慢慢回来的，像一个走远的人，不打招呼，只是某天夜里又躺在旁边。@
+#f7f3ea我上了一所普通的一本。床还是窄，铁架不那么响。觉是慢慢回来的。@
 dwavestop 0
-#f7f3ea郁明去了秦华。消息是别人告诉我的。我说了声挺好。挺好这两个字，我练过，练到能说得没有破音。@
+#f7f3ea郁明去了秦华。别人告诉我的。我说了声挺好。这两个字，我练过，练到没有破音。@
 dwavestop 0
-#f7f3ea沈知夏的信我到底拆开了。别只看着名次。名次已经看完了。我给她回了一句很短的话：我看见了。看见不等于我变成了另一个人。她回：够了。@
+#f7f3ea沈知夏的信我到底拆开了。别只看着名次。我回：我看见了。她回：够了。@
 dwavestop 0
-#f7f3ea多年以后我路过那所高中。雨还在。铁架床的声音没有再响起。我在校门口站了一会儿，没有进去找那张榜的位置。@
+#f7f3ea多年以后我路过那所高中。雨还在。我在校门口站了一会儿，没有进去找那张榜。@
 dwavestop 0
-#f7f3ea那一晚的光，我没有再走进去。不走进去也是一种选择。它不像重来那么亮，可我的日子是用这个不亮的选择过完的。@
+#f7f3ea那一晚的光，我没有再走进去。@
 dwavestop 0
-#f7f3ea失败没有把我变成一个深刻的人。它只是把我留在雨里。雨里的人还是要买菜，还是要睡觉。睡觉这件事，后来居然被我做成了。@
+#f7f3ea失败没有把我变成一个深刻的人。它把我留在雨里。雨里的人还是要买菜，还是要睡觉。睡觉这件事，后来被我做成了。@
 gosub *card_A
 reset
 *ch3_hotel
@@ -1616,14 +1627,14 @@ gosub *scene_d1
 lsp2 10,"sprites/lumian/stand-knowing.png",1050,360,45,45,0
 print 1
 dwavestop 0
-#f7f3ea前台的玻璃后面站着一个女孩。她看着我，像已经等了一会儿。等的样子并不殷勤，只是没有把目光挪去别处。@
+#f7f3ea前台的玻璃后面站着一个女孩。她看着我，没有把目光挪去别处。@
 dwavestop 0
-#f7f3ea白衬衫。我在校门口没看清的那一张脸，好像在这块玻璃里停住了。又好像不是。梦最会做的事，就是把没看清的人补完，补完了还让你感激。@
+#f7f3ea白衬衫。校门口没看清的那张脸，好像在这块玻璃里停住了。@
 dwavestop 0
 dwave 0,"voice/e32da5681488.mp3"
 #1d4e6f鹿眠#f7f3ea　考完了？@
 dwavestop 0
-#f7f3ea两个字，像问一个住客要不要续房。我不习惯被这样问。习惯的问法是：发挥得怎么样，有没有把握，能不能上线。@
+#f7f3ea两个字。像问住客要不要续房。我习惯的问法是：能不能上线。@
 select "回头看前台那个女孩",*pick_d1_ask,"直接离开",*pick_d1_skip
 *pick_d1_ask
 mov %6,6
@@ -1636,8 +1647,8 @@ gosub *scene_crack_cal
 lsp2 10,"sprites/lumian/stand-soft.png",1050,360,45,45,0
 print 1
 dwavestop 0
-dwave 0,"voice/ab3edb25388b.mp3"
-#1d4e6f鹿眠#f7f3ea　你看起来，像是终于睡过一觉的人。别急着把这觉理解成你应得的。@
+dwave 0,"voice/99786f3e4092.mp3"
+#1d4e6f鹿眠#f7f3ea　你看起来，像是终于睡过一觉的人。别急着把这觉当成你应得的。@
 dwavestop 0
 #f7f3ea心里那根刺动了一下。@
 goto *crack_cal_body
@@ -1774,14 +1785,15 @@ goto *d3_body
 *d3
 gosub *scene_d3
 *d3_body
+dwave 2,"se/cup.wav"
 dwavestop 0
-#f7f3ea食堂。红烧肉。这是第四天同一道菜。酱色亮得一样，连盘子边沾上的位置都一样。@
+#f7f3ea食堂。红烧肉。第四天，同一道菜。酱色一样，连盘子边沾上的位置都一样。@
 dwavestop 0
-#f7f3ea家里吃红烧肉是有缘故的。母亲把肉买少的那些月里，一旦买了，就会把肉做得很慢，慢到整间屋子都是这个味道。味道是穷和疼惜混在一起的。@
+#f7f3ea家里把肉买少的那些月里，一旦买了，就会做得很慢。整间屋子都是这个味道。@
 dwavestop 0
-#f7f3ea梦把这个味道端到大学食堂，一天接一天。排队的人里，没有谁皱眉。他们甚至不觉得自己在重复。@
+#f7f3ea排队的人没有谁皱眉。他们不觉得自己在重复。@
 dwavestop 0
-#f7f3ea我不皱眉的话，就能继续做这个世界的好学生。皱眉，就是承认我还记得家里那口锅。@
+#f7f3ea我不皱眉，就能继续做这个世界的好学生。皱眉，就是还记得家里那口锅。@
 select "问阿姨：今天是不是又是红烧肉",*pick_d3_ask,"换个窗口，眼不见为净",*pick_d3_skip
 *pick_d3_ask
 mov %6,10
@@ -1803,11 +1815,12 @@ dwavestop 0
 dwave 0,"voice/189fa26332a5.mp3"
 #6a5b4a阿姨#f7f3ea　同学，食堂哪来的红烧肉？你看清楚。今天是青菜。@
 dwavestop 0
-#f7f3ea我低头。盘子里分明是。油在灯下闪，闪得像家里那口被擦得很干净的锅。@
+#f7f3ea我低头。盘子里分明是。油在灯下闪。@
 dwavestop 0
-#f7f3ea她看着我的眼神没有恶意。恶意反倒好认。她是真心觉得我在无中生有。一个世界如果能让打菜的人真心否认你的记忆，它就不是在骗你，它是在改你。@
+#f7f3ea她没有恶意。她是真心觉得我在无中生有。@
+dwave 2,"se/static.wav"
 dwavestop 0
-#f7f3ea广播里的歌走了一拍。走拍的那一下，我抓紧了盘子。盘子是热的。热是我这边的证据。证据小得可怜。@
+#f7f3ea广播里的歌走了一拍。我抓紧盘子。盘子是热的。@
 goto *crack_id
 *crack_id
 gosub *scene_crack_id
@@ -2409,14 +2422,14 @@ dwavestop 0
 dwave 0,"voice/d375f9ffbe58.mp3"
 #1d4e6f鹿眠#f7f3ea　睡够了，就回家。@
 dwavestop 0
-#f7f3ea她的语气像在提醒一个忘记退房的客人。不煽情。不拉我的手。不说我值得更好的人生。@
+#f7f3ea像在提醒一个忘记退房的客人。她不拉我的手。@
 dwavestop 0
-#f7f3ea我看着她。如果这是爱，它爱的方式是把路指给我，而不是把我留下来当一个永远睡得好的人。留下来很舒服。舒服是这张梦最贵的东西。@
+#f7f3ea留下来很舒服。舒服是这张梦最贵的东西。@
 lsp2 10,"sprites/lumian/stand-knowing.png",1050,360,45,45,0
 print 1
 dwavestop 0
-dwave 0,"voice/ff9a4c6e6ecd.mp3"
-#1d4e6f鹿眠#f7f3ea　你要是还想要奖，就别接。接了，那些词就作废。作废的时候会疼一下。疼完你得自己走路。@
+dwave 0,"voice/4e1afe9a0909.mp3"
+#1d4e6f鹿眠#f7f3ea　你要是还想要奖，就别接。接了，那些词就作废。疼一下。疼完你自己走。@
 select "接过房卡",*pick_ch4_take,"推开",*pick_ch4_push
 *pick_ch4_take
 mov %6,10
@@ -2780,12 +2793,13 @@ dwavestop 0
 dwavestop 0
 #2a211c黍琊#f7f3ea　如果这也是梦呢。@
 dwavestop 0
-dwave 0,"voice/1d9628a30486.mp3"
-#1d4e6f鹿眠#f7f3ea　那我们一起醒。一起的意思不是我拉你。是你要是再看见平墙，别一个人刷到天亮。@
+dwave 0,"voice/d0271d8459d3.mp3"
+#1d4e6f鹿眠#f7f3ea　那我们一起醒。不是我拉你。你要是再看见平墙，别一个人刷到天亮。@
+dwave 2,"se/clock.wav"
 dwavestop 0
-#f7f3ea钟终于走到了六月十日。十日没有奇迹。十日有早晨。早晨里她的袖口还是旧的，我的手心还有一点汗。@
+#f7f3ea钟走到了六月十日。十日没有奇迹。她的袖口还是旧的。我的手心还有一点汗。@
 dwavestop 0
-#f7f3ea汗和旧袖口都留了下来。留下来的东西不必被写成寓言。它们只是证明：这一次，光没有把我们改干净。@
+#f7f3ea汗和旧袖口都留了下来。这一次，光没有把我们改干净。@
 gosub *card_E
 reset
 *card_A

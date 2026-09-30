@@ -705,6 +705,10 @@
       "url": "game/voice/09cd522c5fe7.mp3"
     },
     {
+      "path": "voice/1229f3075a07.mp3",
+      "url": "game/voice/1229f3075a07.mp3"
+    },
+    {
       "path": "voice/155d886a7258.mp3",
       "url": "game/voice/155d886a7258.mp3"
     },
@@ -727,6 +731,10 @@
     {
       "path": "voice/1d9628a30486.mp3",
       "url": "game/voice/1d9628a30486.mp3"
+    },
+    {
+      "path": "voice/2187c7835fe9.mp3",
+      "url": "game/voice/2187c7835fe9.mp3"
     },
     {
       "path": "voice/263e0b96b39c.mp3",
@@ -759,6 +767,10 @@
     {
       "path": "voice/4a48cdbe995a.mp3",
       "url": "game/voice/4a48cdbe995a.mp3"
+    },
+    {
+      "path": "voice/4e1afe9a0909.mp3",
+      "url": "game/voice/4e1afe9a0909.mp3"
     },
     {
       "path": "voice/5226ee22ef67.mp3",
@@ -801,6 +813,10 @@
       "url": "game/voice/7d4ec90ec914.mp3"
     },
     {
+      "path": "voice/880b346bca8d.mp3",
+      "url": "game/voice/880b346bca8d.mp3"
+    },
+    {
       "path": "voice/8908293965a5.mp3",
       "url": "game/voice/8908293965a5.mp3"
     },
@@ -817,8 +833,16 @@
       "url": "game/voice/8f825c7d8af6.mp3"
     },
     {
+      "path": "voice/99786f3e4092.mp3",
+      "url": "game/voice/99786f3e4092.mp3"
+    },
+    {
       "path": "voice/9b87b35ecc9c.mp3",
       "url": "game/voice/9b87b35ecc9c.mp3"
+    },
+    {
+      "path": "voice/9dbba744c76e.mp3",
+      "url": "game/voice/9dbba744c76e.mp3"
     },
     {
       "path": "voice/9ee59926963e.mp3",
@@ -857,6 +881,18 @@
       "url": "game/voice/b8c4bff43d08.mp3"
     },
     {
+      "path": "voice/cefb3b133e9f.mp3",
+      "url": "game/voice/cefb3b133e9f.mp3"
+    },
+    {
+      "path": "voice/d0271d8459d3.mp3",
+      "url": "game/voice/d0271d8459d3.mp3"
+    },
+    {
+      "path": "voice/d0f65a47d579.mp3",
+      "url": "game/voice/d0f65a47d579.mp3"
+    },
+    {
       "path": "voice/d375f9ffbe58.mp3",
       "url": "game/voice/d375f9ffbe58.mp3"
     },
@@ -885,12 +921,20 @@
       "url": "game/voice/e65e1395cd44.mp3"
     },
     {
+      "path": "voice/e675843e9c2b.mp3",
+      "url": "game/voice/e675843e9c2b.mp3"
+    },
+    {
       "path": "voice/e744bac2a1c4.mp3",
       "url": "game/voice/e744bac2a1c4.mp3"
     },
     {
       "path": "voice/eaea896570f9.mp3",
       "url": "game/voice/eaea896570f9.mp3"
+    },
+    {
+      "path": "voice/ec802b958622.mp3",
+      "url": "game/voice/ec802b958622.mp3"
     },
     {
       "path": "voice/ee300f9410c6.mp3",
